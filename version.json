@@ -1,0 +1,62 @@
+{
+  "version": "4.0.0",
+  "build_number": 1,
+  "release_date": "2024-01-25",
+  "release_notes": [
+    {
+      "category": "feature",
+      "description": "完整的跨平台媒體工作站，支援語音轉錄、AI 分析、智能搜尋",
+      "timestamp": "2024-01-25T10:00:00"
+    },
+    {
+      "category": "feature", 
+      "description": "實作資料夾監控系統，自動處理新檔案",
+      "timestamp": "2024-01-25T10:00:00"
+    },
+    {
+      "category": "feature",
+      "description": "進階搜尋系統，支援複雜查詢和智能分組",
+      "timestamp": "2024-01-25T10:00:00"
+    },
+    {
+      "category": "feature",
+      "description": "效能監控系統，即時監控系統資源",
+      "timestamp": "2024-01-25T10:00:00"
+    },
+    {
+      "category": "feature",
+      "description": "完整的診斷和支援系統",
+      "timestamp": "2024-01-25T10:00:00"
+    },
+    {
+      "category": "improvement",
+      "description": "優化跨平台相容性，支援 Windows、macOS 和 Linux",
+      "timestamp": "2024-01-25T10:00:00"
+    },
+    {
+      "category": "improvement",
+      "description": "增強配置管理系統，支援自動驗證和修復",
+      "timestamp": "2024-01-25T10:00:00"
+    },
+    {
+      "category": "improvement",
+      "description": "完整的測試套件和自動化測試流程",
+      "timestamp": "2024-01-25T10:00:00"
+    }
+  ],
+  "pre_release": false,
+  "platform_requirements": {
+    "windows": {
+      "min_version": "Windows 10",
+      "python_version": "3.8+"
+    },
+    "macos": {
+      "min_version": "macOS 10.14",
+      "python_version": "3.8+"
+    },
+    "linux": {
+      "min_version": "Ubuntu 18.04 / CentOS 7",
+      "python_version": "3.8+"
+    }
+  }
+}
