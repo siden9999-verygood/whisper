@@ -63,11 +63,18 @@ class InstallerCreator:
         
         print("建立 Windows 安裝程式...")
         
+        # 優先使用 PyInstaller 的 onedir 輸出目錄
+        pyinstaller_dir = self.dist_dir / self.app_info['name']
+        if not pyinstaller_dir.exists():
+            print(f"找不到 PyInstaller 輸出: {pyinstaller_dir}")
+            print("請先執行: python build_scripts/build.py --type pyinstaller --skip-tests")
+            return False
+
         # 檢查是否有可用的安裝程式建立工具
         if self._check_nsis():
-            return self._create_nsis_installer()
+            return self._create_nsis_installer(pyinstaller_dir)
         elif self._check_inno_setup():
-            return self._create_inno_setup_installer()
+            return self._create_inno_setup_installer(pyinstaller_dir)
         else:
             print("沒有找到可用的安裝程式建立工具")
             print("請安裝 NSIS 或 Inno Setup")
@@ -102,19 +109,12 @@ class InstallerCreator:
         except Exception:
             return False
     
-    def _create_nsis_installer(self) -> bool:
+    def _create_nsis_installer(self, source_dir: Path) -> bool:
         """使用 NSIS 建立安裝程式"""
         try:
             print("使用 NSIS 建立安裝程式...")
-            
-            # 準備安裝檔案
-            portable_dir = self.dist_dir / f"{self.app_info['name']}_Portable"
-            if not portable_dir.exists():
-                print("找不到可攜式版本，請先執行打包")
-                return False
-            
             # 建立 NSIS 腳本
-            nsis_script = self._generate_nsis_script(portable_dir)
+            nsis_script = self._generate_nsis_script(source_dir)
             nsis_file = self.build_dir / "installer.nsi"
             
             with open(nsis_file, 'w', encoding='utf-8') as f:
@@ -201,11 +201,11 @@ Section "MainSection" SEC01
     
     ; 建立開始選單項目
     CreateDirectory "$SMPROGRAMS\\${{APPNAME}}"
-    CreateShortCut "$SMPROGRAMS\\${{APPNAME}}\\${{APPNAME}}.lnk" "$INSTDIR\\start.bat" "" "$INSTDIR\\icon.ico"
+    CreateShortCut "$SMPROGRAMS\\${{APPNAME}}\\${{APPNAME}}.lnk" "$INSTDIR\\{self.app_info['name']}.exe" "" "$INSTDIR\\icon.ico"
     CreateShortCut "$SMPROGRAMS\\${{APPNAME}}\\解除安裝.lnk" "$INSTDIR\\Uninstall.exe"
     
     ; 建立桌面捷徑
-    CreateShortCut "$DESKTOP\\${{APPNAME}}.lnk" "$INSTDIR\\start.bat" "" "$INSTDIR\\icon.ico"
+    CreateShortCut "$DESKTOP\\${{APPNAME}}.lnk" "$INSTDIR\\{self.app_info['name']}.exe" "" "$INSTDIR\\icon.ico"
     
     ; 寫入登錄檔
     WriteRegStr HKLM "Software\\${{APPNAME}}" "InstallDir" "$INSTDIR"
@@ -243,19 +243,12 @@ Section "Uninstall"
 SectionEnd
 '''
     
-    def _create_inno_setup_installer(self) -> bool:
+    def _create_inno_setup_installer(self, source_dir: Path) -> bool:
         """使用 Inno Setup 建立安裝程式"""
         try:
             print("使用 Inno Setup 建立安裝程式...")
-            
-            # 準備安裝檔案
-            portable_dir = self.dist_dir / f"{self.app_info['name']}_Portable"
-            if not portable_dir.exists():
-                print("找不到可攜式版本，請先執行打包")
-                return False
-            
             # 建立 Inno Setup 腳本
-            iss_script = self._generate_inno_setup_script(portable_dir)
+            iss_script = self._generate_inno_setup_script(source_dir)
             iss_file = self.build_dir / "installer.iss"
             
             with open(iss_file, 'w', encoding='utf-8') as f:
@@ -299,7 +292,8 @@ AllowNoIcons=yes
 LicenseFile={self.project_root / 'LICENSE'}
 OutputDir={self.dist_dir}
 OutputBaseFilename={self.app_info['name']}_v{self.app_info['version']}_Setup
-SetupIconFile={source_dir / 'icon.ico'}
+; 如需自訂圖示，將 icon.ico 放入 PyInstaller 輸出資料夾
+; SetupIconFile={source_dir / 'icon.ico'}
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -315,12 +309,12 @@ Name: "desktopicon"; Description: "{{cm:CreateDesktopIcon}}"; GroupDescription: 
 Source: "{source_dir}\\*"; DestDir: "{{app}}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
-Name: "{{group}}\\{self.app_info['name']}"; Filename: "{{app}}\\start.bat"; IconFilename: "{{app}}\\icon.ico"
+Name: "{{group}}\\{self.app_info['name']}"; Filename: "{{app}}\\{self.app_info['name']}.exe"; IconFilename: "{{app}}\\icon.ico"
 Name: "{{group}}\\{{cm:UninstallProgram,{self.app_info['name']}}}"; Filename: "{{uninstallexe}}"
-Name: "{{autodesktop}}\\{self.app_info['name']}"; Filename: "{{app}}\\start.bat"; IconFilename: "{{app}}\\icon.ico"; Tasks: desktopicon
+Name: "{{autodesktop}}\\{self.app_info['name']}"; Filename: "{{app}}\\{self.app_info['name']}.exe"; IconFilename: "{{app}}\\icon.ico"; Tasks: desktopicon
 
 [Run]
-Filename: "{{app}}\\start.bat"; Description: "{{cm:LaunchProgram,{self.app_info['name']}}}"; Flags: nowait postinstall skipifsilent
+Filename: "{{app}}\\{self.app_info['name']}.exe"; Description: "{{cm:LaunchProgram,{self.app_info['name']}}}"; Flags: nowait postinstall skipifsilent
 '''
     
     def create_macos_installer(self) -> bool:

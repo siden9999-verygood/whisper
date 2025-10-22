@@ -68,6 +68,16 @@ python gui_main.py
 2. 解壓到任意目錄
 3. 執行 `start.bat` (Windows) 或 `start.sh` (macOS/Linux)
 
+#### 方式四：Windows 免安裝（原始碼資料夾直接啟動）
+- 將整個專案資料夾移到 Windows
+- 放入 `whisper_resources/ffmpeg.exe` 與 `whisper_resources/main.exe`
+- 雙擊 `start_windows.bat`（首次會自動建立 venv 並安裝依賴，需網路）
+- 完全離線要免安裝，建議改用 PyInstaller onedir 方案，詳見 `docs/WINDOWS_INSTALLER.md`
+
+#### 方式四：Windows 安裝器（離線一鍵安裝）
+- 依據指南製作 `Setup.exe`，安裝後自動建立桌面捷徑
+- 詳見：`docs/WINDOWS_INSTALLER.md`
+
 ### 首次設定
 
 1. **啟動程式**: 執行安裝完成後的啟動腳本
@@ -453,5 +463,5 @@ monitoring_manager.add_event_listener("file_added", on_file_added)
 
 <div align="center">
   <p>如果這個專案對您有幫助，請給我們一個 ⭐️</p>
-  <p>Made with ❤️ by Kiro AI Assistant</p>
+  <p>Made with ❤️ by 胡椒鹽 </p>
 </div>

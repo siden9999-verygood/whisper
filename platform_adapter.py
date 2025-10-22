@@ -9,6 +9,7 @@ import platform
 from pathlib import Path
 from typing import Optional, Dict, List
 import subprocess
+import shutil
 
 
 class PlatformAdapter:
@@ -73,15 +74,49 @@ class PlatformAdapter:
         return self.current_platform == self.LINUX
     
     def get_executable_path(self, base_name: str, resource_folder: str = None) -> Path:
-        """根據平台取得正確的執行檔路徑"""
+        """根據平台取得正確的執行檔路徑
+
+        - 若傳入 `resource_folder` 為實際路徑（絕對/相對含分隔符或存在的路徑），
+          直接視為目錄使用。
+        - 否則視為資源名稱，交給 `get_resource_path` 解析。
+        """
         extension = self.EXECUTABLE_EXTENSIONS.get(self.current_platform, "")
         executable_name = f"{base_name}{extension}"
-        
+
         if resource_folder:
-            resource_path = self.get_resource_path(resource_folder)
-            return resource_path / executable_name
+            looks_like_path = (
+                Path(resource_folder).is_absolute()
+                or any(sep and sep in resource_folder for sep in (os.sep, os.path.altsep))
+                or Path(resource_folder).exists()
+            )
+            base_dir = Path(resource_folder) if looks_like_path else self.get_resource_path(resource_folder)
+            return base_dir / executable_name
         else:
             return self.base_path / executable_name
+
+    def get_executable_from_dir(self, directory: str, base_name: str) -> Path:
+        """從指定目錄組出平台化的執行檔路徑。"""
+        extension = self.EXECUTABLE_EXTENSIONS.get(self.current_platform, "")
+        return Path(directory) / f"{base_name}{extension}"
+
+    def find_executable(self, base_name: str, search_dirs: Optional[List[str]] = None) -> Optional[Path]:
+        """在系統 PATH 與指定目錄尋找可執行檔，回傳第一個存在的路徑。
+
+        - 自動附加平台副檔名。
+        - 先檢查 search_dirs，再使用 shutil.which 掃描 PATH。
+        """
+        extension = self.EXECUTABLE_EXTENSIONS.get(self.current_platform, "")
+        candidate = f"{base_name}{extension}"
+
+        # 指定目錄優先
+        for d in (search_dirs or []):
+            p = Path(d) / candidate
+            if p.exists():
+                return p
+
+        # 系統 PATH 掃描
+        found = shutil.which(candidate)
+        return Path(found) if found else None
     
     def get_resource_path(self, resource_name: str) -> Path:
         """取得資源檔案的正確路徑"""
@@ -300,6 +335,8 @@ class PathManager:
     def is_valid_path(self, path: str) -> bool:
         """檢查路徑是否有效"""
         try:
+            if not path:
+                return False
             Path(path)
             return True
         except (ValueError, OSError):

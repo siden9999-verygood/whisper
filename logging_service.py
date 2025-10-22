@@ -38,8 +38,13 @@ class LoggingService:
         logger = logging.getLogger(logger_name)
         logger.setLevel(logging.DEBUG)
         
-        # 清除現有的處理器
-        logger.handlers.clear()
+        # 清除現有的處理器（確保先關閉避免資源洩漏）
+        for h in list(logger.handlers):
+            try:
+                h.close()
+            except Exception:
+                pass
+            logger.removeHandler(h)
         
         # 建立格式器
         formatter = logging.Formatter(

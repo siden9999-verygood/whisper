@@ -40,7 +40,7 @@ class TestConfigService(unittest.TestCase):
         config = self.config_service.get_config()
         
         self.assertIsInstance(config, AppConfig)
-        self.assertEqual(config.ai_model, "gemini-1.5-flash")
+        self.assertEqual(config.ai_model, "gemini-2.5-flash")
         self.assertEqual(config.default_language, "zh-TW")
         self.assertIsInstance(config.window_width, int)
         self.assertIsInstance(config.window_height, int)
@@ -200,7 +200,7 @@ class TestAppConfig(unittest.TestCase):
         config = AppConfig()
         
         # 檢查預設值
-        self.assertEqual(config.ai_model, "gemini-1.5-flash")
+        self.assertEqual(config.ai_model, "gemini-2.5-flash")
         self.assertEqual(config.default_language, "zh-TW")
         self.assertIsInstance(config.window_width, int)
         self.assertIsInstance(config.window_height, int)

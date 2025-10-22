@@ -194,8 +194,9 @@ class TestLoggingService(unittest.TestCase):
         old_log_file.write_text("Old log content")
         
         # 修改檔案時間為31天前
+        import os
         old_time = datetime.now().timestamp() - (31 * 24 * 3600)
-        old_log_file.touch(times=(old_time, old_time))
+        os.utime(old_log_file, (old_time, old_time))
         
         # 執行清理
         self.logging_service.cleanup_old_logs(days_to_keep=30)

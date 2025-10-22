@@ -436,11 +436,12 @@ Page instfiles
 
 Section "MainSection" SEC01
     SetOutPath "$INSTDIR"
-    File /r "{self.dist_dir}\\{self.app_info["name"]}_Portable\\*"
+    ; 打包 PyInstaller 輸出（onedir）
+    File /r "{self.dist_dir}\\{self.app_info["name"]}\\*"
     
     CreateDirectory "$SMPROGRAMS\\${{APPNAME}}"
-    CreateShortCut "$SMPROGRAMS\\${{APPNAME}}\\${{APPNAME}}.lnk" "$INSTDIR\\start.bat"
-    CreateShortCut "$DESKTOP\\${{APPNAME}}.lnk" "$INSTDIR\\start.bat"
+    CreateShortCut "$SMPROGRAMS\\${{APPNAME}}\\${{APPNAME}}.lnk" "$INSTDIR\\{self.app_info["name"]}.exe"
+    CreateShortCut "$DESKTOP\\${{APPNAME}}.lnk" "$INSTDIR\\{self.app_info["name"]}.exe"
     
     WriteUninstaller "$INSTDIR\\Uninstall.exe"
 SectionEnd
@@ -623,6 +624,11 @@ def main():
         action="store_true",
         help="跳過測試"
     )
+    parser.add_argument(
+        "--skip-deps",
+        action="store_true",
+        help="跳過安裝依賴 (離線打包建議開啟)"
+    )
     
     args = parser.parse_args()
     
@@ -632,6 +638,9 @@ def main():
     # 如果指定跳過測試，修改測試步驟
     if args.skip_tests:
         builder.run_tests = lambda: True
+    # 如果指定跳過依賴安裝
+    if args.skip_deps:
+        builder.install_dependencies = lambda: True
     
     try:
         # 執行打包

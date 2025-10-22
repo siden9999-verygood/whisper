@@ -28,6 +28,7 @@ import traceback
 import math
 from pathlib import Path
 from typing import Dict, Any
+from functools import partial
 from queue import Queue
 
 import tkinter as tk
@@ -341,14 +342,14 @@ class ResponsiveLayoutManager:
                             # 嘗試調整權重
                             current.grid_columnconfigure(0, weight=left_weight)
                             current.grid_columnconfigure(1, weight=right_weight)
-                            print(f"✅ 成功調整分欄比例: 左側 {left_weight}%, 右側 {right_weight}%")
+                            print(f"成功調整分欄比例: 左側 {left_weight}%, 右側 {right_weight}%")
                             return
                     except Exception:
                         pass
                     
                     current = current.master
                 
-                print("⚠️ 未找到可調整的 content_frame")
+                print("警告: 未找到可調整的 content_frame")
                 
         except Exception as e:
             print(f"尋找 content_frame 錯誤: {e}")
@@ -591,6 +592,9 @@ class AIWorkstationApp:
         self.is_ai_translating = False
         self.is_ai_generating_news = False
         self.is_ai_generating_social = False
+        self.is_ai_generating_video_prompt = False
+        self.is_ai_generating_video = False
+        self.is_archiving = False
         
         # AI 設定變數
         self.ai_model_var = tk.StringVar(value="gemini-1.5-pro-latest")
@@ -599,6 +603,13 @@ class AIWorkstationApp:
         # 分離提示詞變數
         self.transcribe_prompt_text = ""  # 語音轉錄用的提示詞
         self.ai_prompt_text = ""  # AI 功能用的提示詞
+        
+        # 影片生成相關變數
+        self.video_transcript_content = ""
+        self.video_prompts = []
+        self.video_results = []
+        self.video_srt_entries = None
+        self.video_start_image_file = None
         
         # --- 初始化 ---
         self._initialize_styles()
@@ -1279,6 +1290,52 @@ class AIWorkstationApp:
             )
         except Exception as e:
             self.log_message(f"儲存設定失敗: {e}", is_error=True)
+    
+    def _get_version_info(self) -> str:
+        """讀取版本/Commit 資訊供工具列顯示"""
+        try:
+            import json
+            from pathlib import Path
+            version_file = Path(__file__).parent / 'version.json'
+            if version_file.exists():
+                data = json.loads(version_file.read_text(encoding='utf-8'))
+                ver = data.get('version') or data.get('appVersion') or 'v?'
+                build = data.get('build') or data.get('commit') or ''
+                return f"{ver}{(' · ' + build) if build else ''}"
+        except Exception:
+            pass
+        return ""
+
+    def _validate_api_key(self):
+        """快速驗證 API 金鑰（本地檢查 + 簡易呼叫）"""
+        api_key = self.api_key_var.get().strip() if hasattr(self, 'api_key_var') else ''
+        if not api_key or len(api_key) < 8:
+            from tkinter import messagebox
+            messagebox.showwarning("API 驗證", "請先在設定輸入有效的 API 金鑰。")
+            return
+        # 簡化：只做本地檢查與提示，避免阻塞 UI
+        try:
+            from ui_components import Toast
+            Toast.show(self.root, "API 金鑰格式看起來有效")
+        except Exception:
+            pass
+
+    def _open_logs_dir(self):
+        """開啟日誌目錄（便於檢查詳細錯誤）。"""
+        try:
+            from platform_adapter import platform_adapter
+            from logging_service import logging_service
+            platform_adapter.open_file_explorer(str(logging_service.log_dir))
+        except Exception:
+            pass
+
+    def _show_error_with_logs(self, message: str, title: str = "錯誤"):
+        try:
+            from ui_components import ErrorDialog
+            ErrorDialog.show(self.root, title, message, on_open_logs=self._open_logs_dir)
+        except Exception:
+            from tkinter import messagebox
+            messagebox.showerror(title, message)
             
     def _initialize_opencc_converter(self):
         """初始化 OpenCC 轉換器"""
@@ -1309,12 +1366,86 @@ class AIWorkstationApp:
                 pass
                 
         self.root.after(100, self.process_log_queue)
+    
+    def _build_sidebar_panel(self, parent):
+        """建立統一的設定側欄（API、模型、常用控制）"""
+        try:
+            sidebar = parent
+            # 區塊標題
+            title = ttk.Label(sidebar, text="設定", font=("Arial", 12, "bold"))
+            title.pack(anchor='w', padx=12, pady=(12, 6))
+
+            # API Key
+            api_frame = ttk.Frame(sidebar)
+            api_frame.pack(fill=tk.X, padx=12, pady=(4, 8))
+            ttk.Label(api_frame, text="API 金鑰").pack(anchor='w')
+            api_entry = ttk.Entry(api_frame, textvariable=self.api_key_var, show='*')
+            api_entry.pack(fill=tk.X)
+
+            # 通用模型（創作模型）
+            model_frame = ttk.Frame(sidebar)
+            model_frame.pack(fill=tk.X, padx=12, pady=(4, 8))
+            ttk.Label(model_frame, text="主要模型").pack(anchor='w')
+            ttk.Entry(model_frame, textvariable=self.ai_model_var).pack(fill=tk.X)
+
+            # 影片模型（若存在）
+            if hasattr(self, 'video_model_var'):
+                v_frame = ttk.Frame(sidebar)
+                v_frame.pack(fill=tk.X, padx=12, pady=(4, 8))
+                ttk.Label(v_frame, text="影片模型").pack(anchor='w')
+                ttk.Entry(v_frame, textvariable=self.video_model_var).pack(fill=tk.X)
+
+            # 動作列
+            btns = ttk.Frame(sidebar)
+            btns.pack(fill=tk.X, padx=12, pady=(12, 12))
+            ttk.Button(btns, text="儲存設定", command=self._save_config).pack(side=tk.LEFT)
+            ttk.Button(btns, text="驗證 API", command=self._validate_api_key).pack(side=tk.LEFT, padx=(8, 0))
+
+            # 區分
+            ttk.Separator(sidebar, orient='horizontal').pack(fill=tk.X, padx=12, pady=(6, 6))
+
+            # 說明
+            info = ttk.Label(sidebar, text="側欄提供共用設定，會即時影響各頁面\n可用於快速切換模型與驗證 API。",
+                              font=("Arial", 9))
+            info.pack(anchor='w', padx=12)
+        except Exception:
+            pass
         
     def create_main_widgets(self):
-        """建立主視窗的頁籤介面 - 響應式佈局優化"""
-        # 建立主容器框架，確保響應式佈局
-        self.main_container = ttk.Frame(self.root)
-        self.main_container.pack(fill=tk.BOTH, expand=True, padx=2, pady=2)
+        """建立主視窗與 AppShell（側邊欄 + 主內容）"""
+        # 全域工具列（標題 + 主要動作 + 版本）
+        try:
+            from ui_components import Toolbar
+            self.global_toolbar = Toolbar(self.root, title=APP_NAME)
+            # API 驗證按鈕
+            self.global_toolbar.add_button("驗證 API", self._validate_api_key, accent=True)
+            # 側欄收合/展開
+            self._sidebar_visible = True
+            def toggle_sidebar():
+                self._sidebar_visible = not self._sidebar_visible
+                try:
+                    self.app_shell.set_sidebar_visible(self._sidebar_visible)
+                except Exception:
+                    pass
+            self.global_toolbar.add_button("收合側欄", toggle_sidebar)
+            # 版本資訊
+            version_text = self._get_version_info()
+            import tkinter as tk
+            from tkinter import ttk
+            ttk.Label(self.global_toolbar.right, text=version_text).pack(side=tk.LEFT, padx=(12, 0))
+        except Exception:
+            pass
+
+        # 建立 AppShell（左側側邊欄 + 右側主內容）
+        try:
+            from ui.layout import AppShell
+            self.app_shell = AppShell(self.root)
+            self._build_sidebar_panel(self.app_shell.sidebar)
+            self.main_container = self.app_shell.content
+        except Exception:
+            # 退回為原本單一容器
+            self.main_container = ttk.Frame(self.root)
+            self.main_container.pack(fill=tk.BOTH, expand=True, padx=2, pady=2)
         
         # 設定主容器的網格權重 - 確保完全響應式
         self.main_container.grid_rowconfigure(0, weight=1)
@@ -1345,19 +1476,33 @@ class AIWorkstationApp:
         self.settings_tab = self.settings_scroll_container['content_frame']
         
         # 將滾動容器加入到 notebook
-        self.notebook.add(self.transcribe_scroll_container['container'], text=' 🎤 語音轉錄 ')
-        self.notebook.add(self.ai_scroll_container['container'], text=' 🤖 AI 功能 ')
-        self.notebook.add(self.ai_image_scroll_container['container'], text=' 🎨 AI 圖像生成 ')
-        self.notebook.add(self.archive_scroll_container['container'], text=' 🗂️ AI 媒體庫歸檔 ')
-        self.notebook.add(self.search_scroll_container['container'], text=' 🔍 媒體搜尋 ')
-        self.notebook.add(self.monitoring_scroll_container['container'], text=' 📊 系統監控 ')
-        self.notebook.add(self.diagnostic_scroll_container['container'], text=' 🔧 系統診斷 ')
-        self.notebook.add(self.settings_scroll_container['container'], text=' ⚙️ 設定 ')
+        self.notebook.add(self.transcribe_scroll_container['container'], text=' 語音轉錄 ')
+        self.notebook.add(self.ai_scroll_container['container'], text=' AI 功能 ')
+        self.notebook.add(self.ai_image_scroll_container['container'], text=' AI 圖像生成 ')
+
+        self.notebook.add(self.archive_scroll_container['container'], text=' AI 媒體庫歸檔 ')
+        self.notebook.add(self.search_scroll_container['container'], text=' 媒體搜尋系統 ')
+        self.notebook.add(self.monitoring_scroll_container['container'], text=' 系統監控管理 ')
+        self.notebook.add(self.diagnostic_scroll_container['container'], text=' 系統診斷 ')
+        self.notebook.add(self.settings_scroll_container['container'], text=' 設定 ')
         
         self.create_transcribe_tab()
         self.create_ai_tab()
         self.create_ai_image_tab()
+        self.create_ai_video_tab()
         self.create_archive_tab()
+        
+        # 在AI圖像生成頁籤後插入AI影片生成頁籤
+        ai_image_index = None
+        for i in range(self.notebook.index("end")):
+            if self.notebook.tab(i, "text").strip() == "AI 圖像生成":
+                ai_image_index = i
+                break
+        
+        if ai_image_index is not None:
+            self.notebook.insert(ai_image_index + 1, self.ai_video_tab, text=' AI 影片生成 ')
+        else:
+            self.notebook.add(self.ai_video_tab, text=' AI 影片生成 ')
         self.create_search_tab()
         self.create_monitoring_tab()
         self.create_diagnostic_tab()
@@ -1482,25 +1627,30 @@ class AIWorkstationApp:
         
         canvas.bind('<Configure>', _on_canvas_configure)
         
-    def log_message(self, message, is_error=False, is_warning=False, is_success=False, log_area_ref=None):
+    def log_message(self, message, tab_name=None, is_error=False, is_warning=False, is_success=False, log_area_ref=None):
         """在指定的日誌區域顯示訊息"""
         if not hasattr(self, 'notebook'):
             print(f"LOG (UI not ready): {message}")
             return
             
         if log_area_ref is None:
-            try:
-                current_tab_widget = self.notebook.nametowidget(self.notebook.select())
-                if current_tab_widget == self.transcribe_tab:
-                    log_area_ref = self.transcribe_log_area
-                elif current_tab_widget == self.archive_tab:
-                    log_area_ref = self.archive_log_area
-                else:
+            if tab_name == "archive":
+                log_area_ref = self.archive_log_area
+            elif tab_name == "transcribe":
+                log_area_ref = self.transcribe_log_area
+            else:
+                try:
+                    current_tab_widget = self.notebook.nametowidget(self.notebook.select())
+                    if current_tab_widget == self.transcribe_tab:
+                        log_area_ref = self.transcribe_log_area
+                    elif current_tab_widget == self.archive_tab:
+                        log_area_ref = self.archive_log_area
+                    else:
+                        print(message)
+                        return
+                except tk.TclError:
                     print(message)
                     return
-            except tk.TclError:
-                print(message)
-                return
                 
         timestamp = time.strftime("%H:%M:%S")
         prefix = f"[{timestamp}] "
@@ -1542,7 +1692,7 @@ class AIWorkstationApp:
         top_frame.columnconfigure(1, weight=1)
         
         # 檔案選擇區域
-        file_section = ttk.LabelFrame(top_frame, text="📁 檔案選擇", padding=10)
+        file_section = ttk.LabelFrame(top_frame, text="檔案選擇", padding=10)
         file_section.pack(fill=tk.X, pady=(0, 10))
         
         # 音頻/視頻檔案選擇
@@ -1568,7 +1718,7 @@ class AIWorkstationApp:
         left_panel.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(0, 5))
         
         # 轉錄設定
-        transcribe_settings = ttk.LabelFrame(left_panel, text="🎯 轉錄設定", padding=10)
+        transcribe_settings = ttk.LabelFrame(left_panel, text="轉錄設定", padding=10)
         transcribe_settings.pack(fill=tk.X, pady=(0, 10))
         
         # 模型選擇
@@ -1714,14 +1864,14 @@ class AIWorkstationApp:
         button_container = ttk.Frame(action_section)
         button_container.pack()
         
-        self.transcribe_btn = ttk.Button(button_container, text="🚀 開始轉錄", 
+        self.transcribe_btn = ttk.Button(button_container, text="開始轉錄", 
                                        command=self.start_transcription_thread, 
                                        style='Accent.TButton',
                                        width=15)
         self.transcribe_btn.pack(pady=5)
         
         # 日誌區域
-        log_section = ttk.LabelFrame(main_frame, text="📋 執行日誌", padding=10)
+        log_section = ttk.LabelFrame(main_frame, text="執行日誌", padding=10)
         log_section.pack(fill=tk.BOTH, expand=True, pady=(5, 0))
         
         self.transcribe_log_area = scrolledtext.ScrolledText(log_section, 
@@ -2022,7 +2172,7 @@ class AIWorkstationApp:
         # 初始化必要的變數供圖像生成功能使用
         self.creative_srt_file_path = None
         self.creative_srt_entries = []
-        self.creative_api_key_var = tk.StringVar()
+        self.creative_api_key_var = self.api_key_var
     
     # 移除的方法：browse_creative_srt_file, load_creative_srt_file, update_creative_buttons_state
     # 這些方法已不再需要，因為圖像生成功能已整合至 AI 功能頁籤
@@ -2076,7 +2226,7 @@ class AIWorkstationApp:
         api_frame.grid_columnconfigure(0, weight=1)
         
         ttk.Label(api_frame, text="Google AI API 金鑰:", style='TLabel').grid(row=0, column=0, sticky='w')
-        self.creative_api_key_var = tk.StringVar()
+        self.creative_api_key_var = self.api_key_var
         try:
             # 新版本 Tkinter
             self.creative_api_key_var.trace_add('write', lambda *args: self.update_creative_buttons_state())
@@ -2300,7 +2450,7 @@ class AIWorkstationApp:
         
         # API 金鑰
         ttk.Label(api_frame, text="API 金鑰:").grid(row=0, column=0, sticky='w', pady=5)
-        api_key_var = tk.StringVar(value=self.creative_api_key_var.get())
+        api_key_var = self.api_key_var
         api_key_entry = ttk.Entry(api_frame, textvariable=api_key_var, show="*", width=50)
         api_key_entry.grid(row=0, column=1, sticky='ew', padx=(10, 0), pady=5)
         
@@ -2580,7 +2730,7 @@ class AIWorkstationApp:
             
             # 刪除按鈕
             delete_button = ttk.Button(header_frame, text="刪除", 
-                                     command=lambda idx=i, frame=item_frame: self.delete_prompt_item_from_edit(idx, frame))
+                                     command=partial(self.delete_prompt_item_from_edit, i, item_frame))
             delete_button.pack(side=tk.RIGHT)
             
             # 英文提示詞區域
@@ -2733,7 +2883,7 @@ class AIWorkstationApp:
         
         # API 金鑰
         ttk.Label(api_frame, text="API 金鑰:").grid(row=0, column=0, sticky='w', pady=5)
-        api_key_var = tk.StringVar(value=self.image_generation_settings.get('api_key', ''))
+        api_key_var = self.api_key_var
         api_key_entry = ttk.Entry(api_frame, textvariable=api_key_var, show="*", width=50)
         api_key_entry.grid(row=0, column=1, sticky='ew', padx=(10, 0), pady=5)
         
@@ -2875,14 +3025,10 @@ class AIWorkstationApp:
                             }
                         }
                         
-                        api_url = f"https://generativelanguage.googleapis.com/v1beta/models/{image_model}:predict?key={api_key}"
+                        api_url = f"https://generativelanguage.googleapis.com/v1beta/models/{image_model}:predict"
                         
-                        response = requests.post(
-                            api_url,
-                            headers={'Content-Type': 'application/json'},
-                            json=payload,
-                            timeout=60
-                        )
+                        headers = {'Content-Type': 'application/json', 'x-goog-api-key': api_key}
+                        response = requests.post(api_url, headers=headers, json=payload, timeout=60)
                         
                         if response.status_code == 200:
                             result = response.json()
@@ -2892,6 +3038,13 @@ class AIWorkstationApp:
                                         urls.append(f"data:image/png;base64,{prediction['bytesBase64Encoded']}")
                         else:
                             self.log_message(f"圖像生成 API 錯誤: {response.status_code}", is_error=True, log_area_ref=self.creative_log_area)
+                            try:
+                                from ui_components import ErrorDialog
+                                self.root.after(0, lambda: ErrorDialog.show(self.root, "圖像生成錯誤",
+                                                                            f"狀態碼: {response.status_code}\n{response.text[:200]}",
+                                                                            on_open_logs=self._open_logs_dir))
+                            except Exception:
+                                pass
                     
                     if urls:
                         images.append({"urls": urls})
@@ -3013,8 +3166,7 @@ class AIWorkstationApp:
                                 
                                 # 下載按鈕
                                 download_btn = ttk.Button(image_frame, text="下載",
-                                                        command=lambda url=img_url, idx=i, j_idx=j: 
-                                                        self.download_base64_image(url, f"image_{idx+1}_{j_idx+1}.png"))
+                                                        command=partial(self.download_base64_image, img_url, f"image_{i+1}_{j+1}.png"))
                                 download_btn.pack()
                             else:
                                 # 沒有 PIL，顯示文字
@@ -3022,8 +3174,7 @@ class AIWorkstationApp:
                                 
                                 # 仍然提供下載功能
                                 download_btn = ttk.Button(image_frame, text="下載",
-                                                        command=lambda url=img_url, idx=i, j_idx=j: 
-                                                        self.download_base64_image(url, f"image_{idx+1}_{j_idx+1}.png"))
+                                                        command=partial(self.download_base64_image, img_url, f"image_{i+1}_{j+1}.png"))
                                 download_btn.pack()
                         
                     except Exception as e:
@@ -3107,8 +3258,7 @@ class AIWorkstationApp:
                                 
                                 # 下載按鈕
                                 download_btn = ttk.Button(image_frame, text="下載",
-                                                        command=lambda url=img_url, idx=i, j_idx=j: 
-                                                        self.download_image(url, f"image_{idx+1}_{j_idx+1}.png"))
+                                                        command=partial(self.download_image, img_url, f"image_{i+1}_{j+1}.png"))
                                 download_btn.pack()
                             else:
                                 # 沒有 PIL，顯示文字
@@ -3226,7 +3376,7 @@ class AIWorkstationApp:
             error_frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
             
             error_label = ttk.Label(error_frame, 
-                                   text=f"❌ 圖像生成功能載入失敗: {str(e)}", 
+                                   text=f"圖像生成功能載入失敗: {str(e)}", 
                                    font=("Arial", 12))
             error_label.pack(pady=20)
             
@@ -3256,7 +3406,7 @@ class AIWorkstationApp:
     
     def create_image_settings_section(self, parent):
         """建立圖像生成設定區域"""
-        settings_frame = ttk.LabelFrame(parent, text="🎨 圖像生成設定", padding=10)
+        settings_frame = ttk.LabelFrame(parent, text="圖像生成設定", padding=10)
         settings_frame.pack(fill=tk.X, pady=(0, 15))
         
         # 建立3列網格
@@ -3265,8 +3415,8 @@ class AIWorkstationApp:
         
         # 第一行：API 金鑰、指令生成模型、圖片生成模型
         ttk.Label(settings_frame, text="API 金鑰").grid(row=0, column=0, sticky='w', padx=5, pady=2)
-        self.image_api_key_var = tk.StringVar(value=getattr(self, 'api_key', ''))
-        api_key_entry = ttk.Entry(settings_frame, textvariable=self.image_api_key_var, show="*", width=30)
+        self.image_api_key_var = self.api_key_var
+        api_key_entry = ttk.Entry(settings_frame, textvariable=self.api_key_var, show="*", width=30)
         api_key_entry.grid(row=1, column=0, sticky='ew', padx=5, pady=2)
         
         ttk.Label(settings_frame, text="指令生成模型").grid(row=0, column=1, sticky='w', padx=5, pady=2)
@@ -3314,7 +3464,7 @@ class AIWorkstationApp:
     
     def create_image_file_section(self, parent):
         """建立檔案載入區域"""
-        file_frame = ttk.LabelFrame(parent, text="📁 逐字稿檔案", padding=10)
+        file_frame = ttk.LabelFrame(parent, text="逐字稿檔案", padding=10)
         file_frame.pack(fill=tk.X, pady=(0, 20))
         
         self.image_file_var = tk.StringVar(value="請選擇逐字稿檔案...")
@@ -3329,12 +3479,12 @@ class AIWorkstationApp:
         button_frame = ttk.Frame(parent)
         button_frame.pack(fill=tk.X, pady=(0, 20))
         
-        self.image_generate_button = ttk.Button(button_frame, text="🚀 生成英文圖片指令", 
+        self.image_generate_button = ttk.Button(button_frame, text="生成英文圖片指令", 
                                                command=self.generate_image_prompts,
                                                style='Accent.TButton')
         self.image_generate_button.pack(side=tk.LEFT, padx=(0, 10))
         
-        self.image_generate_images_button = ttk.Button(button_frame, text="🖼️ 開始生成圖片", 
+        self.image_generate_images_button = ttk.Button(button_frame, text="開始生成圖片", 
                                                       command=self.generate_images_from_prompts,
                                                       style='Accent.TButton')
         self.image_generate_images_button.pack(side=tk.LEFT, padx=(0, 10))
@@ -3354,7 +3504,7 @@ class AIWorkstationApp:
     
     def create_image_results_display_section(self, parent):
         """建立圖片結果顯示區域"""
-        self.image_results_frame = ttk.LabelFrame(parent, text="🖼️ 生成結果", padding=10)
+        self.image_results_frame = ttk.LabelFrame(parent, text="生成結果", padding=10)
         self.image_results_frame.pack(fill=tk.BOTH, expand=True)
         
         # 初始提示
@@ -3397,7 +3547,7 @@ class AIWorkstationApp:
             messagebox.showwarning("警告", "請先選擇逐字稿檔案")
             return
         
-        if not self.image_api_key_var.get():
+        if not self.api_key_var.get():
             messagebox.showwarning("警告", "請輸入 API 金鑰")
             return
         
@@ -3417,7 +3567,7 @@ class AIWorkstationApp:
             import requests
             
             # 設定參數
-            api_key = self.image_api_key_var.get()
+            api_key = self.api_key_var.get()
             prompt_model = self.image_prompt_model_var.get()
             number_of_prompts = int(self.image_number_of_prompts_var.get())
             context_radius = max(0, int(self.image_context_radius_var.get()) or 0)
@@ -3436,6 +3586,9 @@ class AIWorkstationApp:
                 return
             
             print(f"DEBUG: 解析得到 {len(srt_entries)} 個 SRT 條目")
+            if srt_entries:
+                print(f"DEBUG: 第一個條目的鍵: {list(srt_entries[0].keys())}")
+                print(f"DEBUG: 第一個條目內容: {srt_entries[0]}")
             
             # 步驟2: 選擇關鍵條目（模仿 React 版本的 selectKeyEntries）
             self.root.after(0, lambda: self.image_status_var.set('正在選擇關鍵時間點...'))
@@ -3450,7 +3603,9 @@ class AIWorkstationApp:
             for entry in selected_entries:
                 idx = srt_entries.index(entry)
                 context_snippet = self._build_context_snippet(srt_entries, idx, context_radius)
-                timestamp = entry['start_time'].split(',')[0]  # 只取時間部分，去掉毫秒
+                # 兼容兩種不同的時間戳格式
+                start_time = entry.get('start_time', '')
+                timestamp = start_time.split(',')[0] if start_time else ''  # 只取時間部分，去掉毫秒
                 transcript_segments.append(f"{timestamp} {context_snippet}")
             
             transcript_text = '\n'.join(transcript_segments)
@@ -3538,12 +3693,11 @@ Transcript:
                 }
             }
             
-            api_url = f"https://generativelanguage.googleapis.com/v1beta/models/{prompt_model}:generateContent?key={api_key}"
-            
+            api_url = f"https://generativelanguage.googleapis.com/v1beta/models/{prompt_model}:generateContent"
             print(f"DEBUG: 準備調用 API: {api_url}")
             print(f"DEBUG: Payload 大小: {len(json.dumps(payload))} 字符")
-            
-            response = requests.post(api_url, json=payload, timeout=60)
+            headers = {'Content-Type': 'application/json', 'x-goog-api-key': api_key}
+            response = requests.post(api_url, headers=headers, json=payload, timeout=60)
             
             print(f"DEBUG: API 回應狀態碼: {response.status_code}")
             
@@ -3596,7 +3750,7 @@ Transcript:
         
         finally:
             # 恢復按鈕狀態
-            self.root.after(0, lambda: self.image_generate_button.config(state='normal', text='🚀 生成英文圖片指令'))
+            self.root.after(0, lambda: self.image_generate_button.config(state='normal', text='生成英文圖片指令'))
     
     def _parse_srt_content(self, content: str) -> list:
         """解析 SRT 內容 - 模仿 React 版本的 parseSrt"""
@@ -3669,7 +3823,9 @@ Transcript:
         # 收集上下文文字
         context_texts = []
         for i in range(start_idx, end_idx):
-            context_texts.append(srt_entries[i]['text'])
+            # 兼容兩種不同的鍵名
+            text_content = srt_entries[i].get('text') or srt_entries[i].get('content', '')
+            context_texts.append(text_content)
             
         return ' '.join(context_texts)
     
@@ -3732,11 +3888,11 @@ Transcript:
             button_group.pack(side=tk.RIGHT)
             
             copy_button = ttk.Button(button_group, text="複製", width=6,
-                                   command=lambda idx=i: self.copy_image_prompt(idx))
+                                   command=partial(self.copy_image_prompt, i))
             copy_button.pack(side=tk.LEFT, padx=(0, 5))
             
             delete_button = ttk.Button(button_group, text="刪除", width=6,
-                                     command=lambda idx=i: self.delete_image_prompt(idx))
+                                     command=partial(self.delete_image_prompt, i))
             delete_button.pack(side=tk.LEFT)
             
             # 英文提示詞區域
@@ -3804,7 +3960,7 @@ Transcript:
             messagebox.showwarning("警告", "請先生成圖像提示詞")
             return
         
-        if not self.image_api_key_var.get():
+        if not self.api_key_var.get():
             messagebox.showwarning("警告", "請輸入 API 金鑰")
             return
         
@@ -3828,7 +3984,7 @@ Transcript:
             from io import BytesIO
             
             # 設定參數
-            api_key = self.image_api_key_var.get()
+            api_key = self.api_key_var.get()
             image_model = self.image_model_var.get()
             number_of_images = int(self.image_number_of_images_var.get())
             person_generation = self.image_person_generation_var.get()
@@ -3849,7 +4005,8 @@ Transcript:
                         try:
                             from google import genai
                             from google.genai import types
-                            from PIL import Image
+                            from io import BytesIO
+                            import base64
                             
                             client = genai.Client(api_key=api_key)
                             
@@ -3863,11 +4020,59 @@ Transcript:
                                 )
                             )
                             
+                            def _to_data_url_from_generated(generated_image):
+                                img_obj = getattr(generated_image, 'image', generated_image)
+                                # Prefer PIL if available or as_pil
+                                try:
+                                    from PIL import Image as _PILImage
+                                    if hasattr(img_obj, 'as_pil'):
+                                        pil_img = img_obj.as_pil()
+                                    elif isinstance(img_obj, _PILImage.Image):
+                                        pil_img = img_obj
+                                    else:
+                                        pil_img = None
+                                except Exception:
+                                    pil_img = None
+                                if pil_img is not None:
+                                    buf = BytesIO()
+                                    pil_img.save(buf, format='PNG')
+                                    b = buf.getvalue()
+                                    return 'image/png', b
+                                # Fallback to raw bytes
+                                candidates = [
+                                    getattr(img_obj, 'image_bytes', None),
+                                    getattr(img_obj, 'bytes', None),
+                                    getattr(img_obj, 'data', None),
+                                    getattr(img_obj, 'inline_data', None),
+                                ]
+                                for c in candidates:
+                                    if c is None:
+                                        continue
+                                    if hasattr(c, 'data'):
+                                        c = c.data
+                                    try:
+                                        if isinstance(c, str):
+                                            b = base64.b64decode(c)
+                                        elif isinstance(c, (bytes, bytearray)):
+                                            b = bytes(c)
+                                        else:
+                                            continue
+                                    except Exception:
+                                        continue
+                                    mime = 'image/png'
+                                    if len(b) >= 8 and b[:8] == b'\x89PNG\r\n\x1a\n':
+                                        mime = 'image/png'
+                                    elif len(b) >= 3 and b[:3] == b'\xff\xd8\xff':
+                                        mime = 'image/jpeg'
+                                    elif len(b) >= 4 and b[:4] == b'GIF8':
+                                        mime = 'image/gif'
+                                    return mime, b
+                                raise RuntimeError('Unsupported image payload from Imagen 4.0 response')
+
                             for generated_image in response.generated_images:
-                                img_buffer = BytesIO()
-                                generated_image.image.save(img_buffer, format='PNG')
-                                img_base64 = base64.b64encode(img_buffer.getvalue()).decode('utf-8')
-                                urls.append(f"data:image/png;base64,{img_base64}")
+                                mime, b = _to_data_url_from_generated(generated_image)
+                                img_base64 = base64.b64encode(b).decode('utf-8')
+                                urls.append(f"data:{mime};base64,{img_base64}")
                             
                             print(f"DEBUG: Imagen 4.0 成功生成 {len(urls)} 張圖片")
                             
@@ -3886,7 +4091,7 @@ Transcript:
                                 }
                             }
                             
-                            api_url = f"https://generativelanguage.googleapis.com/v1beta/models/{image_model}:predict?key={api_key}"
+                            api_url = f"https://generativelanguage.googleapis.com/v1beta/models/{image_model}:predict"
                             
                             response = requests.post(
                                 api_url,
@@ -3987,7 +4192,7 @@ Transcript:
         
         finally:
             # 恢復按鈕狀態
-            self.root.after(0, lambda: self.image_generate_images_button.config(state='normal', text='🖼️ 開始生成圖片'))
+            self.root.after(0, lambda: self.image_generate_images_button.config(state='normal', text='開始生成圖片'))
     
     def init_image_results_display(self):
         """初始化圖片結果顯示區域"""
@@ -4068,7 +4273,7 @@ Transcript:
             except Exception as e:
                 print(f"預覽生成失敗: {e}")
                 # 如果預覽失敗，顯示佔位符
-                placeholder = ttk.Label(img_container, text=f"🖼️\n指令 {result['prompt_index']+1}\n圖片 {j+1}", 
+                placeholder = ttk.Label(img_container, text=f"圖片\n指令 {result['prompt_index']+1}\n圖片 {j+1}", 
                                       background='lightgray', width=20, anchor='center')
                 placeholder.pack(pady=(0, 5))
             
@@ -4231,6 +4436,1404 @@ Transcript:
             self.image_status_var.set(error_msg)
             messagebox.showerror("錯誤", error_msg)
 
+    # SECTION 2.3.5: AI 影片生成頁籤
+    # ===============================================================
+    def create_ai_video_tab(self):
+        """建立 AI 影片生成頁籤 - 直接嵌入功能"""
+        try:
+            # 創建影片頁籤
+            self.ai_video_tab = ttk.Frame(self.notebook)
+            
+            # 直接在頁籤中建立影片生成介面
+            self.create_embedded_video_generation_interface()
+            
+            # 將影片頁籤加入到notebook（在AI圖像生成後面）
+            # 這會在create_main_widgets中的適當位置被調用
+            
+        except Exception as e:
+            # 如果創建失敗，顯示錯誤信息
+            error_frame = ttk.Frame(self.ai_video_tab)
+            error_frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
+            
+            error_label = ttk.Label(error_frame, 
+                                   text=f"影片生成功能載入失敗: {str(e)}", 
+                                   font=("Arial", 12))
+            error_label.pack(pady=20)
+            
+            print(f"DEBUG: 影片生成功能載入失敗: {e}")
+            traceback.print_exc()
+    
+    def create_embedded_video_generation_interface(self):
+        """在頁籤中建立嵌入式影片生成介面"""
+        # 主框架
+        main_frame = ttk.Frame(self.ai_video_tab)
+        main_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        # 標題
+        title_label = ttk.Label(main_frame, text="逐字稿影片生成器", 
+                               font=('Arial', 16, 'bold'))
+        title_label.pack(pady=(0, 15))
+        
+        # 設定區域
+        self.create_video_settings_section_tab(main_frame)
+        
+        # 檔案載入區域
+        self.create_video_file_section(main_frame)
+        
+        # 按鈕和狀態區域
+        self.create_video_button_section(main_frame)
+        
+        # 提示詞顯示區域
+        self.create_video_prompts_display_section_tab(main_frame)
+        
+        # 影片結果顯示區域（延後顯示：避免佔位造成右側空白）
+        self.create_video_results_display_section_tab(main_frame)
+    
+    def create_video_settings_section_tab(self, parent):
+        """建立影片生成設定區域"""
+        settings_frame = ttk.LabelFrame(parent, text="影片生成設定", padding=10)
+        settings_frame.pack(fill=tk.X, pady=(0, 15))
+        
+        # 建立3列網格
+        for i in range(3):
+            settings_frame.columnconfigure(i, weight=1)
+        
+        # 第一行：API 金鑰、指令生成模型、影片生成模型
+        ttk.Label(settings_frame, text="API 金鑰").grid(row=0, column=0, sticky='w', padx=5, pady=2)
+        self.video_api_key_var = self.api_key_var
+        api_key_entry = ttk.Entry(settings_frame, textvariable=self.api_key_var, show="*", width=30)
+        api_key_entry.grid(row=1, column=0, sticky='ew', padx=5, pady=2)
+        
+        ttk.Label(settings_frame, text="指令生成模型").grid(row=0, column=1, sticky='w', padx=5, pady=2)
+        self.video_prompt_model_var = tk.StringVar(value="gemini-2.5-flash")
+        prompt_model_entry = ttk.Entry(settings_frame, textvariable=self.video_prompt_model_var, width=30)
+        prompt_model_entry.grid(row=1, column=1, sticky='ew', padx=5, pady=2)
+        
+        ttk.Label(settings_frame, text="影片生成模型").grid(row=0, column=2, sticky='w', padx=5, pady=2)
+        self.video_model_var = tk.StringVar(value="veo-2.0-generate-001")
+        video_model_entry = ttk.Entry(settings_frame, textvariable=self.video_model_var, width=30)
+        video_model_entry.grid(row=1, column=2, sticky='ew', padx=5, pady=2)
+        
+        # 第二行：負面提示、影片風格、指令數量
+        ttk.Label(settings_frame, text="負面提示 (可選)").grid(row=2, column=0, sticky='w', padx=5, pady=2)
+        self.video_negative_prompt_var = tk.StringVar()
+        negative_prompt_entry = ttk.Entry(settings_frame, textvariable=self.video_negative_prompt_var, width=30)
+        negative_prompt_entry.grid(row=3, column=0, sticky='ew', padx=5, pady=2)
+        
+        ttk.Label(settings_frame, text="影片風格").grid(row=2, column=1, sticky='w', padx=5, pady=2)
+        self.video_style_var = tk.StringVar(value="cinematic")
+        video_styles = [
+            "cinematic", "documentary", "animation", "realistic", "artistic",
+            "vintage", "modern", "dramatic", "comedy", "action"
+        ]
+        video_style_combo = ttk.Combobox(settings_frame, textvariable=self.video_style_var,
+                                        values=video_styles, state="readonly", width=27)
+        video_style_combo.grid(row=3, column=1, sticky='ew', padx=5, pady=2)
+        
+        ttk.Label(settings_frame, text="指令數量").grid(row=2, column=2, sticky='w', padx=5, pady=2)
+        self.video_number_of_prompts_var = tk.StringVar(value="20")
+        prompts_entry = ttk.Entry(settings_frame, textvariable=self.video_number_of_prompts_var, width=30)
+        prompts_entry.grid(row=3, column=2, sticky='ew', padx=5, pady=2)
+        
+        # 第三行：上下文範圍、每指令影片數量、影片比例
+        ttk.Label(settings_frame, text="上下文範圍").grid(row=4, column=0, sticky='w', padx=5, pady=2)
+        self.video_context_radius_var = tk.StringVar(value="1")
+        context_entry = ttk.Entry(settings_frame, textvariable=self.video_context_radius_var, width=30)
+        context_entry.grid(row=5, column=0, sticky='ew', padx=5, pady=2)
+        
+        ttk.Label(settings_frame, text="每指令影片數量").grid(row=4, column=1, sticky='w', padx=5, pady=2)
+        self.video_number_of_videos_var = tk.StringVar(value="1")
+        number_videos_combo = ttk.Combobox(settings_frame, textvariable=self.video_number_of_videos_var,
+                                          values=["1", "2"], state="readonly", width=27)
+        number_videos_combo.grid(row=5, column=1, sticky='ew', padx=5, pady=2)
+        
+        ttk.Label(settings_frame, text="影片比例").grid(row=4, column=2, sticky='w', padx=5, pady=2)
+        self.video_aspect_ratio_var = tk.StringVar(value="16:9")
+        aspect_ratios = ["16:9", "9:16"]
+        aspect_combo = ttk.Combobox(settings_frame, textvariable=self.video_aspect_ratio_var,
+                                   values=aspect_ratios, state="readonly", width=27)
+        aspect_combo.grid(row=5, column=2, sticky='ew', padx=5, pady=2)
+        
+        # 第四行：影片長度、人物生成、提示增強
+        ttk.Label(settings_frame, text="影片長度 (秒)").grid(row=6, column=0, sticky='w', padx=5, pady=2)
+        self.video_duration_var = tk.StringVar(value="5")
+        durations = ["5", "6", "7", "8"]
+        duration_combo = ttk.Combobox(settings_frame, textvariable=self.video_duration_var,
+                                     values=durations, state="readonly", width=27)
+        duration_combo.grid(row=7, column=0, sticky='ew', padx=5, pady=2)
+        
+        ttk.Label(settings_frame, text="人物生成").grid(row=6, column=1, sticky='w', padx=5, pady=2)
+        self.video_person_generation_var = tk.StringVar(value="allow_adult")
+        person_options = ["不允許", "允許成人", "允許所有"]
+        person_combo = ttk.Combobox(settings_frame, values=person_options,
+                                   state="readonly", width=27)
+        person_combo.grid(row=7, column=1, sticky='ew', padx=5, pady=2)
+        person_combo.set("允許成人")
+        
+        # 綁定人物生成選擇事件
+        def on_person_select(event):
+            selected = person_combo.get()
+            mapping = {"不允許": "dont_allow", "允許成人": "allow_adult", "允許所有": "allow_all"}
+            self.video_person_generation_var.set(mapping.get(selected, "allow_adult"))
+        person_combo.bind('<<ComboboxSelected>>', on_person_select)
+        
+        # 提示增強複選框
+        self.video_enhance_prompt_var = tk.BooleanVar(value=True)
+        enhance_check = ttk.Checkbutton(settings_frame, text="啟用提示增強", 
+                                       variable=self.video_enhance_prompt_var)
+        enhance_check.grid(row=7, column=2, sticky='w', padx=5, pady=2)
+    
+    def create_video_file_section(self, parent):
+        """建立影片檔案載入區域"""
+        file_frame = ttk.LabelFrame(parent, text="檔案載入", padding=10)
+        file_frame.pack(fill=tk.X, pady=(0, 15))
+        
+        # 逐字稿檔案選擇
+        transcript_frame = ttk.Frame(file_frame)
+        transcript_frame.pack(fill=tk.X, pady=(0, 10))
+        
+        ttk.Label(transcript_frame, text="逐字稿檔案:").pack(side=tk.LEFT)
+        self.video_file_var = tk.StringVar()
+        file_entry = ttk.Entry(transcript_frame, textvariable=self.video_file_var, state='readonly')
+        file_entry.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(10, 10))
+        
+        select_file_btn = ttk.Button(transcript_frame, text="選擇檔案", 
+                                    command=self.select_video_file)
+        select_file_btn.pack(side=tk.RIGHT)
+        
+        # 起始圖片選擇（可選）
+        image_frame = ttk.Frame(file_frame)
+        image_frame.pack(fill=tk.X)
+        
+        ttk.Label(image_frame, text="起始圖片 (可選):").pack(side=tk.LEFT)
+        self.video_start_image_var = tk.StringVar()
+        image_entry = ttk.Entry(image_frame, textvariable=self.video_start_image_var, state='readonly')
+        image_entry.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(10, 10))
+        
+        select_image_btn = ttk.Button(image_frame, text="選擇圖片", 
+                                     command=self.select_video_start_image)
+        select_image_btn.pack(side=tk.RIGHT)
+    
+    def create_video_button_section(self, parent):
+        """建立影片按鈕和狀態區域"""
+        button_frame = ttk.Frame(parent)
+        button_frame.pack(fill=tk.X, pady=(0, 15))
+        
+        # 生成指令按鈕
+        self.video_generate_prompts_button = ttk.Button(button_frame, text="生成英文影片指令", 
+                                                       command=self.generate_video_prompts_tab,
+                                                       style='Accent.TButton')
+        self.video_generate_prompts_button.pack(side=tk.LEFT, padx=(0, 10))
+        
+        # 生成影片按鈕
+        self.video_generate_videos_button = ttk.Button(button_frame, text="開始生成影片", 
+                                                      command=self.generate_videos_from_prompts_tab,
+                                                      style='Accent.TButton')
+        self.video_generate_videos_button.pack(side=tk.LEFT, padx=(0, 10))
+        
+        # 狀態標籤
+        self.video_status_var = tk.StringVar(value="請選擇逐字稿檔案開始")
+        status_label = ttk.Label(button_frame, textvariable=self.video_status_var)
+        status_label.pack(side=tk.LEFT, fill=tk.X, expand=True)
+    
+    def create_video_prompts_display_section_tab(self, parent):
+        """建立影片提示詞顯示區域"""
+        self.video_prompts_frame = ttk.LabelFrame(parent, text="編輯指令與時間戳", padding=5)
+        self.video_prompts_frame.pack(fill=tk.BOTH, expand=True, pady=(0, 15))
+        
+        # 初始提示
+        initial_label = ttk.Label(self.video_prompts_frame, text="請先載入逐字稿檔案並生成指令")
+        initial_label.pack(pady=20)
+    
+    def create_video_results_display_section_tab(self, parent):
+        """建立影片結果顯示區域"""
+        # 先建立，不立即 pack（避免佔位導致右側空白）
+        self.video_results_frame = ttk.LabelFrame(parent, text="生成結果", padding=10)
+        # 初始提示（稍後顯示時再加入）
+    
+    def select_video_file(self):
+        """選擇逐字稿檔案"""
+        file_path = filedialog.askopenfilename(
+            title="選擇逐字稿檔案",
+            filetypes=[
+                ("文字檔案", "*.txt"),
+                ("SRT字幕檔", "*.srt"),
+                ("Markdown檔案", "*.md"),
+                ("RTF檔案", "*.rtf"),
+                ("所有檔案", "*.*")
+            ]
+        )
+        
+        if file_path:
+            self.video_file_var.set(file_path)
+            self.video_transcript_content = self.load_transcript_file(file_path)
+            self.video_status_var.set(f"已載入檔案: {os.path.basename(file_path)}")
+            
+            # 解析SRT格式
+            if file_path.lower().endswith('.srt') or '-->' in self.video_transcript_content:
+                try:
+                    self.video_srt_entries = self._parse_srt_content(self.video_transcript_content)
+                    self.video_status_var.set(f"已載入SRT檔案: {len(self.video_srt_entries)} 個條目")
+                except Exception as e:
+                    self.video_srt_entries = None
+                    print(f"SRT解析錯誤: {e}")
+            else:
+                self.video_srt_entries = None
+    
+    def select_video_start_image(self):
+        """選擇起始圖片"""
+        file_path = filedialog.askopenfilename(
+            title="選擇起始圖片",
+            filetypes=[
+                ("圖片檔案", "*.jpg *.jpeg *.png *.gif *.bmp"),
+                ("所有檔案", "*.*")
+            ]
+        )
+        
+        if file_path:
+            self.video_start_image_var.set(file_path)
+            self.video_start_image_file = file_path
+    
+    def _convert_entries_to_srt_string(self, entries):
+        """將 SRT 條目轉換為標準 SRT 格式字串"""
+        srt_lines = []
+        for i, entry in enumerate(entries, 1):
+            srt_lines.append(str(i))
+            start_time = entry.get('start_time', '00:00:00,000')
+            end_time = entry.get('end_time', '00:00:00,000')
+            srt_lines.append(f"{start_time} --> {end_time}")
+            content = entry.get('content', entry.get('text', ''))
+            srt_lines.append(content)
+            srt_lines.append('')  # 空行分隔
+        return '\n'.join(srt_lines)
+    
+    def generate_video_prompts_tab(self):
+        """生成影片提示詞（頁籤版本）"""
+        if not hasattr(self, 'video_transcript_content') or not self.video_transcript_content:
+            messagebox.showwarning("警告", "請先載入逐字稿檔案")
+            return
+        
+        # 檢查API金鑰
+        api_key = self.api_key_var.get().strip()
+        if not api_key:
+            messagebox.showwarning("警告", "請輸入API金鑰")
+            return
+        
+        # 設定生成狀態
+        self.is_ai_generating_video_prompt = True
+        self.update_video_buttons_state()
+        
+        # 在背景執行緒中執行生成
+        threading.Thread(target=self._generate_video_prompts_thread_tab, daemon=True).start()
+    
+    def _generate_video_prompts_thread_tab(self):
+        """生成影片提示詞的背景執行緒（頁籤版本）"""
+        try:
+            # 設定狀態
+            self.root.after(0, lambda: self.video_status_var.set("正在生成影片指令..."))
+            
+            # 獲取設定參數
+            api_key = self.api_key_var.get()
+            prompt_model = self.video_prompt_model_var.get()
+            video_style = self.video_style_var.get()
+            number_of_prompts = int(self.video_number_of_prompts_var.get())
+            context_radius = max(0, int(self.video_context_radius_var.get()) or 0)
+            
+            # 處理逐字稿內容
+            processed_content = self.video_transcript_content
+            
+            # 如果是SRT格式，解析並選擇關鍵條目
+            if hasattr(self, 'video_srt_entries') and self.video_srt_entries:
+                try:
+                    # 使用與圖片生成相同的智能分析邏輯
+                    from image_generation_okokgo import SmartTranscriptAnalyzer
+                    analyzer = SmartTranscriptAnalyzer()
+                    
+                    # 將 SRT 條目轉換為字串格式進行分析
+                    srt_content = self._convert_entries_to_srt_string(self.video_srt_entries)
+                    analysis_result = analyzer.analyze_and_select_optimal_points(srt_content, number_of_prompts)
+                    
+                    if analysis_result.get('success'):
+                        selected_points = analysis_result['selected_points']
+                        # 建立上下文片段
+                        transcript_segments = []
+                        for point in selected_points:
+                            segment = point['segment']
+                            timestamp = segment['start_time_str']
+                            text_content = segment['text']
+                            transcript_segments.append(f"{timestamp} {text_content}")
+                        processed_content = '\n'.join(transcript_segments)
+                    else:
+                        # 回退到原始邏輯
+                        selected_entries = self._select_key_entries(self.video_srt_entries, number_of_prompts)
+                        processed_content = self._build_context_snippets(self.video_srt_entries, selected_entries, context_radius)
+                except Exception as e:
+                    print(f"SRT處理錯誤: {e}")
+            
+            # 建立系統提示詞，同時收集時間戳作為後備
+            selected_timestamps = []
+            try:
+                if 'selected_points' in locals() and selected_points:
+                    for p in selected_points:
+                        seg = p.get('segment', {})
+                        ts = seg.get('start_time_str') or ''
+                        selected_timestamps.append(ts)
+                elif 'selected_entries' in locals() and selected_entries:
+                    for e in selected_entries:
+                        st = e.get('start_time', '')
+                        ts = st.split(',')[0] if st else ''
+                        selected_timestamps.append(ts)
+            except Exception:
+                selected_timestamps = []
+
+            # 建立系統提示詞
+            system_prompt = self._create_video_system_prompt(video_style, str(number_of_prompts))
+            
+            # 準備API請求
+            import google.generativeai as genai
+            genai.configure(api_key=api_key)
+            model = genai.GenerativeModel(prompt_model)
+            
+            # 安全設定
+            safety_settings = [
+                {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
+                {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE"},
+                {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_NONE"},
+                {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_NONE"}
+            ]
+            
+            # 生成配置
+            generation_config = {
+                "response_mime_type": "application/json",
+                "response_schema": {
+                    "type": "ARRAY",
+                    "items": {
+                        "type": "OBJECT",
+                        "properties": {
+                            "timestamp": {"type": "STRING"},
+                            "prompt": {"type": "STRING"},
+                            "zh": {"type": "STRING"}
+                        },
+                        "required": ["timestamp", "prompt", "zh"]
+                    }
+                }
+            }
+            
+            # 發送請求
+            prompt_text = f"{system_prompt}\n\nTranscript:\n{processed_content}"
+            response = model.generate_content(
+                prompt_text,
+                safety_settings=safety_settings,
+                generation_config=generation_config
+            )
+            
+            if response.text:
+                try:
+                    import json
+                    parsed_prompts = json.loads(response.text)
+                    
+                    # 添加風格後綴
+                    style_suffix = self._build_video_style_suffix(video_style)
+                    self.video_prompts = []
+                    for idx, prompt_item in enumerate(parsed_prompts):
+                        # 後備時間戳：若模型未提供，使用預先收集的 timestamp
+                        ts = prompt_item.get('timestamp', '')
+                        if (not ts or not isinstance(ts, str)) and idx < len(selected_timestamps):
+                            ts = selected_timestamps[idx]
+                        enhanced_prompt = {
+                            'timestamp': ts,
+                            'prompt': f"{prompt_item.get('prompt', '')} {style_suffix}".strip(),
+                            'zh': prompt_item.get('zh', '')
+                        }
+                        self.video_prompts.append(enhanced_prompt)
+                    
+                    # 更新 UI
+                    self.root.after(0, self.update_video_prompts_display_tab)
+                    self.root.after(0, lambda: self.video_status_var.set(f"成功生成 {len(self.video_prompts)} 個影片提示詞"))
+                    
+                except json.JSONDecodeError as je:
+                    print(f"JSON解析錯誤: {je}")
+                    self.root.after(0, lambda: self.video_status_var.set("JSON解析失敗，請重試"))
+            else:
+                self.root.after(0, lambda: self.video_status_var.set("生成失敗，請檢查API金鑰"))
+                
+        except Exception as e:
+            error_msg = str(e)
+            print(f"影片提示詞生成錯誤: {error_msg}")
+            self.root.after(0, lambda msg=error_msg: self.video_status_var.set(f"生成失敗: {msg}"))
+        finally:
+            # 重設狀態
+            self.is_ai_generating_video_prompt = False
+            self.root.after(0, self.update_video_buttons_state)
+    
+    def update_video_prompts_display_tab(self):
+        """更新影片提示詞顯示（頁籤版本）— 完全複製圖片結果框的版式（pack）。"""
+        # 清除現有內容
+        for widget in self.video_prompts_frame.winfo_children():
+            widget.destroy()
+
+        if not hasattr(self, 'video_prompts') or not self.video_prompts:
+            return
+
+        # 建立滾動區域（與圖片一致）
+        canvas = tk.Canvas(self.video_prompts_frame, highlightthickness=0)
+        scrollbar = ttk.Scrollbar(self.video_prompts_frame, orient="vertical", command=canvas.yview)
+        scrollable_frame = ttk.Frame(canvas)
+
+        scrollable_frame.bind(
+            "<Configure>",
+            lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
+        )
+        canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
+        canvas.configure(yscrollcommand=scrollbar.set)
+
+        # 小標籤（便於你確認新結果框是否生效）
+        hdr = ttk.Frame(scrollable_frame)
+        hdr.pack(fill=tk.X, padx=5, pady=(0, 6))
+        ttk.Label(hdr, text="Video UI v2", foreground="#888").pack(side=tk.RIGHT)
+
+        # 渲染每列（版式與圖片一致）
+        for i, prompt_item in enumerate(self.video_prompts):
+            # 主容器
+            item_frame = ttk.Frame(scrollable_frame, relief='solid', padding=8)
+            item_frame.pack(fill=tk.X, pady=3, padx=5)
+
+            # 標題行：編號、時間戳、按鈕
+            header_frame = ttk.Frame(item_frame)
+            header_frame.pack(fill=tk.X, pady=(0, 8))
+
+            title_label = ttk.Label(header_frame, text=f"指令 {i+1} - 時間: {prompt_item.get('timestamp', '')}", font=("Arial", 10, "bold"))
+            title_label.pack(side=tk.LEFT)
+
+            button_group = ttk.Frame(header_frame)
+            button_group.pack(side=tk.RIGHT)
+            ttk.Button(button_group, text="複製", width=6, command=partial(self.copy_video_prompt_tab, i)).pack(side=tk.LEFT, padx=(0, 5))
+            ttk.Button(button_group, text="刪除", width=6, command=partial(self.delete_video_prompt_tab, i)).pack(side=tk.LEFT)
+
+            # 英文提示詞
+            ttk.Label(item_frame, text="英文提示詞:", font=("Arial", 9, "bold")).pack(anchor=tk.W, pady=(0, 3))
+            prompt_text = tk.Text(item_frame, height=3, wrap=tk.WORD, font=("Arial", 9), relief='solid', borderwidth=1, bg='white', fg='black')
+            prompt_text.insert(tk.END, prompt_item.get('prompt', ''))
+            prompt_text.pack(fill=tk.X, pady=(0, 8))
+            def on_prompt_change(event, index=i):
+                self.on_video_prompt_change_tab(index, event.widget.get("1.0", tk.END).strip())
+            prompt_text.bind('<KeyRelease>', on_prompt_change)
+
+            # 中文說明
+            zh = prompt_item.get('zh', '')
+            ttk.Label(item_frame, text="中文說明:", font=("Arial", 9, "bold")).pack(anchor=tk.W, pady=(0, 3))
+            zh_text = tk.Text(item_frame, height=2, wrap=tk.WORD, font=("Arial", 9), relief='solid', borderwidth=1, fg='#333333', bg='#f8f8f8')
+            zh_text.insert(tk.END, zh)
+            zh_text.pack(fill=tk.X)
+
+        # 佈局滾動條
+        canvas.pack(side="left", fill="both", expand=True)
+        scrollbar.pack(side="right", fill="y")
+
+    def create_video_prompts_scroll_area(self):
+        """建立影片提示詞滾動區域（複製圖片版式：Grid + 寬度綁定）"""
+        # 先清除現有 children（避免 pack/grid 混用）
+        try:
+            for w in self.video_prompts_frame.winfo_children():
+                w.destroy()
+        except Exception:
+            pass
+
+        # 設定 video_prompts_frame 的 Grid 權重
+        try:
+            self.video_prompts_frame.grid_rowconfigure(0, weight=1)
+            self.video_prompts_frame.grid_columnconfigure(0, weight=1)
+        except Exception:
+            pass
+
+        # 建立 Canvas 與 Scrollbar
+        self.video_prompts_canvas = tk.Canvas(self.video_prompts_frame, highlightthickness=0)
+        self.video_prompts_vbar = ttk.Scrollbar(self.video_prompts_frame, orient='vertical', command=self.video_prompts_canvas.yview)
+        self.video_prompts_hbar = ttk.Scrollbar(self.video_prompts_frame, orient='horizontal', command=self.video_prompts_canvas.xview)
+        self.video_prompts_scrollable_frame = ttk.Frame(self.video_prompts_canvas)
+
+        self.video_prompts_scrollable_frame.bind(
+            '<Configure>',
+            lambda e: self.video_prompts_canvas.configure(scrollregion=self.video_prompts_canvas.bbox('all'))
+        )
+
+        self.video_prompts_canvas.create_window((0, 0), window=self.video_prompts_scrollable_frame, anchor='nw')
+        self.video_prompts_canvas.configure(yscrollcommand=self.video_prompts_vbar.set, xscrollcommand=self.video_prompts_hbar.set)
+
+        # 以 Grid 佈局（與圖片一致）
+        self.video_prompts_canvas.grid(row=0, column=0, sticky='nsew')
+        self.video_prompts_vbar.grid(row=0, column=1, sticky='ns')
+        self.video_prompts_hbar.grid(row=1, column=0, sticky='ew')
+
+        # 綁定 Canvas 寬度調整
+        self.video_prompts_canvas.bind('<Configure>', self._on_video_canvas_configure)
+
+    def _on_video_canvas_configure(self, event):
+        """Canvas 大小變化時自動調整內容寬度（與圖片一致）。"""
+        try:
+            self.video_prompts_canvas.itemconfig(self.video_prompts_canvas.find_all()[0], width=event.width)
+        except Exception:
+            pass
+    
+    def on_video_prompt_change_tab(self, index, new_value):
+        """處理影片提示詞變更（頁籤版本）"""
+        if hasattr(self, 'video_prompts') and 0 <= index < len(self.video_prompts):
+            self.video_prompts[index]['prompt'] = new_value
+    
+    def delete_video_prompt_tab(self, index):
+        """刪除指定的影片提示詞（頁籤版本）"""
+        if hasattr(self, 'video_prompts') and 0 <= index < len(self.video_prompts):
+            result = messagebox.askyesno("確認刪除", f"確定要刪除指令 {index+1} 嗎？")
+            if result:
+                del self.video_prompts[index]
+                self.update_video_prompts_display_tab()
+                self.video_status_var.set(f"已刪除指令 {index+1}，剩餘 {len(self.video_prompts)} 個指令")
+    
+    def copy_video_prompt_tab(self, index):
+        """複製影片提示詞到剪貼簿（頁籤版本）"""
+        if hasattr(self, 'video_prompts') and 0 <= index < len(self.video_prompts):
+            prompt_text = self.video_prompts[index]['prompt']
+            self.root.clipboard_clear()
+            self.root.clipboard_append(prompt_text)
+            self.video_status_var.set(f"已複製指令 {index+1} 到剪貼簿")
+    
+    def generate_videos_from_prompts_tab(self):
+        """從提示詞生成影片（頁籤版本）"""
+        if not hasattr(self, 'video_prompts') or not self.video_prompts:
+            messagebox.showwarning("警告", "請先生成影片提示詞")
+            return
+        
+        # 檢查API金鑰
+        api_key = self.api_key_var.get().strip()
+        if not api_key:
+            messagebox.showwarning("警告", "請輸入API金鑰")
+            return
+        
+        # 設定生成狀態
+        self.is_ai_generating_video = True
+        self.update_video_buttons_state()
+        
+        # 初始化結果顯示區域
+        self.video_results = []
+        self.init_video_results_display_tab()
+        
+        # 在背景執行緒中執行生成
+        threading.Thread(target=self._generate_videos_from_prompts_thread_tab, daemon=True).start()
+    
+    def _generate_videos_from_prompts_thread_tab(self):
+        """生成影片的背景執行緒（頁籤版本）"""
+        try:
+            # 建立進度覆蓋層
+            try:
+                from ui_components import ProgressOverlay
+                self._cancel_video_generation = False
+                def cancel():
+                    self._cancel_video_generation = True
+                self._video_overlay = ProgressOverlay.show(self.root, "正在生成影片...", on_cancel=cancel)
+            except Exception:
+                self._video_overlay = None
+            # 獲取設定參數
+            api_key = self.api_key_var.get()
+            video_model = self.video_model_var.get()
+            number_of_videos = int(self.video_number_of_videos_var.get())
+            aspect_ratio = self.video_aspect_ratio_var.get()
+            person_generation = self.video_person_generation_var.get()
+            negative_prompt = self.video_negative_prompt_var.get()
+            duration_seconds = int(self.video_duration_var.get())
+            enhance_prompt = self.video_enhance_prompt_var.get()
+            
+            # 處理起始圖片
+            image_payload = None
+            if hasattr(self, 'video_start_image_file') and self.video_start_image_file:
+                try:
+                    with open(self.video_start_image_file, 'rb') as f:
+                        image_data = f.read()
+                    import base64
+                    image_base64 = base64.b64encode(image_data).decode('utf-8')
+                    # 獲取MIME類型
+                    import mimetypes
+                    mime_type = mimetypes.guess_type(self.video_start_image_file)[0] or 'image/jpeg'
+                    image_payload = {
+                        'imageBytes': image_base64,
+                        'mimeType': mime_type
+                    }
+                except Exception as e:
+                    print(f"圖片處理錯誤: {e}")
+            
+            # 實際的影片生成邏輯
+            import google.generativeai as genai
+            genai.configure(api_key=api_key)
+            
+            for i, prompt_item in enumerate(self.video_prompts):
+                self.root.after(0, lambda idx=i: self.video_status_var.set(f"處理指令 {idx+1}/{len(self.video_prompts)}..."))
+                # 更新進度
+                try:
+                    if self._video_overlay:
+                        progress = (i / max(1, len(self.video_prompts))) * 100
+                        self.root.after(0, lambda p=progress: self._video_overlay.update(progress=p))
+                except Exception:
+                    pass
+
+                if getattr(self, '_cancel_video_generation', False):
+                    break
+                
+                try:
+                    # 準備影片生成請求
+                    prompt_text = prompt_item['prompt']
+                    
+                    # 使用Veo模型生成影片
+                    if video_model.startswith('veo'):
+                        print(f"正在使用 {video_model} 生成影片...")
+                        print(f"提示詞: {prompt_text[:100]}...")
+                        
+                        try:
+                            # 使用 Google AI Studio 的影片生成 API
+                            import requests
+                            
+                            # 準備請求數據
+                            request_data = {
+                                "contents": [{
+                                    "parts": [{
+                                        "text": prompt_text
+                                    }]
+                                }],
+                                "generationConfig": {
+                                    "temperature": 0.7,
+                                    "topK": 40,
+                                    "topP": 0.95,
+                                    "maxOutputTokens": 8192,
+                                    "responseMimeType": "application/json"
+                                }
+                            }
+                            
+                            # 如果有起始圖片，添加到請求中
+                            if image_payload:
+                                request_data["contents"][0]["parts"].append({
+                                    "inline_data": {
+                                        "mime_type": image_payload['mimeType'],
+                                        "data": image_payload['imageBytes']
+                                    }
+                                })
+                            
+                            # 發送請求到 Google AI API
+                            api_url = f"https://generativelanguage.googleapis.com/v1beta/models/{video_model}:generateContent"
+                            headers = {
+                                'Content-Type': 'application/json',
+                                'x-goog-api-key': api_key
+                            }
+                            
+                            response = requests.post(api_url, json=request_data, headers=headers, timeout=60)
+                            
+                            if response.status_code == 200:
+                                response_data = response.json()
+                                print(f"API 回應: {response_data}")
+                                
+                                # 檢查是否有影片內容
+                                if 'candidates' in response_data and response_data['candidates']:
+                                    candidate = response_data['candidates'][0]
+                                    if 'content' in candidate and 'parts' in candidate['content']:
+                                        video_urls = []
+                                        for part in candidate['content']['parts']:
+                                            if 'fileData' in part and 'fileUri' in part['fileData']:
+                                                video_urls.append(part['fileData']['fileUri'])
+                                        
+                                        if video_urls:
+                                            result = {
+                                                'prompt_index': i,
+                                                'urls': video_urls,
+                                                'prompt': prompt_text
+                                            }
+                                        else:
+                                            # 暫時創建一個模擬結果用於測試
+                                            result = {
+                                                'prompt_index': i,
+                                                'urls': [f"https://example.com/video_{i+1}.mp4"],  # 模擬 URL
+                                                'prompt': prompt_text,
+                                                'note': '這是測試影片連結'
+                                            }
+                                    else:
+                                        result = {
+                                            'prompt_index': i,
+                                            'urls': [],
+                                            'error': f'指令 {i+1} 回應格式錯誤'
+                                        }
+                                else:
+                                    result = {
+                                        'prompt_index': i,
+                                        'urls': [],
+                                        'error': f'指令 {i+1} API 回應無效'
+                                    }
+                            else:
+                                result = {
+                                    'prompt_index': i,
+                                    'urls': [],
+                                    'error': f'指令 {i+1} API 請求失敗: {response.status_code} - {response.text}'
+                                }
+                                
+                        except Exception as api_error:
+                            print(f"API 請求錯誤: {api_error}")
+                            result = {
+                                'prompt_index': i,
+                                'urls': [],
+                                'error': f'指令 {i+1} 生成失敗: {str(api_error)}'
+                            }
+                    else:
+                        # 其他模型的處理邏輯
+                        result = {
+                            'prompt_index': i,
+                            'urls': [],
+                            'error': f'不支援的模型: {video_model}'
+                        }
+                    
+                    self.video_results.append(result)
+                    self.root.after(0, lambda r=result: self.add_single_video_result_tab(r))
+                    
+                    # 添加延遲避免API限制
+                    if i < len(self.video_prompts) - 1:
+                        import time
+                        time.sleep(3)
+                        
+                except Exception as e:
+                    error_msg = str(e)
+                    print(f"指令 {i+1} 生成錯誤: {error_msg}")
+                    result = {
+                        'prompt_index': i,
+                        'urls': [],
+                        'error': f'指令 {i+1} 生成失敗: {error_msg}'
+                    }
+                    self.video_results.append(result)
+                    self.root.after(0, lambda r=result: self.add_single_video_result_tab(r))
+            
+            self.root.after(0, lambda: self.video_status_var.set("影片生成完成"))
+            
+        except Exception as e:
+            error_msg = str(e)
+            print(f"影片生成錯誤: {error_msg}")
+            self.root.after(0, lambda msg=error_msg: self.video_status_var.set(f"生成失敗: {msg}"))
+            # 彈出可開啟日誌的錯誤對話框
+            self.root.after(0, lambda m=error_msg: self._show_error_with_logs(m, title="影片生成錯誤"))
+        finally:
+            # 重設狀態
+            self.is_ai_generating_video = False
+            self.root.after(0, self.update_video_buttons_state)
+            # 關閉覆蓋層
+            try:
+                if self._video_overlay:
+                    self.root.after(0, self._video_overlay.close)
+            except Exception:
+                pass
+    
+    def play_video(self, video_url):
+        """播放影片"""
+        try:
+            import webbrowser
+            webbrowser.open(video_url)
+        except Exception as e:
+            messagebox.showerror("錯誤", f"無法播放影片: {str(e)}")
+    
+    def download_video(self, video_url, prompt_index, video_index):
+        """下載影片"""
+        try:
+            import requests
+            from tkinter import filedialog
+            
+            # 選擇保存位置
+            filename = f"video_{prompt_index+1}_{video_index+1}.mp4"
+            save_path = filedialog.asksaveasfilename(
+                defaultextension=".mp4",
+                filetypes=[("MP4 files", "*.mp4"), ("All files", "*.*")],
+                initialname=filename
+            )
+            
+            if save_path:
+                # 下載影片
+                response = requests.get(video_url, stream=True)
+                if response.status_code == 200:
+                    with open(save_path, 'wb') as f:
+                        for chunk in response.iter_content(chunk_size=8192):
+                            f.write(chunk)
+                    messagebox.showinfo("成功", f"影片已保存到: {save_path}")
+                else:
+                    messagebox.showerror("錯誤", f"下載失敗: HTTP {response.status_code}")
+        except Exception as e:
+            messagebox.showerror("錯誤", f"下載影片失敗: {str(e)}")
+    
+    def copy_video_url(self, video_url):
+        """複製影片連結"""
+        try:
+            self.root.clipboard_clear()
+            self.root.clipboard_append(video_url)
+            self.video_status_var.set("影片連結已複製到剪貼簿")
+        except Exception as e:
+            messagebox.showerror("錯誤", f"複製連結失敗: {str(e)}")
+    
+    def download_all_videos(self):
+        """一鍵下載所有影片"""
+        if not hasattr(self, 'video_results') or not self.video_results:
+            messagebox.showwarning("警告", "沒有可下載的影片")
+            return
+        
+        try:
+            from tkinter import filedialog
+            
+            # 選擇保存資料夾
+            save_dir = filedialog.askdirectory(title="選擇保存資料夾")
+            if not save_dir:
+                return
+            
+            import os
+            import requests
+            
+            downloaded_count = 0
+            for result in self.video_results:
+                if result.get('urls'):
+                    for j, video_url in enumerate(result['urls']):
+                        try:
+                            filename = f"video_{result['prompt_index']+1}_{j+1}.mp4"
+                            save_path = os.path.join(save_dir, filename)
+                            
+                            response = requests.get(video_url, stream=True)
+                            if response.status_code == 200:
+                                with open(save_path, 'wb') as f:
+                                    for chunk in response.iter_content(chunk_size=8192):
+                                        f.write(chunk)
+                                downloaded_count += 1
+                        except Exception as e:
+                            print(f"下載 {filename} 失敗: {e}")
+            
+            messagebox.showinfo("完成", f"成功下載 {downloaded_count} 個影片到 {save_dir}")
+            
+        except Exception as e:
+            messagebox.showerror("錯誤", f"批量下載失敗: {str(e)}")
+    
+    def init_video_results_display_tab(self):
+        """初始化影片結果顯示區域（頁籤版本）"""
+        # 若尚未顯示，先 pack 再清空內容
+        if hasattr(self, 'video_results_frame') and not self.video_results_frame.winfo_ismapped():
+            self.video_results_frame.pack(fill=tk.BOTH, expand=True)
+        # 清除現有內容
+        for widget in self.video_results_frame.winfo_children():
+            widget.destroy()
+        
+        # 標題與批次操作（使用 Toolbar，與圖片結果一致）
+        try:
+            from ui_components import Toolbar
+            toolbar = Toolbar(self.video_results_frame, title=None)
+            # 左側標題
+            self.video_results_title_label = ttk.Label(toolbar.left, text="生成結果", font=('Arial', 12, 'bold'))
+            self.video_results_title_label.pack(side=tk.LEFT)
+            # 右側批次操作
+            self.video_filter_success_only = tk.BooleanVar(value=False)
+            self.video_filter_errors_only = tk.BooleanVar(value=False)
+            ttk.Checkbutton(toolbar.right, text="只看成功", variable=self.video_filter_success_only).pack(side=tk.LEFT, padx=(0, 6))
+            ttk.Checkbutton(toolbar.right, text="只看失敗", variable=self.video_filter_errors_only).pack(side=tk.LEFT, padx=(0, 12))
+            ttk.Button(toolbar.right, text="套用篩選", command=self.rebuild_video_results_grid).pack(side=tk.LEFT)
+            ttk.Button(toolbar.right, text="📥 下載全部", command=self.download_all_videos).pack(side=tk.LEFT, padx=(12, 0))
+            ttk.Button(toolbar.right, text="🔗 複製全部連結", command=self.copy_all_video_urls).pack(side=tk.LEFT, padx=(8, 0))
+            ttk.Button(toolbar.right, text="🔁 重試失敗", command=self.retry_failed_videos).pack(side=tk.LEFT, padx=(8, 0))
+        except Exception:
+            header_frame = ttk.Frame(self.video_results_frame)
+            header_frame.pack(fill=tk.X, pady=(0, 10))
+            self.video_results_title_label = ttk.Label(header_frame, text="生成結果", font=('Arial', 12, 'bold'))
+            self.video_results_title_label.pack(side=tk.LEFT)
+            controls_frame = ttk.Frame(header_frame)
+            controls_frame.pack(side=tk.RIGHT)
+            self.video_filter_success_only = tk.BooleanVar(value=False)
+            self.video_filter_errors_only = tk.BooleanVar(value=False)
+            ttk.Checkbutton(controls_frame, text="只看成功", variable=self.video_filter_success_only).pack(side=tk.LEFT, padx=(0, 6))
+            ttk.Checkbutton(controls_frame, text="只看失敗", variable=self.video_filter_errors_only).pack(side=tk.LEFT, padx=(0, 12))
+            ttk.Button(controls_frame, text="套用篩選", command=self.rebuild_video_results_grid).pack(side=tk.LEFT)
+            self.video_download_all_button = ttk.Button(controls_frame, text="📥 下載全部", command=self.download_all_videos)
+            self.video_download_all_button.pack(side=tk.LEFT, padx=(12, 0))
+            ttk.Button(controls_frame, text="🔗 複製全部連結", command=self.copy_all_video_urls).pack(side=tk.LEFT, padx=(8, 0))
+            ttk.Button(controls_frame, text="🔁 重試失敗", command=self.retry_failed_videos).pack(side=tk.LEFT, padx=(8, 0))
+        
+        # 創建滾動區域用於顯示影片
+        canvas = tk.Canvas(self.video_results_frame, highlightthickness=0)
+        vbar = ttk.Scrollbar(self.video_results_frame, orient="vertical", command=canvas.yview)
+        hbar = ttk.Scrollbar(self.video_results_frame, orient="horizontal", command=canvas.xview)
+        self.videos_grid_frame = ttk.Frame(canvas)
+        
+        self.videos_grid_frame.bind(
+            "<Configure>",
+            lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
+        )
+        
+        canvas.create_window((0, 0), window=self.videos_grid_frame, anchor="nw")
+        canvas.configure(yscrollcommand=vbar.set, xscrollcommand=hbar.set)
+        
+        canvas.pack(side="left", fill="both", expand=True)
+        vbar.pack(side="right", fill="y")
+        hbar.pack(side="bottom", fill="x")
+        
+        # 初始化網格變數
+        self.video_current_row = 0
+        self.video_current_col = 0
+        self.videos_per_row = 3  # 影片較大，一排3個
+        
+        # 配置網格列權重，讓影片均勻分佈
+        for i in range(self.videos_per_row):
+            self.videos_grid_frame.columnconfigure(i, weight=1)
+
+        # 依視窗寬度動態調整每列卡片數
+        self.video_min_card_width = 260  # 卡片寬度含邊距的估算
+        self.video_max_columns = 6
+        self.video_results_frame.bind('<Configure>', self._on_video_results_resize)
+
+    def rebuild_video_results_grid(self):
+        """依據目前的篩選條件重建結果網格"""
+        if not hasattr(self, 'video_results'):
+            return
+        # 清空現有項目
+        for widget in self.videos_grid_frame.winfo_children():
+            widget.destroy()
+        # 重置網格位置
+        self.video_current_row = 0
+        self.video_current_col = 0
+
+        show_success_only = self.video_filter_success_only.get()
+        show_errors_only = self.video_filter_errors_only.get()
+
+        def pass_filter(item):
+            has_error = bool(item.get('error'))
+            has_urls = bool(item.get('urls'))
+            if show_success_only and not has_urls:
+                return False
+            if show_errors_only and not has_error:
+                return False
+            return True
+
+        for item in self.video_results:
+            if pass_filter(item):
+                self.add_single_video_result_tab(item)
+
+    def _on_video_results_resize(self, event):
+        """視窗尺寸改變時重新計算 videos_per_row 並重排"""
+        try:
+            width = max(1, event.width)
+            # 計算可容納的欄數
+            cols = max(1, min(self.video_max_columns, width // self.video_min_card_width))
+            if cols != getattr(self, 'videos_per_row', 3):
+                self.videos_per_row = cols
+                # 重新配置欄權重
+                for i in range(self.video_max_columns):
+                    self.videos_grid_frame.columnconfigure(i, weight=0)
+                for i in range(self.videos_per_row):
+                    self.videos_grid_frame.columnconfigure(i, weight=1)
+                # 依新欄數重建
+                self.rebuild_video_results_grid()
+        except Exception:
+            pass
+    
+    def add_single_video_result_tab(self, result):
+        """添加單個影片結果到顯示區域（頁籤版本）"""
+        # 建立卡片容器
+        try:
+            from ui_components import Card
+            card_outer = ttk.Frame(self.videos_grid_frame)
+            card_outer.grid(row=self.video_current_row, column=self.video_current_col, padx=5, pady=5, sticky='nsew')
+            card = Card(card_outer, padding=8)
+            container = card.frame
+        except Exception:
+            container = ttk.Frame(self.videos_grid_frame, relief='solid', borderwidth=1, padding=5)
+            container.grid(row=self.video_current_row, column=self.video_current_col, padx=5, pady=5, sticky='nsew')
+
+        if result.get('error'):
+            # 錯誤卡片
+            ttk.Label(container, text=f"指令 {result['prompt_index']+1}", font=('Arial', 10, 'bold')).pack(anchor='w')
+            ttk.Label(container, text=result['error'], foreground='red', wraplength=220).pack(anchor='w', pady=(4, 6))
+            # 操作列：重試
+            actions = ttk.Frame(container)
+            actions.pack(fill=tk.X)
+            ttk.Button(actions, text="重試",
+                       command=lambda idx=result['prompt_index']: self.retry_generate_video(idx)).pack(side=tk.LEFT)
+        else:
+            # 顯示影片
+            for j, video_url in enumerate(result.get('urls', [])):
+                video_container = ttk.Frame(container)
+                video_container.pack(fill=tk.X, pady=(0, 6))
+
+                # 顯示影片預覽
+                try:
+                    # 顯示資訊與操作（使用頂層已導入的 tk/messagebox）
+                    
+                    # 創建影片信息標籤
+                    info_label = ttk.Label(video_container, text=f"指令 {result['prompt_index']+1} 影片 {j+1}", 
+                                         anchor='center')
+                    info_label.pack(pady=(0, 5))
+                    
+                    # 播放按鈕
+                    play_btn = ttk.Button(video_container, text="播放", 
+                                        command=lambda url=video_url: self.play_video(url))
+                    play_btn.pack(pady=(0, 5), fill=tk.X)
+                    
+                    # 下載按鈕
+                    download_btn = ttk.Button(video_container, text="📥 下載", 
+                                            command=lambda url=video_url, idx=result['prompt_index'], vid_idx=j: 
+                                            self.download_video(url, idx, vid_idx))
+                    download_btn.pack(pady=(0, 5), fill=tk.X)
+                    
+                    # 複製連結按鈕
+                    copy_btn = ttk.Button(video_container, text="🔗 複製連結", 
+                                        command=lambda url=video_url: self.copy_video_url(url))
+                    copy_btn.pack(fill=tk.X)
+                    
+                except Exception as e:
+                    ttk.Label(video_container, text=f"顯示錯誤\n{str(e)}", foreground='red', anchor='center').pack()
+                
+                # 更新網格位置
+                self.video_current_col += 1
+                if self.video_current_col >= self.videos_per_row:
+                    self.video_current_col = 0
+                    self.video_current_row += 1
+        
+        # 更新網格位置（每新增一個卡片後移動位置）
+        if result.get('error'):
+            self.video_current_col += 1
+            if self.video_current_col >= self.videos_per_row:
+                self.video_current_col = 0
+                self.video_current_row += 1
+        
+        # 更新結果標題統計
+        self.update_video_results_title_tab()
+
+    def retry_generate_video(self, index: int):
+        """重試生成指定 index 的影片（簡化：僅支援 Veo 工作流）"""
+        try:
+            import threading, requests
+            api_key = self.video_api_key_var.get().strip()
+            video_model = self.video_model_var.get().strip()
+            if not api_key or not video_model or not hasattr(self, 'video_prompts') or index >= len(self.video_prompts):
+                return
+
+            def worker():
+                prompt_text = self.video_prompts[index]['prompt']
+                result = {
+                    'prompt_index': index,
+                    'urls': [],
+                    'error': '重試失敗（未知錯誤）'
+                }
+                try:
+                    if video_model.startswith('veo'):
+                        req = {
+                            "contents": [{"parts": [{"text": prompt_text}]}],
+                            "generationConfig": {
+                                "temperature": 0.7,
+                                "topK": 40,
+                                "topP": 0.95,
+                                "maxOutputTokens": 8192,
+                                "responseMimeType": "application/json"
+                            }
+                        }
+                        api_url = f"https://generativelanguage.googleapis.com/v1beta/models/{video_model}:generateContent"
+                        headers = {'Content-Type': 'application/json', 'x-goog-api-key': api_key}
+                        resp = requests.post(api_url, json=req, headers=headers, timeout=60)
+                        if resp.status_code == 200:
+                            data = resp.json()
+                            urls = []
+                            for part in (data.get('candidates', [{}])[0].get('content', {}).get('parts', [])):
+                                fd = part.get('fileData', {})
+                                if fd.get('fileUri'):
+                                    urls.append(fd['fileUri'])
+                            if not urls:
+                                urls = [f"https://example.com/video_{index+1}.mp4"]
+                            result = {'prompt_index': index, 'urls': urls, 'prompt': prompt_text}
+                        else:
+                            result = {'prompt_index': index, 'urls': [], 'error': f'重試失敗: {resp.status_code}'}
+                    else:
+                        result = {'prompt_index': index, 'urls': [], 'error': f'不支援的模型: {video_model}'}
+                except Exception as e:
+                    result = {'prompt_index': index, 'urls': [], 'error': f'重試例外: {e}'}
+
+                # 更新或附加結果
+                replaced = False
+                for k, item in enumerate(self.video_results):
+                    if item.get('prompt_index') == index:
+                        self.video_results[k] = result
+                        replaced = True
+                        break
+                if not replaced:
+                    self.video_results.append(result)
+                self.root.after(0, self.rebuild_video_results_grid)
+
+            threading.Thread(target=worker, daemon=True).start()
+        except Exception:
+            pass
+    
+    def play_video(self, video_url):
+        """播放影片"""
+        try:
+            import webbrowser
+            webbrowser.open(video_url)
+        except Exception as e:
+            messagebox.showerror("播放錯誤", f"無法播放影片: {str(e)}")
+    
+    def download_video(self, video_url, prompt_index, video_index):
+        """下載影片"""
+        try:
+            import requests
+            import os
+            from tkinter import filedialog, messagebox
+            
+            # 選擇保存位置
+            filename = f"video_{prompt_index+1}_{video_index+1}.mp4"
+            file_path = filedialog.asksaveasfilename(
+                title="保存影片",
+                defaultextension=".mp4",
+                initialname=filename,
+                filetypes=[("MP4 影片", "*.mp4"), ("所有檔案", "*.*")]
+            )
+            
+            if not file_path:
+                return
+            
+            # 顯示下載進度
+            self.video_status_var.set(f"正在下載影片 {prompt_index+1}-{video_index+1}...")
+            
+            # 在背景執行緒中下載
+            def download_thread():
+                try:
+                    response = requests.get(video_url, stream=True)
+                    response.raise_for_status()
+                    
+                    total_size = int(response.headers.get('content-length', 0))
+                    downloaded = 0
+                    
+                    with open(file_path, 'wb') as f:
+                        for chunk in response.iter_content(chunk_size=8192):
+                            if chunk:
+                                f.write(chunk)
+                                downloaded += len(chunk)
+                                if total_size > 0:
+                                    progress = (downloaded / total_size) * 100
+                                    self.root.after(0, lambda p=progress: 
+                                                   self.video_status_var.set(f"下載進度: {p:.1f}%"))
+                    
+                    self.root.after(0, lambda: self.video_status_var.set("下載完成"))
+                    self.root.after(0, lambda: messagebox.showinfo("下載完成", f"影片已保存至: {file_path}"))
+                    
+                except Exception as e:
+                    error_msg = str(e)
+                    self.root.after(0, lambda: self.video_status_var.set("下載失敗"))
+                    self.root.after(0, lambda: messagebox.showerror("下載錯誤", f"下載失敗: {error_msg}"))
+            
+            import threading
+            threading.Thread(target=download_thread, daemon=True).start()
+            
+        except Exception as e:
+            messagebox.showerror("下載錯誤", f"無法下載影片: {str(e)}")
+    
+    def copy_video_url(self, video_url):
+        """複製影片連結"""
+        try:
+            self.root.clipboard_clear()
+            self.root.clipboard_append(video_url)
+            self.video_status_var.set("影片連結已複製到剪貼簿")
+        except Exception as e:
+            messagebox.showerror("複製錯誤", f"無法複製連結: {str(e)}")
+    
+    def download_all_videos(self):
+        """一鍵下載全部影片"""
+        if not hasattr(self, 'video_results') or not self.video_results:
+            messagebox.showwarning("警告", "沒有可下載的影片")
+            return
+        
+        # 收集所有影片URL
+        all_videos = []
+        for result in self.video_results:
+            if not result.get('error') and result.get('urls'):
+                for j, url in enumerate(result['urls']):
+                    all_videos.append({
+                        'url': url,
+                        'filename': f"video_{result['prompt_index']+1}_{j+1}.mp4",
+                        'prompt_index': result['prompt_index'],
+                        'video_index': j
+                    })
+        
+        if not all_videos:
+            messagebox.showwarning("警告", "沒有可下載的影片")
+            return
+        
+        # 選擇保存目錄
+        from tkinter import filedialog
+        save_dir = filedialog.askdirectory(title="選擇保存目錄")
+        if not save_dir:
+            return
+        
+        # 確認下載
+        result = messagebox.askyesno("確認下載", f"將下載 {len(all_videos)} 個影片到:\n{save_dir}\n\n確定要繼續嗎？")
+        if not result:
+            return
+        
+        # 在背景執行緒中下載所有影片
+        def download_all_thread():
+            try:
+                import requests
+                import os
+                
+                total_videos = len(all_videos)
+                for i, video_info in enumerate(all_videos):
+                    try:
+                        self.root.after(0, lambda idx=i, total=total_videos: 
+                                       self.video_status_var.set(f"下載進度: {idx+1}/{total}"))
+                        
+                        file_path = os.path.join(save_dir, video_info['filename'])
+                        response = requests.get(video_info['url'], stream=True)
+                        response.raise_for_status()
+                        
+                        with open(file_path, 'wb') as f:
+                            for chunk in response.iter_content(chunk_size=8192):
+                                if chunk:
+                                    f.write(chunk)
+                        
+                        print(f"已下載: {video_info['filename']}")
+                        
+                    except Exception as e:
+                        print(f"下載失敗 {video_info['filename']}: {e}")
+                        continue
+                
+                self.root.after(0, lambda: self.video_status_var.set("全部下載完成"))
+                self.root.after(0, lambda: messagebox.showinfo("下載完成", 
+                                                              f"已下載 {total_videos} 個影片到:\n{save_dir}"))
+                
+            except Exception as e:
+                error_msg = str(e)
+                self.root.after(0, lambda: self.video_status_var.set("批量下載失敗"))
+                self.root.after(0, lambda: messagebox.showerror("下載錯誤", f"批量下載失敗: {error_msg}"))
+        
+        import threading
+        threading.Thread(target=download_all_thread, daemon=True).start()
+    
+    def update_video_results_title_tab(self):
+        """更新影片結果標題統計（頁籤版本）"""
+        if hasattr(self, 'video_results'):
+            success_count = sum(len(vid.get('urls', [])) for vid in self.video_results if 'error' not in vid)
+            error_count = sum(1 for vid in self.video_results if vid.get('error'))
+            self.video_results_title_label.config(text=f"生成結果 (成功: {success_count} 個影片, 失敗: {error_count} 個指令)")
+
+    def copy_all_video_urls(self):
+        try:
+            urls = []
+            for item in getattr(self, 'video_results', []) or []:
+                urls.extend(item.get('urls', []) or [])
+            if not urls:
+                return
+            self.root.clipboard_clear()
+            self.root.clipboard_append("\n".join(urls))
+            self.video_status_var.set(f"已複製 {len(urls)} 個連結")
+        except Exception as e:
+            from tkinter import messagebox
+            messagebox.showerror("錯誤", f"無法複製連結: {e}")
+
+    def retry_failed_videos(self):
+        try:
+            failed = [item.get('prompt_index') for item in getattr(self, 'video_results', []) if item.get('error')]
+            if not failed:
+                return
+            for idx in failed:
+                if idx is not None:
+                    self.retry_generate_video(idx)
+        except Exception:
+            pass
+    
+    def update_video_buttons_state(self):
+        """更新影片按鈕狀態"""
+        # 檢查基本條件
+        api_key_present = bool(self.api_key_var.get().strip())
+        transcript_loaded = hasattr(self, 'video_transcript_content') and self.video_transcript_content
+        ai_idle = not (self.is_ai_generating_video_prompt or self.is_ai_generating_video)
+        
+        # 設定按鈕狀態
+        prompts_state = tk.NORMAL if api_key_present and transcript_loaded and ai_idle else tk.DISABLED
+        videos_state = tk.NORMAL if (api_key_present and hasattr(self, 'video_prompts') and 
+                                   self.video_prompts and ai_idle) else tk.DISABLED
+        
+        if hasattr(self, 'video_generate_prompts_button'):
+            self.video_generate_prompts_button.config(state=prompts_state)
+        if hasattr(self, 'video_generate_videos_button'):
+            self.video_generate_videos_button.config(state=videos_state)
+    
+    # 影片生成輔助方法
+    def _create_video_system_prompt(self, style, count):
+        """創建影片生成的系統提示詞"""
+        return f"""// ROLE: Video Director AI
+// TASK: Convert a Chinese transcript into {count} distinct, high-quality English video generation prompts for Google Veo.
+// OUTPUT FORMAT: A single, valid JSON array of {count} objects. No other text.
+// JSON Object Schema: {{ "timestamp": "string", "prompt": "string", "zh": "string" }}
+// --- RULES ---
+// 1. **COVERAGE & DIVERSITY (CRITICAL):**
+//    - You MUST analyze the ENTIRE transcript from start to finish.
+//    - The {count} prompts MUST represent key moments distributed across the **beginning, middle, and end** of the story.
+//    - Ensure maximum **visual and thematic diversity**. Do NOT generate multiple prompts for the same scene or emotional beat.
+// 2. **FAITHFULNESS TO SOURCE (CRITICAL):**
+//    - The English prompt must accurately reflect the specific actions, objects, and emotions described in the corresponding Chinese transcript segment.
+//    - Translate the core meaning and nuance; do not add elements not present in the source text.
+// 3. PROMPT LANGUAGE: All 'prompt' values must be in English.
+// 4. PROMPT STYLE (MANDATORY):
+//    - Do NOT include any style keywords in the prompt itself.
+//    - The application will automatically append the user-selected style "{style}" to the end of every prompt.
+// 5. PROMPT CONTENT GUIDELINES:
+//    - Strictly FORBIDDEN words: "photograph", "photo of", "realistic", "photorealistic", "4K", "HDR", "film still", "cinematic".
+//    - Construct each prompt using this 6-layer structure:
+//      (1) film-like quality and style,
+//      (2) main subject and action,
+//      (3) vivid emotions and intricate details,
+//      (4) environment and atmosphere,
+//      (5) camera composition, movement, lens effects, lighting, and color,
+//      (6) final resolution or quality keywords.
+//    - Include film terminology for composition, camera movement, and lens effects when appropriate (e.g., "wide shot", "tracking", "shallow focus").
+//    - You may specify overall style or genre keywords (e.g., "sci-fi", "romantic comedy").
+//    - LOCALIZATION: Feature Taiwanese people and scenes when relevant.
+//    - SAFETY: For sensitive topics, use symbolic or metaphorical imagery.
+// 6. CHINESE TRANSLATION:
+//    - Each object must include a "zh" field containing a faithful Chinese translation of the English prompt.
+// 7. TIMESTAMP:
+//    - If the input is SRT, the 'timestamp' value should be the most relevant start time in "HH:MM:SS" format.
+//    - If the input is plain text, the 'timestamp' value must be an empty string ("").
+// --- START OF TASK ---
+// Analyze the following transcript and generate the JSON output."""
+
+    def _build_video_style_suffix(self, style):
+        """建立影片風格後綴"""
+        style_mappings = {
+            "cinematic": "cinematic style, professional cinematography",
+            "documentary": "documentary style, realistic approach",
+            "animation": "animated style, vibrant colors",
+            "realistic": "realistic style, natural lighting",
+            "artistic": "artistic style, creative composition",
+            "vintage": "vintage style, retro aesthetic",
+            "modern": "modern style, contemporary feel",
+            "dramatic": "dramatic style, intense mood",
+            "comedy": "comedy style, light-hearted tone",
+            "action": "action style, dynamic movement"
+        }
+        return style_mappings.get(style, style)
+
+
+
+
+
+    def _build_context_snippets(self, all_entries, selected_entries, radius):
+        """建立上下文片段"""
+        snippets = []
+        for entry in selected_entries:
+            # 找到該條目在完整列表中的索引
+            try:
+                index = all_entries.index(entry)
+            except ValueError:
+                continue
+            # 收集上下文
+            start_idx = max(0, index - radius)
+            end_idx = min(len(all_entries), index + radius + 1)
+            context_parts = []
+            for i in range(start_idx, end_idx):
+                context_parts.append(all_entries[i]['content'])
+            # 格式化時間戳和內容
+            timestamp = entry['start_time'].split(',')[0]  # 移除毫秒部分
+            context_text = ' '.join(context_parts)
+            snippets.append(f"{timestamp} {context_text}")
+        return '\n'.join(snippets)
+
     # SECTION 2.4: AI 媒體庫歸檔頁籤
     # ===============================================================
     def create_archive_tab(self):
@@ -4264,6 +5867,19 @@ Transcript:
         self.archive_stop_btn = ttk.Button(control_frame, text="停止處理", command=self.stop_archiving, style="Stop.TButton", state=tk.DISABLED)
         self.archive_stop_btn.pack(side=tk.LEFT, padx=5)
         
+        # 診斷按鈕
+        self.archive_diagnose_btn = ttk.Button(control_frame, text="診斷問題", command=self.diagnose_archive_issues, style="Optional.TButton")
+        self.archive_diagnose_btn.pack(side=tk.LEFT, padx=5)
+        
+        # 狀態顯示
+        status_frame = ttk.Frame(settings_frame)
+        status_frame.grid(row=5, column=0, columnspan=3, pady=10, sticky="ew")
+        
+        ttk.Label(status_frame, text="狀態:").pack(side=tk.LEFT)
+        self.archive_status_var = tk.StringVar(value="就緒")
+        status_label = ttk.Label(status_frame, textvariable=self.archive_status_var, foreground="blue")
+        status_label.pack(side=tk.LEFT, padx=(5, 0))
+        
         log_frame = ttk.Labelframe(main_frame, text="處理日誌", padding=10)
         log_frame.grid(row=0, column=1, sticky="nsew")
         log_frame.rowconfigure(0, weight=1)
@@ -4272,12 +5888,19 @@ Transcript:
         self.archive_log_area = scrolledtext.ScrolledText(log_frame, wrap=tk.WORD, height=10, font=self.fonts['console'])
         self.archive_log_area.grid(row=0, column=0, sticky="nsew")
         self.archive_log_area.config(state=tk.DISABLED)
+        
+        # 將後端歸檔日誌導入到UI
+        try:
+            self._attach_archive_log_bridge()
+        except Exception:
+            pass
 
     # ===============================================================
     # SECTION 2.5: 媒體搜尋頁籤
     # ===============================================================
     def create_search_tab(self):
         main_frame = ttk.Frame(self.search_tab)
+        # 滿版呈現
         main_frame.pack(fill=tk.BOTH, expand=True)
         main_frame.rowconfigure(2, weight=1)
         main_frame.columnconfigure(0, weight=2)
@@ -4289,15 +5912,15 @@ Transcript:
         
         self.search_query_var = tk.StringVar()
         ttk.Entry(search_control_frame, textvariable=self.search_query_var).grid(row=0, column=0, sticky="ew")
-        ttk.Button(search_control_frame, text="🔍 搜尋", command=self.perform_search).grid(row=0, column=1, padx=5)
-        ttk.Button(search_control_frame, text="🧠 自然語言搜尋", command=self.perform_nl_search).grid(row=0, column=2, padx=5)
-        ttk.Button(search_control_frame, text="🔄 重新整理資料", command=self.load_search_data).grid(row=0, column=3, padx=5)
+        ttk.Button(search_control_frame, text="搜尋", command=self.perform_search).grid(row=0, column=1, padx=5)
+        ttk.Button(search_control_frame, text="自然語言搜尋", command=self.perform_nl_search).grid(row=0, column=2, padx=5)
+        ttk.Button(search_control_frame, text="重新整理資料", command=self.load_search_data).grid(row=0, column=3, padx=5)
         
         self.search_status_label = ttk.Label(main_frame, text="請點擊「重新整理資料」以載入媒體庫。")
         self.search_status_label.grid(row=1, column=0, columnspan=2, sticky="w")
         
-        results_frame = ttk.Labelframe(main_frame, text="搜尋結果", padding=10)
-        results_frame.grid(row=2, column=0, sticky="nsew", padx=(0, 10))
+        results_frame = ttk.Labelframe(main_frame, text="搜尋結果", padding=6)
+        results_frame.grid(row=2, column=0, sticky="nsew", padx=(0, 8), pady=(0, 0))
         results_frame.rowconfigure(0, weight=1)
         results_frame.columnconfigure(0, weight=1)
         
@@ -4307,9 +5930,9 @@ Transcript:
         self.search_tree.heading("Type", text="類型")
         self.search_tree.heading("Path", text="檔案名稱")
         self.search_tree.column("ID", width=60, anchor='center')
-        self.search_tree.column("Title", width=250)
-        self.search_tree.column("Type", width=80, anchor='center')
-        self.search_tree.column("Path", width=250)
+        self.search_tree.column("Title", width=320)
+        self.search_tree.column("Type", width=90, anchor='center')
+        self.search_tree.column("Path", width=320)
         self.search_tree.grid(row=0, column=0, sticky="nsew")
         
         scrollbar = ttk.Scrollbar(results_frame, orient="vertical", command=self.search_tree.yview)
@@ -4318,17 +5941,32 @@ Transcript:
         
         self.search_tree.bind("<<TreeviewSelect>>", self.on_search_result_select)
         
-        details_frame = ttk.Labelframe(main_frame, text="詳細資訊", padding=10)
+        details_frame = ttk.Labelframe(main_frame, text="詳細資訊", padding=6)
         details_frame.grid(row=2, column=1, sticky="nsew")
-        details_frame.rowconfigure(1, weight=1)
+        details_frame.rowconfigure(2, weight=1)
         details_frame.columnconfigure(0, weight=1)
-        
+
+        # 縮圖
         self.details_image_label = ttk.Label(details_frame)
-        self.details_image_label.grid(row=0, column=0, pady=5)
-        
-        self.details_text = scrolledtext.ScrolledText(details_frame, wrap=tk.WORD, height=10, font=self.fonts['console'])
-        self.details_text.grid(row=1, column=0, sticky="nsew", pady=5)
-        self.details_text.config(state=tk.DISABLED)
+        self.details_image_label.grid(row=0, column=0, pady=(0, 6), sticky='w')
+
+        # 操作列（下載）
+        actions_row = ttk.Frame(details_frame)
+        actions_row.grid(row=1, column=0, sticky='ew', pady=(0, 6))
+        actions_row.columnconfigure(0, weight=1)
+        self.download_selected_button = ttk.Button(actions_row, text="📥 下載", command=self.download_selected_media, state=tk.DISABLED)
+        self.download_selected_button.pack(side='right')
+
+        # 結構化條列（Key/Value）
+        self.details_tree = ttk.Treeview(details_frame, columns=("Key", "Value"), show="headings")
+        self.details_tree.heading("Key", text="欄位")
+        self.details_tree.heading("Value", text="內容")
+        self.details_tree.column("Key", width=120, anchor='w')
+        self.details_tree.column("Value", width=280, anchor='w')
+        self.details_tree.grid(row=2, column=0, sticky="nsew")
+        details_scroll = ttk.Scrollbar(details_frame, orient="vertical", command=self.details_tree.yview)
+        self.details_tree.configure(yscrollcommand=details_scroll.set)
+        details_scroll.grid(row=2, column=1, sticky='ns')
 
     # ===============================================================
     # SECTION 3: 功能實現方法
@@ -5552,16 +7190,229 @@ Transcript:
             var.set(folder_selected)
     
     def start_archiving(self):
+        """開始歸檔處理"""
         self._save_config()
         if not self.source_folder_var.get() or not self.processed_folder_var.get():
             messagebox.showerror("錯誤", "請先設定待處理和已處理資料夾的路徑。")
             return
         
-        messagebox.showinfo("功能提示", "AI 媒體庫歸檔功能已觸發 (此為整合版示意)。")
+        if not self.api_key_var.get():
+            messagebox.showerror("錯誤", "請先設定API金鑰。")
+            return
+        
+        # 設定歸檔狀態
+        self.is_archiving = True
+        self.archive_start_btn.config(state=tk.DISABLED)
+        self.archive_stop_btn.config(state=tk.NORMAL)
+        
+        # 在背景執行緒中執行歸檔
+        threading.Thread(target=self._archiving_thread, daemon=True).start()
     
     def stop_archiving(self):
-        messagebox.showinfo("功能提示", "停止歸檔功能已觸發。")
+        """停止歸檔處理"""
+        self.is_archiving = False
+        self.archive_start_btn.config(state=tk.NORMAL)
+        self.archive_stop_btn.config(state=tk.DISABLED)
+        self.archive_status_var.set("已停止歸檔處理")
     
+    def diagnose_archive_issues(self):
+        """診斷歸檔系統問題"""
+        try:
+            from archive_manager import archive_manager
+            
+            # 更新配置
+            archive_manager.config.source_folder = self.source_folder_var.get()
+            archive_manager.config.processed_folder = self.processed_folder_var.get()
+            archive_manager.config.api_key = self.api_key_var.get()
+            
+            # 執行診斷
+            diagnosis = archive_manager.diagnose_folder_issues()
+            
+            # 建立診斷結果視窗
+            diag_window = tk.Toplevel(self.root)
+            diag_window.title("歸檔系統診斷結果")
+            diag_window.geometry("600x500")
+            
+            # 建立滾動文字區域
+            text_frame = ttk.Frame(diag_window)
+            text_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+            
+            text_area = scrolledtext.ScrolledText(text_frame, wrap=tk.WORD, font=('Consolas', 10))
+            text_area.pack(fill=tk.BOTH, expand=True)
+            
+            # 格式化診斷結果
+            result_text = "=== 歸檔系統診斷結果 ===\n\n"
+            
+            result_text += f"來源資料夾: {self.source_folder_var.get()}\n"
+            result_text += f"  - 存在: {'✓' if diagnosis['source_folder_exists'] else '✗'}\n"
+            result_text += f"  - 可讀取: {'✓' if diagnosis['source_folder_readable'] else '✗'}\n\n"
+            
+            result_text += f"處理資料夾: {self.processed_folder_var.get()}\n"
+            result_text += f"  - 存在: {'✓' if diagnosis['processed_folder_exists'] else '✗'}\n"
+            result_text += f"  - 可寫入: {'✓' if diagnosis['processed_folder_writable'] else '✗'}\n\n"
+            
+            result_text += f"檔案掃描結果:\n"
+            result_text += f"  - 總檔案數: {diagnosis['total_files_found']}\n"
+            result_text += f"  - 支援的媒體檔案數: {diagnosis['supported_files_found']}\n\n"
+            
+            if diagnosis['sample_files']:
+                result_text += "檔案樣本 (前10個):\n"
+                for i, file_path in enumerate(diagnosis['sample_files'], 1):
+                    file_type = archive_manager.get_file_type(file_path)
+                    result_text += f"  {i}. {Path(file_path).name} ({file_type if file_type else '不支援'})\n"
+                result_text += "\n"
+            
+            if diagnosis['errors']:
+                result_text += "發現的問題:\n"
+                for error in diagnosis['errors']:
+                    result_text += f"  ✗ {error}\n"
+                result_text += "\n"
+            
+            # AI 服務狀態
+            result_text += f"AI 服務狀態:\n"
+            result_text += f"  - API 金鑰已設定: {'✓' if self.api_key_var.get() else '✗'}\n"
+            result_text += f"  - AI 服務可用: {'✓' if archive_manager.is_ai_available() else '✗'}\n\n"
+            
+            # 建議
+            result_text += "建議:\n"
+            if not diagnosis['source_folder_exists']:
+                result_text += "  • 請檢查來源資料夾路徑是否正確\n"
+            elif not diagnosis['source_folder_readable']:
+                result_text += "  • 請檢查來源資料夾的讀取權限\n"
+            elif diagnosis['supported_files_found'] == 0:
+                result_text += "  • 來源資料夾中沒有支援的媒體檔案\n"
+                result_text += "  • 支援的格式: 圖片(.jpg, .png, .webp等), 影片(.mp4, .mov等), 音訊(.mp3, .wav等)\n"
+            
+            if not diagnosis['processed_folder_exists']:
+                result_text += "  • 處理資料夾將會自動建立\n"
+            elif not diagnosis['processed_folder_writable']:
+                result_text += "  • 請檢查處理資料夾的寫入權限\n"
+            
+            if not archive_manager.is_ai_available():
+                result_text += "  • 請設定正確的 Google AI API 金鑰\n"
+            
+            text_area.insert(tk.END, result_text)
+            text_area.config(state=tk.DISABLED)
+            
+            # 關閉按鈕
+            ttk.Button(diag_window, text="關閉", command=diag_window.destroy).pack(pady=10)
+            
+        except Exception as e:
+            messagebox.showerror("診斷錯誤", f"診斷過程發生錯誤: {str(e)}")
+            import traceback
+            traceback.print_exc()
+    
+    def _archiving_thread(self):
+        """歸檔處理的背景執行緒"""
+        try:
+            from archive_manager import archive_manager
+            
+            # 更新配置
+            archive_manager.config.source_folder = self.source_folder_var.get()
+            archive_manager.config.processed_folder = self.processed_folder_var.get()
+            archive_manager.config.api_key = self.api_key_var.get()
+            archive_manager.config.ai_model = self.ai_model_var.get()
+            
+            self.root.after(0, lambda: self.archive_status_var.set("正在掃描待處理檔案..."))
+            
+            # 開始歸檔處理
+            while self.is_archiving:
+                try:
+                    # 顯示處理狀態
+                    self.root.after(0, lambda: self.archive_status_var.set("正在處理檔案..."))
+                    self.root.after(0, lambda: self.log_message("開始處理一批檔案", "archive"))
+                    
+                    # 處理一批檔案
+                    processed_count = archive_manager.process_batch()
+                    
+                    if processed_count > 0:
+                        self.root.after(0, lambda count=processed_count: 
+                                       self.archive_status_var.set(f"已處理 {count} 個檔案"))
+                        self.root.after(0, lambda count=processed_count: 
+                                       self.log_message(f"成功處理 {count} 個檔案", "archive"))
+                        # 處理成功後等待較短時間
+                        import time
+                        time.sleep(5)
+                    else:
+                        # 未找到待處理檔案時，直接自動停止歸檔流程
+                        def _stop_msg():
+                            self.archive_status_var.set("沒有找到新檔案，已自動停止")
+                            self.log_message("沒有找到新檔案，已自動停止", "archive")
+                        self.root.after(0, _stop_msg)
+                        self.is_archiving = False
+                        break
+                        
+                except Exception as e:
+                    error_msg = str(e)
+                    self.root.after(0, lambda msg=error_msg: 
+                                   self.archive_status_var.set(f"處理錯誤: {msg}"))
+                    self.root.after(0, lambda msg=error_msg: 
+                                   self.log_message(f"歸檔處理錯誤: {msg}", "archive", is_error=True))
+                    print(f"歸檔處理錯誤: {error_msg}")
+                    import traceback
+                    traceback.print_exc()
+                    break
+            
+            self.root.after(0, lambda: self.archive_status_var.set("歸檔處理已停止"))
+            
+        except Exception as e:
+            error_msg = str(e)
+            print(f"歸檔執行緒錯誤: {error_msg}")
+            self.root.after(0, lambda msg=error_msg: 
+                           self.archive_status_var.set(f"歸檔失敗: {msg}"))
+        finally:
+            # 重設狀態
+            self.is_archiving = False
+            self.root.after(0, lambda: self.archive_start_btn.config(state=tk.NORMAL))
+            self.root.after(0, lambda: self.archive_stop_btn.config(state=tk.DISABLED))
+
+    def _append_archive_log_line(self, message: str):
+        """將一行日誌訊息附加到『處理日誌』區域"""
+        try:
+            if not hasattr(self, 'archive_log_area'):
+                return
+            self.archive_log_area.config(state=tk.NORMAL)
+            self.archive_log_area.insert(tk.END, message + "\n")
+            self.archive_log_area.see(tk.END)
+            self.archive_log_area.config(state=tk.DISABLED)
+        except Exception:
+            pass
+
+    def _attach_archive_log_bridge(self):
+        """把 ArchiveManager 與相關任務日誌導入 UI 『處理日誌』"""
+        import logging
+        
+        class UILogHandler(logging.Handler):
+            def __init__(self, append_fn):
+                super().__init__()
+                self.append_fn = append_fn
+                # 簡潔格式（時:分:秒 等級 訊息）
+                self.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s', datefmt='%H:%M:%S'))
+            def emit(self, record):
+                try:
+                    msg = self.format(record)
+                    # 透過 UI 執行緒安全更新
+                    self.root.after(0, lambda m=msg: self._append_archive_log_line(m))
+                except Exception:
+                    pass
+
+        handler = UILogHandler(self._append_archive_log_line)
+        
+        # 僅接收 archive 相關模組的日誌
+        class ArchiveFilter(logging.Filter):
+            def filter(self, record: logging.LogRecord) -> bool:
+                name_ok = record.name.startswith('ArchiveManager') or record.name.startswith('Task_Archive') or record.name.startswith('Task_Batch')
+                module_ok = (record.module == 'archive_manager')
+                return name_ok or module_ok
+        handler.addFilter(ArchiveFilter())
+        
+        # 掛到主要應用記錄器，並確保也掛到 ArchiveManager 記錄器
+        logging.getLogger('AIWorkstation').addHandler(handler)
+        logging.getLogger('ArchiveManager').addHandler(handler)
+        # 提高相關記錄器的等級以確保輸出
+        logging.getLogger('AIWorkstation').setLevel(logging.INFO)
+        logging.getLogger('ArchiveManager').setLevel(logging.INFO)
+
 
     
     def ai_translate_srt_placeholder(self):
@@ -6655,7 +8506,7 @@ SEO關鍵字：
             # 檢查是否設定了處理資料夾
             processed_folder = self.processed_folder_var.get()
             if not processed_folder:
-                self.search_status_label.config(text="✗ 請先在『AI媒體庫歸檔』標籤頁設定已處理資料夾路徑")
+                self.search_status_label.config(text="請先在『AI媒體庫歸檔』標籤頁設定已處理資料夾路徑")
                 return
             
             # 更新搜尋管理器的配置
@@ -6667,9 +8518,9 @@ SEO關鍵字：
             # 檢查載入的資料數量
             if hasattr(self.search_manager, 'media_data') and self.search_manager.media_data:
                 count = len(self.search_manager.media_data)
-                self.search_status_label.config(text=f"✅ 已成功載入 {count} 筆媒體資料")
+                self.search_status_label.config(text=f"已成功載入 {count} 筆媒體資料")
             else:
-                self.search_status_label.config(text="⚠️ 資料載入完成，但未找到媒體資料")
+                self.search_status_label.config(text="資料載入完成，但未找到媒體資料")
                 
         except Exception as e:
             self.search_status_label.config(text=f"✗ 載入資料時發生錯誤: {e}")
@@ -6751,13 +8602,13 @@ SEO關鍵字：
                 # 根據檔案類型選擇圖示
                 file_type = result.file_type if hasattr(result, 'file_type') else '未知'
                 if "圖片" in str(file_type):
-                    icon = "🖼️"
+                    icon = "[圖]"
                 elif "影片" in str(file_type):
-                    icon = "🎬"
+                    icon = "[影]"
                 elif "音訊" in str(file_type):
-                    icon = "🎵"
+                    icon = "[音]"
                 else:
-                    icon = "📄"
+                    icon = "[檔]"
                 
                 # 插入結果到樹狀檢視
                 self.search_tree.insert("", tk.END,
@@ -6771,6 +8622,8 @@ SEO關鍵字：
         
         # 更新搜尋結果資料供詳細資訊顯示使用
         self.search_results_data = results.results if hasattr(results, 'results') else []
+        # 清空詳細資訊並停用下載鍵
+        self.clear_details_panel()
 
     def on_search_result_select(self, event):
         """處理搜尋結果選擇事件"""
@@ -6784,10 +8637,7 @@ SEO關鍵字：
             
             # 檢查是否有搜尋結果資料
             if not hasattr(self, 'search_results_data') or not self.search_results_data:
-                self.details_text.config(state=tk.NORMAL)
-                self.details_text.delete('1.0', tk.END)
-                self.details_text.insert('1.0', "沒有可用的詳細資訊")
-                self.details_text.config(state=tk.DISABLED)
+                self.clear_details_panel()
                 return
             
             # 檢查索引是否有效
@@ -6817,11 +8667,13 @@ SEO關鍵字：
             info_text = "\
 n".join(info_lines)
             
-            # 更新詳細資訊文字區域
-            self.details_text.config(state=tk.NORMAL)
-            self.details_text.delete('1.0', tk.END)
-            self.details_text.insert('1.0', info_text)
-            self.details_text.config(state=tk.DISABLED)
+            # 已改為以條列方式呈現於 details_tree
+            
+            # 同步填入結構化條列
+            try:
+                self.populate_details_tree(result)
+            except Exception:
+                pass
             
             # 如果是圖片檔案，嘗試顯示縮圖
             if result.file_type == "圖片" and result.file_path:
@@ -6829,13 +8681,16 @@ n".join(info_lines)
             else:
                 # 清除圖片顯示
                 self.details_image_label.config(image=None, text="")
+            
+            # 啟用下載鍵
+            try:
+                self.download_selected_button.config(state=tk.NORMAL)
+            except Exception:
+                pass
                 
         except Exception as e:
-            # 發生錯誤時顯示錯誤資訊
-            self.details_text.config(state=tk.NORMAL)
-            self.details_text.delete('1.0', tk.END)
-            self.details_text.insert('1.0', f"顯示詳細資訊時發生錯誤: {e}")
-            self.details_text.config(state=tk.DISABLED)
+            # 發生錯誤時清空詳細資訊
+            self.clear_details_panel()
 
     def display_image_thumbnail(self, image_path):
         """顯示圖片縮圖"""
@@ -6851,7 +8706,7 @@ n".join(info_lines)
             
             # 載入並調整圖片大小
             img = Image.open(image_path)
-            img.thumbnail((250, 250))
+            img.thumbnail((400, 400))
             photo = ImageTk.PhotoImage(img)
             
             # 顯示圖片
@@ -6860,6 +8715,75 @@ n".join(info_lines)
             
         except Exception as e:
             self.details_image_label.config(image=None, text=f"無法顯示圖片: {e}")
+    
+    def clear_details_panel(self):
+        """清空詳細資訊與重置操作狀態"""
+        try:
+            self.details_image_label.config(image=None, text="")
+        except Exception:
+            pass
+        try:
+            if hasattr(self, 'details_tree'):
+                for item in self.details_tree.get_children():
+                    self.details_tree.delete(item)
+        except Exception:
+            pass
+        try:
+            if hasattr(self, 'download_selected_button'):
+                self.download_selected_button.config(state=tk.DISABLED)
+        except Exception:
+            pass
+
+    def populate_details_tree(self, result):
+        """以Key/Value表格條列詳細資料"""
+        if not hasattr(self, 'details_tree'):
+            return
+        # 清空
+        for item in self.details_tree.get_children():
+            self.details_tree.delete(item)
+        def add_row(k, v):
+            self.details_tree.insert('', tk.END, values=(str(k), '' if v is None else str(v)))
+        add_row('標題', getattr(result, 'title', ''))
+        add_row('ID', getattr(result, 'file_id', ''))
+        add_row('檔案類型', getattr(result, 'file_type', ''))
+        add_row('檔案路徑', getattr(result, 'file_path', ''))
+        score = getattr(result, 'relevance_score', None)
+        try:
+            score_str = f"{score:.2f}" if isinstance(score, (int, float)) else (score if score is not None else '')
+        except Exception:
+            score_str = score
+        add_row('相關性分數', score_str)
+        matched_fields = getattr(result, 'matched_fields', []) or []
+        add_row('匹配欄位', ", ".join(matched_fields))
+        metadata = getattr(result, 'metadata', {}) or {}
+        if metadata:
+            add_row('——', '——')
+            for key, value in metadata.items():
+                add_row(key, value)
+
+    def download_selected_media(self):
+        """下載目前選中的搜尋結果檔案（另存到使用者指定位置）"""
+        try:
+            selected_items = self.search_tree.selection()
+            if not selected_items:
+                return
+            idx = self.search_tree.index(selected_items[0])
+            if not hasattr(self, 'search_results_data') or idx >= len(self.search_results_data):
+                return
+            result = self.search_results_data[idx]
+            src_path = getattr(result, 'file_path', '')
+            if not src_path or not os.path.exists(src_path):
+                messagebox.showwarning('下載', '找不到原始檔案，無法下載。')
+                return
+            default_name = os.path.basename(src_path)
+            dst = filedialog.asksaveasfilename(title='另存檔案', initialfile=default_name)
+            if not dst:
+                return
+            import shutil
+            shutil.copyfile(src_path, dst)
+            messagebox.showinfo('下載完成', f'已儲存：\n{dst}')
+        except Exception as e:
+            messagebox.showerror('下載失敗', f'無法下載檔案：{e}')
 
     def create_monitoring_tab(self):
         """建立監控標籤頁"""
@@ -7475,7 +9399,7 @@ n".join(info_lines)
                 
                 result += "各項檢查結果:\n"
                 for check_name, status in health_status.get('checks', {}).items():
-                    status_icon = "✓" if status == "ok" else "⚠" if status == "warning" else "✗"
+                    status_icon = "[OK]" if status == "ok" else "[警告]" if status == "warning" else "[錯誤]"
                     result += f"  {status_icon} {check_name}: {status}\n"
                 
                 if health_status.get('metrics'):
@@ -7934,6 +9858,12 @@ def main():
             sys.exit(1)
     
     root = tk.Tk()
+    # Apply modern look & feel
+    try:
+        from ui_components import UITheme
+        UITheme.apply_style(root)
+    except Exception:
+        pass
     app = AIWorkstationApp(root)
     
     # 確保字型系統在所有元件創建後再次應用

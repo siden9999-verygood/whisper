@@ -312,6 +312,8 @@ class ArchiveManager:
     def _initialize_file_id(self, task: ArchiveTask) -> None:
         """初始化檔案 ID 計數器"""
         csv_path = Path(task.options.processed_folder) / "媒體入庫資訊.csv"
+        # 使用可用的 logger（任務 logger 不存在時退回模組 logger）
+        logger = task.logger if getattr(task, 'logger', None) is not None else self.logger
         
         if csv_path.exists():
             try:
@@ -344,11 +346,27 @@ class ArchiveManager:
                     
                     if max_id > 0:
                         self.current_id = max_id + 1
-                
-                task.logger.log_step("ID 初始化", f"檔案 ID 從 {self.current_id} 開始")
+                # 記錄初始化結果（若有任務 logger 則用之，否則用模組 logger）
+                if logger:
+                    try:
+                        # 如果是 TaskLogger，偏好使用 log_step；否則使用 info
+                        if hasattr(logger, 'log_step'):
+                            logger.log_step("ID 初始化", f"檔案 ID 從 {self.current_id} 開始")
+                        else:
+                            logger.info(f"檔案 ID 從 {self.current_id} 開始")
+                    except Exception:
+                        # 日誌不可阻斷流程
+                        pass
                 
             except Exception as e:
-                task.logger.log_error(f"讀取現有 ID 失敗: {str(e)}")
+                # 記錄錯誤（安全防護：logger 可能不存在）
+                try:
+                    if logger and hasattr(logger, 'log_error'):
+                        logger.log_error(f"讀取現有 ID 失敗: {str(e)}")
+                    elif logger:
+                        logger.error(f"讀取現有 ID 失敗: {str(e)}")
+                except Exception:
+                    pass
                 self.current_id = 1
         else:
             self.current_id = 1
@@ -394,42 +412,90 @@ class ArchiveManager:
                           file_type: str) -> Optional[Dict]:
         """使用 AI 分析媒體檔案"""
         try:
+            self.logger.info(f"開始 AI 分析 {file_type}: {file_path.name}")
+            
+            # 檢查 AI 服務
+            if not self.genai:
+                self.logger.error("Google AI 服務未初始化")
+                return None
+            
             model = self.genai.GenerativeModel(task.options.ai_model)
+            self.logger.info(f"使用 AI 模型: {task.options.ai_model}")
             
             # 準備媒體檔案
             if file_type == "圖片":
-                from PIL import Image
-                media_file = Image.open(file_path)
+                try:
+                    from PIL import Image
+                    media_file = Image.open(file_path)
+                    self.logger.info(f"成功載入圖片: {file_path.name}")
+                except Exception as e:
+                    self.logger.error(f"載入圖片失敗: {e}")
+                    return None
             else:
                 # 上傳檔案到 Google AI
-                task.logger.log_step("檔案上傳", f"上傳 {file_type} 檔案")
-                media_file = self.genai.upload_file(path=str(file_path))
-                
-                # 等待處理完成
-                while media_file.state.name == "PROCESSING":
-                    time.sleep(2)
-                    media_file = self.genai.get_file(media_file.name)
-                
-                if media_file.state.name == "FAILED":
-                    raise ArchiveError(f"Google AI 處理 {file_type} 失敗")
+                self.logger.info(f"開始上傳 {file_type} 檔案到 Google AI")
+                try:
+                    media_file = self.genai.upload_file(path=str(file_path))
+                    self.logger.info(f"檔案上傳成功，等待處理...")
+                    
+                    # 等待處理完成
+                    max_wait_time = 300  # 5分鐘超時
+                    wait_time = 0
+                    while media_file.state.name == "PROCESSING" and wait_time < max_wait_time:
+                        time.sleep(2)
+                        wait_time += 2
+                        media_file = self.genai.get_file(media_file.name)
+                        if wait_time % 10 == 0:  # 每10秒記錄一次
+                            self.logger.info(f"等待 Google AI 處理中... ({wait_time}s)")
+                    
+                    if media_file.state.name == "FAILED":
+                        self.logger.error(f"Google AI 處理 {file_type} 失敗")
+                        return None
+                    elif wait_time >= max_wait_time:
+                        self.logger.error(f"Google AI 處理超時 ({max_wait_time}s)")
+                        return None
+                    
+                    self.logger.info(f"Google AI 處理完成: {media_file.state.name}")
+                    
+                except Exception as e:
+                    self.logger.error(f"上傳檔案到 Google AI 失敗: {e}")
+                    return None
             
             # 生成分析提示
             prompt = self._get_analysis_prompt(file_type)
+            self.logger.info("開始 AI 內容分析...")
             
             # 執行分析
-            response = model.generate_content([prompt, media_file])
-            
-            # 解析結果
-            result_text = response.text.strip()
-            
-            # 清理 JSON 格式
-            import re
-            result_text = re.sub(r'^```json\s*|```\s*$', '', result_text, flags=re.MULTILINE)
-            
-            return json.loads(result_text)
+            try:
+                response = model.generate_content([prompt, media_file])
+                self.logger.info("AI 分析完成，解析結果...")
+                
+                # 解析結果
+                result_text = response.text.strip()
+                self.logger.info(f"AI 回應長度: {len(result_text)} 字符")
+                
+                # 清理 JSON 格式
+                import re
+                result_text = re.sub(r'^```json\s*|```\s*$', '', result_text, flags=re.MULTILINE)
+                
+                # 解析 JSON
+                analysis_result = json.loads(result_text)
+                self.logger.info(f"成功解析 AI 分析結果: {analysis_result.get('suggested_title', '無標題')}")
+                
+                return analysis_result
+                
+            except json.JSONDecodeError as e:
+                self.logger.error(f"AI 回應 JSON 解析失敗: {e}")
+                self.logger.error(f"原始回應: {result_text[:500]}...")
+                return None
+            except Exception as e:
+                self.logger.error(f"AI 內容分析失敗: {e}")
+                return None
             
         except Exception as e:
-            task.logger.log_error(f"AI 分析失敗: {str(e)}")
+            self.logger.error(f"AI 分析過程發生錯誤: {str(e)}")
+            import traceback
+            self.logger.error(f"錯誤詳情: {traceback.format_exc()}")
             return None
     
     def _get_analysis_prompt(self, file_type: str) -> str:
@@ -524,7 +590,8 @@ class ArchiveManager:
     
     def _organize_files(self, task: ArchiveTask) -> None:
         """組織檔案到目標位置"""
-        task.logger.log_step("檔案組織", f"移動 {len(task.results)} 個檔案")
+        action = "複製" if task.options.create_backup else "移動"
+        task.logger.log_step("檔案組織", f"{action} {len(task.results)} 個檔案")
         
         for metadata in task.results:
             try:
@@ -534,14 +601,14 @@ class ArchiveManager:
                 # 建立目標目錄
                 target_path.parent.mkdir(parents=True, exist_ok=True)
                 
-                # 移動檔案
+                # 移動/複製檔案
                 if task.options.create_backup:
-                    # 複製而非移動
+                    # 複製而非移動（保留來源檔）
                     shutil.copy2(source_path, target_path)
+                    task.logger.log_step("檔案複製", f"{source_path.name} -> {target_path.name}")
                 else:
                     shutil.move(str(source_path), str(target_path))
-                
-                task.logger.log_step("檔案移動", f"{source_path.name} -> {target_path.name}")
+                    task.logger.log_step("檔案移動", f"{source_path.name} -> {target_path.name}")
                 
             except Exception as e:
                 error_msg = f"移動檔案失敗 {metadata.original_path}: {str(e)}"
@@ -665,7 +732,10 @@ class ArchiveManager:
     def _analyze_media_file_direct(self, file_path: Path, file_type: str) -> Optional[Dict]:
         """直接分析媒體檔案（不依賴任務）"""
         try:
-            model = self.genai.GenerativeModel("gemini-1.5-pro-latest")
+            # 使用目前設定的 AI 模型
+            model_name = self.config.ai_model or "gemini-2.5-flash"
+            self.logger.info(f"直接分析使用 AI 模型: {model_name}")
+            model = self.genai.GenerativeModel(model_name)
             
             # 準備媒體檔案
             if file_type == "圖片":
@@ -823,6 +893,204 @@ class ArchiveManager:
                     suggestions.append(tag)
         
         return suggestions[:10]  # 限制建議數量
+    
+    def diagnose_folder_issues(self) -> Dict[str, Any]:
+        """診斷資料夾相關問題"""
+        diagnosis = {
+            'source_folder_exists': False,
+            'source_folder_readable': False,
+            'processed_folder_exists': False,
+            'processed_folder_writable': False,
+            'supported_files_found': 0,
+            'total_files_found': 0,
+            'sample_files': [],
+            'errors': []
+        }
+        
+        try:
+            # 檢查來源資料夾
+            if not self.config.source_folder:
+                diagnosis['errors'].append("來源資料夾路徑未設定")
+                return diagnosis
+            
+            source_path = Path(self.config.source_folder)
+            diagnosis['source_folder_exists'] = source_path.exists()
+            
+            if source_path.exists():
+                diagnosis['source_folder_readable'] = os.access(source_path, os.R_OK)
+                
+                # 掃描檔案
+                all_files = []
+                supported_files = []
+                
+                for file_path in source_path.rglob('*'):
+                    if file_path.is_file():
+                        all_files.append(file_path)
+                        if self.is_supported_format(str(file_path)):
+                            supported_files.append(file_path)
+                
+                diagnosis['total_files_found'] = len(all_files)
+                diagnosis['supported_files_found'] = len(supported_files)
+                diagnosis['sample_files'] = [str(f) for f in all_files[:10]]  # 前10個檔案作為樣本
+            
+            # 檢查處理資料夾
+            if self.config.processed_folder:
+                processed_path = Path(self.config.processed_folder)
+                diagnosis['processed_folder_exists'] = processed_path.exists()
+                
+                if processed_path.exists():
+                    diagnosis['processed_folder_writable'] = os.access(processed_path, os.W_OK)
+                else:
+                    # 嘗試建立資料夾
+                    try:
+                        processed_path.mkdir(parents=True, exist_ok=True)
+                        diagnosis['processed_folder_exists'] = True
+                        diagnosis['processed_folder_writable'] = True
+                    except Exception as e:
+                        diagnosis['errors'].append(f"無法建立處理資料夾: {e}")
+            
+        except Exception as e:
+            diagnosis['errors'].append(f"診斷過程發生錯誤: {e}")
+        
+        return diagnosis
+    
+    def process_single_file_simple(self, file_path: str) -> bool:
+        """簡化版單檔案處理，用於測試"""
+        try:
+            file_path = Path(file_path)
+            if not file_path.exists():
+                self.logger.error(f"檔案不存在: {file_path}")
+                return False
+            
+            file_type = self.get_file_type(str(file_path))
+            if not file_type:
+                self.logger.error(f"不支援的檔案格式: {file_path}")
+                return False
+            
+            self.logger.info(f"開始處理 {file_type} 檔案: {file_path.name}")
+            
+            # 檢查 AI 服務
+            if not self.is_ai_available():
+                self.logger.error("AI 服務不可用")
+                return False
+            
+            # 簡單的檔案複製測試（不使用 AI 分析）
+            target_dir = Path(self.config.processed_folder) / "測試處理"
+            target_dir.mkdir(parents=True, exist_ok=True)
+            
+            target_path = target_dir / f"processed_{file_path.name}"
+            
+            import shutil
+            shutil.copy2(file_path, target_path)
+            
+            self.logger.info(f"成功處理檔案: {file_path.name} -> {target_path.name}")
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"處理檔案失敗: {e}")
+            import traceback
+            self.logger.error(f"錯誤詳情: {traceback.format_exc()}")
+            return False
+    
+    def process_batch(self) -> int:
+        """處理一批檔案（用於GUI的連續處理）"""
+        try:
+            if not self.config.source_folder or not self.config.processed_folder:
+                return 0
+            
+            source_path = Path(self.config.source_folder)
+            if not source_path.exists():
+                return 0
+            
+            # 掃描待處理檔案
+            files_to_process = []
+            for file_path in source_path.rglob('*'):
+                if (file_path.is_file() and 
+                    self.is_supported_format(str(file_path)) and
+                    not file_path.name.startswith('._')):  # 跳過 macOS 隱藏檔
+                    files_to_process.append(file_path)
+            
+            # 記錄掃描結果
+            self.logger.info(f"掃描到 {len(files_to_process)} 個待處理檔案")
+            
+            if not files_to_process:
+                self.logger.info(f"在 {source_path} 中沒有找到支援的媒體檔案")
+                return 0
+            
+            # 處理最多5個檔案
+            batch_size = min(5, len(files_to_process))
+            processed_count = 0
+            
+            self.logger.info(f"開始處理 {batch_size} 個檔案")
+
+            # 在本批次開始前，根據已存在的報表初始化流水編號
+            try:
+                init_options = ArchiveOptions(
+                    api_key=self.config.api_key,
+                    ai_model=self.config.ai_model or "gemini-2.5-flash",
+                    source_folder=self.config.source_folder,
+                    processed_folder=self.config.processed_folder,
+                    organize_by_category=True,
+                    organize_by_date=False,
+                    create_backup=False
+                )
+                init_task = ArchiveTask(f"batch_{int(time.time())}_init", init_options)
+                self._initialize_file_id(init_task)
+            except Exception as e:
+                self.logger.warning(f"初始化檔案ID時發生問題，將從 {self.current_id} 繼續: {e}")
+            
+            for i in range(batch_size):
+                file_path = files_to_process[i]
+                self.logger.info(f"正在處理第 {i+1} 個檔案: {file_path.name}")
+                
+                try:
+                    # 創建臨時任務選項
+                    options = ArchiveOptions(
+                        api_key=self.config.api_key,
+                        ai_model=self.config.ai_model or "gemini-2.5-flash",
+                        source_folder=self.config.source_folder,
+                        processed_folder=self.config.processed_folder,
+                        organize_by_category=True,
+                        organize_by_date=False,
+                        # 重要：避免重複入庫，預設執行「移動」而非「複製」
+                        create_backup=False
+                    )
+                    
+                    # 創建臨時任務
+                    task = ArchiveTask(f"batch_{int(time.time())}", options)
+                    task.logger = TaskLogger(f"Batch_{task.task_id}", logging_service)
+                    task.start_time = time.time()
+                    
+                    # 處理檔案 - 完整的 AI 分析
+                    self.logger.info(f"開始 AI 分析: {file_path.name}")
+                    metadata = self._process_single_file(task, file_path)
+                    
+                    if metadata:
+                        task.results.append(metadata)
+                        processed_count += 1
+                        self.logger.info(f"成功處理: {file_path.name}")
+                        
+                        # 組織檔案和生成報告
+                        self._organize_files(task)
+                        self._generate_report(task)
+                    else:
+                        self.logger.warning(f"處理失敗，未生成元數據: {file_path.name}")
+                    
+                    task.end_time = time.time()
+                    
+                except Exception as e:
+                    self.logger.error(f"處理檔案 {file_path.name} 時發生錯誤: {e}")
+                    import traceback
+                    self.logger.error(f"錯誤詳情: {traceback.format_exc()}")
+                    continue
+            
+            self.logger.info(f"批次處理完成，成功處理 {processed_count} 個檔案")
+            
+            return processed_count
+            
+        except Exception as e:
+            self.logger.error(f"批次處理錯誤: {e}")
+            return 0
     
     def _calculate_tag_similarity(self, tag1: str, tag2: str) -> float:
         """計算標籤相似度"""

@@ -36,7 +36,9 @@ ART_STYLE_OPTIONS = [
     {"label": "霓虹賽博龐克風", "value": "neon cyberpunk style"},
     {"label": "版畫風格", "value": "printmaking style"},
     {"label": "柔和粉彩插畫", "value": "soft pastel illustration"},
-    {"label": "途鴉風格", "value": "graffiti style"}
+    {"label": "塗鴉風格", "value": "graffiti style"},
+    {"label": "寫實照片", "value": "photographic realism"},
+    {"label": "真實照片風格", "value": "camera-style capture"}
 ]
 
 class SmartTranscriptAnalyzer:
@@ -590,8 +592,19 @@ class ImageGenerationOkokGo:
         
         # 第一行：API 金鑰、指令生成模型、圖片生成模型
         ttk.Label(settings_frame, text="API 金鑰").grid(row=0, column=0, sticky='w', padx=5, pady=2)
-        self.api_key_var = tk.StringVar(value=self.api_key)
+        # 連結父視窗的 API 金鑰，統一管理
+        if hasattr(self.parent, 'api_key_var'):
+            self.api_key_var = self.parent.api_key_var
+            self.api_key = self.api_key_var.get()
+        else:
+            self.api_key_var = tk.StringVar(value=self.api_key)
         api_key_entry = ttk.Entry(settings_frame, textvariable=self.api_key_var, show="*", width=30)
+        # 使用統一來源時，可以選擇不允許在此處修改
+        try:
+            if hasattr(self.parent, 'api_key_var'):
+                api_key_entry.configure(state='normal')
+        except Exception:
+            pass
         api_key_entry.grid(row=1, column=0, sticky='ew', padx=5, pady=2)
         
         ttk.Label(settings_frame, text="指令生成模型").grid(row=0, column=1, sticky='w', padx=5, pady=2)
@@ -856,14 +869,13 @@ class ImageGenerationOkokGo:
             }
             
             # 呼叫 API
-            api_url = f"https://generativelanguage.googleapis.com/v1beta/models/{self.prompt_model}:generateContent?key={self.api_key}"
-            
+            api_url = f"https://generativelanguage.googleapis.com/v1beta/models/{self.prompt_model}:generateContent"
             print(f"DEBUG: 準備調用 API: {api_url}")
             print(f"DEBUG: Payload 大小: {len(str(payload))} 字符")
             
             response = requests.post(
                 api_url,
-                headers={'Content-Type': 'application/json'},
+                headers={'Content-Type': 'application/json', 'x-goog-api-key': self.api_key},
                 json=payload,
                 timeout=60
             )
@@ -911,6 +923,11 @@ class ImageGenerationOkokGo:
                 error_msg = f'API 錯誤: {response.status_code} - {response.text}'
                 print(f"DEBUG: {error_msg}")
                 self.window.after(0, lambda msg=error_msg: self.status_var.set(msg))
+                try:
+                    from ui_components import ErrorDialog
+                    self.window.after(0, lambda m=error_msg: ErrorDialog.show(self.window, "提示詞生成錯誤", m, on_open_logs=self._open_logs_dir))
+                except Exception:
+                    pass
                 
         except Exception as e:
             error_msg = f'指令生成失敗：{str(e)}'
@@ -918,6 +935,11 @@ class ImageGenerationOkokGo:
             import traceback
             traceback.print_exc()
             self.window.after(0, lambda msg=error_msg: self.status_var.set(msg))
+            try:
+                from ui_components import ErrorDialog
+                self.window.after(0, lambda m=error_msg: ErrorDialog.show(self.window, "提示詞生成錯誤", m, on_open_logs=self._open_logs_dir))
+            except Exception:
+                pass
         
         finally:
             self.loading_prompts = False
@@ -1021,7 +1043,9 @@ Transcript:
             'cartoon': 'cartoon style, animated style, colorful cartoon',
             'abstract': 'abstract art, modern art, artistic interpretation',
             'vintage': 'vintage style, retro aesthetic, classic art',
-            'minimalist': 'minimalist design, clean lines, simple composition'
+            'minimalist': 'minimalist design, clean lines, simple composition',
+            # 相機拍攝風格（避免使用 forbidden 詞彙）
+            'camera-style capture': 'camera-style capture, natural lighting, true-to-life colors, shallow depth of field, lens bokeh, optical lens effects'
         }
         
         return style_mappings.get(art_style, art_style)
@@ -1098,10 +1122,18 @@ Transcript:
             return
         
         # 標題
-        title_label = ttk.Label(self.prompts_scrollable_frame, 
-                               text=f"編輯指令與時間戳 ({len(self.prompts)} 個指令)", 
-                               font=('Arial', 12, 'bold'))
-        title_label.pack(pady=(0, 5))
+        title_label = ttk.Label(self.prompts_scrollable_frame,
+                                text=f"編輯指令與時間戳 ({len(self.prompts)} 個指令)",
+                                font=('Arial', 12, 'bold'))
+        title_label.pack(pady=(0, 5), anchor='w')
+
+        # 表頭列
+        header = ttk.Frame(self.prompts_scrollable_frame)
+        header.pack(fill=tk.X, padx=2, pady=(0, 4))
+        ttk.Label(header, text="索引", width=6, font=('Arial', 9, 'bold')).pack(side=tk.LEFT)
+        ttk.Label(header, text="時間戳", width=10, font=('Arial', 9, 'bold')).pack(side=tk.LEFT)
+        ttk.Label(header, text="英文提示詞", font=('Arial', 9, 'bold')).pack(side=tk.LEFT, padx=(10, 0))
+        ttk.Label(header, text="操作", width=8, font=('Arial', 9, 'bold')).pack(side=tk.RIGHT)
         
         # 建立提示詞編輯項目
         self.prompt_edit_entries = []
@@ -1122,7 +1154,8 @@ Transcript:
         
         # 建立滾動區域
         self.prompts_canvas = tk.Canvas(self.prompts_display_frame, highlightthickness=0)
-        self.prompts_scrollbar = ttk.Scrollbar(self.prompts_display_frame, orient="vertical", command=self.prompts_canvas.yview)
+        self.prompts_vbar = ttk.Scrollbar(self.prompts_display_frame, orient="vertical", command=self.prompts_canvas.yview)
+        self.prompts_hbar = ttk.Scrollbar(self.prompts_display_frame, orient="horizontal", command=self.prompts_canvas.xview)
         self.prompts_scrollable_frame = ttk.Frame(self.prompts_canvas)
         
         self.prompts_scrollable_frame.bind(
@@ -1131,53 +1164,46 @@ Transcript:
         )
         
         self.prompts_canvas.create_window((0, 0), window=self.prompts_scrollable_frame, anchor="nw")
-        self.prompts_canvas.configure(yscrollcommand=self.prompts_scrollbar.set)
+        self.prompts_canvas.configure(yscrollcommand=self.prompts_vbar.set, xscrollcommand=self.prompts_hbar.set)
         
         # 使用 Grid 佈局 - 徹底解決空白問題
         self.prompts_canvas.grid(row=0, column=0, sticky="nsew")
-        self.prompts_scrollbar.grid(row=0, column=1, sticky="ns")
+        self.prompts_vbar.grid(row=0, column=1, sticky="ns")
+        self.prompts_hbar.grid(row=1, column=0, sticky="ew")
         
         # 綁定 Canvas 寬度自動調整
         self.prompts_canvas.bind('<Configure>', self._on_canvas_configure)
     
     def create_prompt_edit_item(self, parent, index, prompt_item):
-        """建立單個提示詞編輯項目 - 緊湊版設計"""
+        """建立單個提示詞編輯項目 - 緊湊版設計（固定操作列）"""
         item_frame = ttk.Frame(parent, relief='solid', padding=5)
         item_frame.pack(fill=tk.X, pady=2, padx=2)
-        
-        # 標題行 - 更緊湊
-        header_frame = ttk.Frame(item_frame)
-        header_frame.pack(fill=tk.X, pady=(0, 3))
-        
-        ttk.Label(header_frame, text=f"指令 {index+1}", font=('Arial', 9, 'bold')).pack(side=tk.LEFT)
-        
-        timestamp_var = tk.StringVar(value=prompt_item.get('timestamp', 'N/A'))
-        timestamp_entry = ttk.Entry(header_frame, textvariable=timestamp_var, 
-                                  state='readonly', width=10, font=('Arial', 8))
-        timestamp_entry.pack(side=tk.LEFT, padx=(10, 0))
-        
-        ttk.Button(header_frame, text="刪除", 
-                  command=lambda: self.delete_prompt_item(index, item_frame)).pack(side=tk.RIGHT)
-        
-        # 英文提示詞 - 減少高度
-        prompt_label = ttk.Label(item_frame, text="英文提示詞:", font=('Arial', 8))
-        prompt_label.pack(anchor='w', pady=(0, 2))
-        
+
+        row = ttk.Frame(item_frame)
+        row.pack(fill=tk.X)
+
+        # 左側：索引與時間戳
+        ttk.Label(row, text=f"{index+1}", width=6, font=('Arial', 9)).pack(side=tk.LEFT)
+        timestamp_var = tk.StringVar(value=prompt_item.get('timestamp', ''))
+        ts = ttk.Entry(row, textvariable=timestamp_var, state='readonly', width=10, font=('Arial', 8))
+        ts.pack(side=tk.LEFT)
+
+        # 右側操作（固定於右端）
+        actions = ttk.Frame(row)
+        actions.pack(side=tk.RIGHT)
+        ttk.Button(actions, text="刪除",
+                   command=lambda: self.delete_prompt_item(index, item_frame)).pack(side=tk.LEFT)
+
+        # 英文提示詞編輯
         prompt_text = tk.Text(item_frame, height=3, wrap=tk.WORD, font=('Arial', 8))
         prompt_text.insert('1.0', prompt_item.get('prompt', ''))
-        prompt_text.pack(fill=tk.X, pady=(0, 3))
-        
-        # 中文說明 - 減少高度，確保內容正確
-        zh_label = ttk.Label(item_frame, text="中文說明:", font=('Arial', 8))
-        zh_label.pack(anchor='w', pady=(0, 2))
-        
-        zh_text = tk.Text(item_frame, height=2, wrap=tk.WORD, 
-                        bg='#f8f8f8', fg='#333333', state='disabled', font=('Arial', 8))
+        prompt_text.pack(fill=tk.X, pady=(4, 3))
+
+        # 中文說明（唯讀）
+        zh_text = tk.Text(item_frame, height=2, wrap=tk.WORD,
+                          bg='#f8f8f8', fg='#333', state='disabled', font=('Arial', 8))
         zh_text.config(state='normal')
-        # 確保中文說明對應正確的英文指令
-        zh_content = prompt_item.get('zh', '')
-        if not zh_content or zh_content.strip() == '':
-            zh_content = f"指令 {index+1} 的中文說明"
+        zh_content = prompt_item.get('zh', '') or f"指令 {index+1} 的中文說明"
         zh_text.insert('1.0', zh_content)
         zh_text.config(state='disabled')
         zh_text.pack(fill=tk.X)
@@ -1231,9 +1257,27 @@ Transcript:
     def _generate_images_thread(self):
         """生成圖片的背景執行緒"""
         sample_count = int(self.number_of_images)
+        # 進度覆蓋層
+        try:
+            from ui_components import ProgressOverlay
+            self._cancel_image_generation = False
+            def cancel():
+                self._cancel_image_generation = True
+            self._img_overlay = ProgressOverlay.show(self.window, "正在生成圖片...", on_cancel=cancel)
+        except Exception:
+            self._img_overlay = None
         
         for i, prompt_item in enumerate(self.prompts):
             self.window.after(0, lambda i=i: self.status_var.set(f'處理指令 {i + 1} / {len(self.prompts)} ...'))
+            try:
+                if self._img_overlay:
+                    progress = (i / max(1, len(self.prompts))) * 100
+                    self.window.after(0, lambda p=progress: self._img_overlay.update(progress=p))
+            except Exception:
+                pass
+
+            if getattr(self, '_cancel_image_generation', False):
+                break
             
             try:
                 urls = []
@@ -1263,11 +1307,63 @@ Transcript:
                             )
                         )
                         
+                        def _to_data_url_from_generated(generated_image):
+                            # Try multiple shapes returned by google-genai SDK
+                            img_obj = getattr(generated_image, 'image', generated_image)
+                            # 1) Prefer PIL if available or as_pil() helper
+                            try:
+                                from PIL import Image as _PILImage
+                                if hasattr(img_obj, 'as_pil'):
+                                    pil_img = img_obj.as_pil()
+                                elif isinstance(img_obj, _PILImage.Image):
+                                    pil_img = img_obj
+                                else:
+                                    pil_img = None
+                            except Exception:
+                                pil_img = None
+                            if pil_img is not None:
+                                buf = BytesIO()
+                                pil_img.save(buf, format='PNG')
+                                b = buf.getvalue()
+                                return 'image/png', b
+                            # 2) Fallback to raw bytes on common attributes
+                            candidates = [
+                                getattr(img_obj, 'image_bytes', None),
+                                getattr(img_obj, 'bytes', None),
+                                getattr(img_obj, 'data', None),
+                                getattr(img_obj, 'inline_data', None),
+                            ]
+                            for c in candidates:
+                                if c is None:
+                                    continue
+                                # inline_data may have .data (base64)
+                                if hasattr(c, 'data'):
+                                    c = c.data
+                                try:
+                                    if isinstance(c, str):
+                                        b = base64.b64decode(c)
+                                    elif isinstance(c, (bytes, bytearray)):
+                                        b = bytes(c)
+                                    else:
+                                        continue
+                                except Exception:
+                                    continue
+                                # Detect mime by magic numbers
+                                mime = 'image/png'
+                                if len(b) >= 8 and b[:8] == b'\x89PNG\r\n\x1a\n':
+                                    mime = 'image/png'
+                                elif len(b) >= 3 and b[:3] == b'\xff\xd8\xff':
+                                    mime = 'image/jpeg'
+                                elif len(b) >= 4 and b[:4] == b'GIF8':
+                                    mime = 'image/gif'
+                                return mime, b
+                            # 3) Give up
+                            raise RuntimeError('Unsupported image payload from Imagen 4.0 response')
+
                         for generated_image in response.generated_images:
-                            img_buffer = BytesIO()
-                            generated_image.image.save(img_buffer, format='PNG')
-                            img_base64 = base64.b64encode(img_buffer.getvalue()).decode('utf-8')
-                            urls.append(f"data:image/png;base64,{img_base64}")
+                            mime, b = _to_data_url_from_generated(generated_image)
+                            img_base64 = base64.b64encode(b).decode('utf-8')
+                            urls.append(f"data:{mime};base64,{img_base64}")
                         
                         print(f"DEBUG: Imagen 4.0 成功生成 {len(urls)} 張圖片")
                         
@@ -1287,11 +1383,11 @@ Transcript:
                         }
                         
                         # 使用正確的 Imagen API 端點 (按照 React 程式碼)
-                        api_url = f"https://generativelanguage.googleapis.com/v1beta/models/{self.image_model}:predict?key={self.api_key}"
+                        api_url = f"https://generativelanguage.googleapis.com/v1beta/models/{self.image_model}:predict"
                         
                         response = requests.post(
                             api_url,
-                            headers={'Content-Type': 'application/json'},
+                            headers={'Content-Type': 'application/json', 'x-goog-api-key': self.api_key},
                             json=payload,
                             timeout=60
                         )
@@ -1372,6 +1468,11 @@ Transcript:
         # 最終狀態更新
         self.window.after(0, lambda: self.status_var.set('全部圖片已處理完畢'))
         self.loading_images = False
+        try:
+            if self._img_overlay:
+                self.window.after(0, self._img_overlay.close)
+        except Exception:
+            pass
     
     def update_images_display(self):
         """更新圖片顯示 - 即時顯示新生成的圖片"""
@@ -1426,23 +1527,34 @@ Transcript:
         success_count = sum(1 for img in self.images if 'error' not in img and img.get('urls'))
         error_count = len(self.images) - success_count
         
-        # 標題和統計
-        header_frame = ttk.Frame(self.images_display_frame)
-        header_frame.pack(fill=tk.X, pady=(0, 10))
-        
-        self.title_label = ttk.Label(header_frame, 
-                                    text=f"生成結果 (成功: {success_count}, 失敗: {error_count})", 
-                                    font=('Arial', 12, 'bold'))
-        self.title_label.pack(side=tk.LEFT)
-        
-        # 批量下載按鈕
-        if success_count > 0:
-            ttk.Button(header_frame, text="批量下載全部圖片", 
-                      command=self.download_all_images).pack(side=tk.RIGHT, padx=(10, 0))
+        # 標題與操作列（採用 Toolbar 元件）
+        try:
+            from ui_components import Toolbar
+            self.images_toolbar = Toolbar(self.images_display_frame, title=f"生成結果 (成功: {success_count}, 失敗: {error_count})")
+            if success_count > 0:
+                self.images_toolbar.add_button("📥 下載全部", self.download_all_images, accent=True)
+                self.images_toolbar.add_button("🔗 複製全部連結", self.copy_all_image_urls)
+            # 提供重試全部（無論目前成功/失敗統計）
+            self.images_toolbar.add_button("🔁 重試全部", self.generate_images)
+            # 用於後續更新標題
+            self.title_label = None
+        except Exception:
+            header_frame = ttk.Frame(self.images_display_frame)
+            header_frame.pack(fill=tk.X, pady=(0, 10))
+            self.title_label = ttk.Label(header_frame,
+                                         text=f"生成結果 (成功: {success_count}, 失敗: {error_count})",
+                                         font=('Arial', 12, 'bold'))
+            self.title_label.pack(side=tk.LEFT)
+            controls = ttk.Frame(header_frame)
+            controls.pack(side=tk.RIGHT)
+            if success_count > 0:
+                ttk.Button(controls, text="📥 批量下載", command=self.download_all_images).pack(side=tk.LEFT)
+                ttk.Button(controls, text="🔗 複製全部連結", command=self.copy_all_image_urls).pack(side=tk.LEFT, padx=(8, 0))
         
         # 建立可滾動的結果區域
         canvas = tk.Canvas(self.images_display_frame, height=400)
-        scrollbar = ttk.Scrollbar(self.images_display_frame, orient="vertical", command=canvas.yview)
+        vbar = ttk.Scrollbar(self.images_display_frame, orient="vertical", command=canvas.yview)
+        hbar = ttk.Scrollbar(self.images_display_frame, orient="horizontal", command=canvas.xview)
         self.images_scroll_frame = ttk.Frame(canvas)
         
         self.images_scroll_frame.bind(
@@ -1451,17 +1563,25 @@ Transcript:
         )
         
         canvas.create_window((0, 0), window=self.images_scroll_frame, anchor="nw")
-        canvas.configure(yscrollcommand=scrollbar.set)
+        canvas.configure(yscrollcommand=vbar.set, xscrollcommand=hbar.set)
         
         # 佈局滾動區域
-        scrollbar.pack(side="right", fill="y")
+        vbar.pack(side="right", fill="y")
         canvas.pack(side="left", fill="both", expand=True)
+        hbar.pack(side="bottom", fill="x")
     
     def add_single_image_item(self, index, image_item):
         """添加單個圖片項目到顯示區域"""
         i = index
-        result_frame = ttk.LabelFrame(self.images_scroll_frame, text=f"指令 {i+1}", padding=10)
-        result_frame.pack(fill=tk.X, pady=5, padx=5)
+        # 使用 Card 封裝結果項目
+        try:
+            from ui_components import Card
+            card = Card(self.images_scroll_frame, padding=10)
+            result_frame = card.frame
+            ttk.Label(result_frame, text=f"指令 {i+1}", font=('Arial', 10, 'bold')).pack(anchor='w')
+        except Exception:
+            result_frame = ttk.LabelFrame(self.images_scroll_frame, text=f"指令 {i+1}", padding=10)
+            result_frame.pack(fill=tk.X, pady=5, padx=5)
         
         # 顯示對應的提示詞
         if i < len(self.prompts):
@@ -1507,15 +1627,26 @@ Transcript:
                         ttk.Label(img_container, text=f"圖片 {j+1}\n(預覽失敗)", 
                                  background='lightgray', width=15, anchor='center').pack()
                     
-                    # 下載按鈕
-                    ttk.Button(img_container, text=f"下載 {j+1}", 
-                              command=lambda url=img_url, idx=f"{i+1}_{j+1}": self.download_image(url, idx)).pack(pady=(5, 0))
+                    # 操作按鈕列
+                    btns = ttk.Frame(img_container)
+                    btns.pack(pady=(5, 0))
+                    ttk.Button(btns, text=f"下載 {j+1}",
+                              command=lambda url=img_url, idx=f"{i+1}_{j+1}": self.download_image(url, idx)).pack(side=tk.LEFT)
+                    ttk.Button(btns, text="複製連結",
+                              command=lambda url=img_url: self.copy_image_url(url)).pack(side=tk.LEFT, padx=(6, 0))
         
         # 更新標題統計
-        if hasattr(self, 'title_label'):
-            success_count = sum(1 for img in self.images if 'error' not in img and img.get('urls'))
-            error_count = len(self.images) - success_count
-            self.title_label.config(text=f"生成結果 (成功: {success_count}, 失敗: {error_count})")
+        success_count = sum(1 for img in self.images if 'error' not in img and img.get('urls'))
+        error_count = len(self.images) - success_count
+        try:
+            # Toolbar 標題更新：重建 Toolbar 以反映統計
+            for w in getattr(self.images_display_frame, 'winfo_children', lambda: [])():
+                pass
+            # 簡化處理：不重建 Toolbar，僅在存在舊式 title_label 時更新
+            if hasattr(self, 'title_label') and self.title_label is not None:
+                self.title_label.config(text=f"生成結果 (成功: {success_count}, 失敗: {error_count})")
+        except Exception:
+            pass
     
     def download_image(self, img_url, filename):
         """下載單張圖片 - 修復版"""
@@ -1599,6 +1730,31 @@ Transcript:
         
         except Exception as e:
             messagebox.showerror("錯誤", f"批量下載失敗: {str(e)}")
+
+    def copy_image_url(self, img_url):
+        """複製單張圖片連結（支援 data URL）"""
+        try:
+            self.window.clipboard_clear()
+            self.window.clipboard_append(img_url or "")
+            self.status_var.set("圖片連結已複製")
+        except Exception as e:
+            messagebox.showerror("錯誤", f"無法複製連結: {str(e)}")
+
+    def copy_all_image_urls(self):
+        """複製所有成功生成圖片的連結"""
+        try:
+            urls = []
+            for item in getattr(self, 'images', []):
+                if isinstance(item, dict):
+                    urls.extend(item.get('urls', []) or [])
+            if not urls:
+                self.status_var.set("沒有可複製的連結")
+                return
+            self.window.clipboard_clear()
+            self.window.clipboard_append("\n".join(urls))
+            self.status_var.set(f"已複製 {len(urls)} 個連結")
+        except Exception as e:
+            messagebox.showerror("錯誤", f"無法複製連結: {str(e)}")
     
     def create_image_preview(self, parent, img_url, size=(150, 150)):
         """創建圖片預覽"""

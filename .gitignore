@@ -1,2 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Virtual envs
 venv/
+.venv/
 whisper_resources/
+
+# OS / Editor
+.DS_Store
+.idea/
+.vscode/
+._*
+
+# Logs & temp
+logs/
+*.log
+*.tmp
+tmp/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/

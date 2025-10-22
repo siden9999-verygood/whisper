@@ -80,6 +80,12 @@ class EnhancedSearchManager:
             if HAS_PANDAS:
                 # 使用 pandas 讀取
                 df = pd.read_csv(csv_path, keep_default_na=False)
+                # 移除完全空白的列（避免因為 CSV 尾端空白行導致多 +1 筆）
+                if not df.empty:
+                    try:
+                        df = df[~(df.apply(lambda r: all((str(v).strip() == '' for v in r)), axis=1))]
+                    except Exception:
+                        pass
                 self.media_data = df.to_dict('records')
             else:
                 # 使用 csv 模組讀取
@@ -87,6 +93,14 @@ class EnhancedSearchManager:
                 with open(csv_path, 'r', encoding='utf-8-sig') as f:
                     reader = csv.DictReader(f)
                     for row in reader:
+                        # 跳過完全空白的列
+                        if row is None:
+                            continue
+                        try:
+                            if all((str(v).strip() == '' for v in row.values())):
+                                continue
+                        except Exception:
+                            pass
                         self.media_data.append(row)
             
             self.logger.info(f"載入了 {len(self.media_data)} 筆媒體資料")
