@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>MESSAGES</key>
+	<array>
+		<string>loại:tin nhắn</string>
+		<string>loại:thông báo</string>
+		<string>loại:thông điệp</string>
+	</array>
+	<key>APPLICATIONS</key>
+	<array>
+		<string>loại:ứng dụng</string>
+		<string>loại:ưd</string>
+		<string>loại:ứ.dụng</string>
+		<string>loại:app</string>
+	</array>
+	<key>CONTACT</key>
+	<array>
+		<string>loại:liên hệ</string>
+		<string>loại:danh bạ</string>
+		<string>loại:mọi người</string>
+		<string>loại:người</string>
+	</array>
+	<key>DOCUMENTS</key>
+	<array>
+		<string>loại:tài liệu</string>
+		<string>loại:văn bản</string>
+		<string>loại:chứng từ</string>
+	</array>
+	<key>DIRECTORIES</key>
+	<array>
+		<string>loại:thư mục</string>
+	</array>
+	<key>EMAIL</key>
+	<array>
+		<string>loại:email</string>
+		<string>loại:e-mail</string>
+		<string>loại:thư điện tử</string>
+		<string>loại:thư</string>
+		<string>loại:thư trong mail</string>
+	</array>
+	<key>EVENT</key>
+	<array>
+		<string>loại:sự kiện</string>
+	</array>
+	<key>TODO</key>
+	<array>
+		<string>loại:lời nhắc</string>
+	</array>
+	<key>EVENT_TODO</key>
+	<array>
+		<string>loại:sự kiện &amp; lời nhắc</string>
+		<string>loại:lời nhắc &amp; sự kiện</string>
+		<string>loại:sự kiện và lời nhắc</string>
+		<string>loại:lời nhắc và sự kiện</string>
+		<string>loại:sự kiện hoặc lời nhắc</string>
+		<string>loại:lời nhắc hoặc sự kiện</string>
+	</array>
+	<key>IMAGES</key>
+	<array>
+		<string>loại:hình ảnh</string>
+		<string>loại:ảnh</string>
+	</array>
+	<key>MOVIES</key>
+	<array>
+		<string>loại:phim</string>
+	</array>
+	<key>MUSIC</key>
+	<array>
+		<string>loại:nhạc</string>
+		<string>loại:âm nhạc</string>
+		<string>loại:bản nhạc</string>
+		<string>loại:bài hát</string>
+		<string>loại:ca khúc</string>
+		<string>loại:âm thanh</string>
+	</array>
+	<key>NEXT_MONTH</key>
+	<array>
+		<string>ngày:tháng sau</string>
+		<string>ngày:tháng tới</string>
+		<string>ngày:tháng tiếp theo</string>
+	</array>
+	<key>NEXT_WEEK</key>
+	<array>
+		<string>ngày:tuần sau</string>
+		<string>ngày:tuần tới</string>
+		<string>ngày:tuần tiếp theo</string>
+	</array>
+	<key>NEXT_YEAR</key>
+	<array>
+		<string>ngày:năm sau</string>
+		<string>ngày:năm tới</string>
+		<string>ngày:năm tiếp theo</string>
+	</array>
+	<key>PDF</key>
+	<array>
+		<string>loại:pdf</string>
+		<string>loại:tệp pdf</string>
+		<string>loại:tài liệu pdf</string>
+		<string>loại:văn bản pdf</string>
+	</array>
+	<key>SYSTEM_PREFS</key>
+	<array>
+		<string>loại:tùy chọn hệ thống</string>
+		<string>loại:thiết lập hệ thống</string>
+		<string>loại:thiết đặt hệ thống</string>
+		<string>loại:tùy chọn</string>
+		<string>loại:thiết lập</string>
+		<string>loại:thiết đặt</string>
+		<string>loại:cài đặt hệ thống</string>
+		<string>loại:cài đặt</string>
+	</array>
+	<key>THIS_MONTH</key>
+	<array>
+		<string>ngày:tháng này</string>
+		<string>ngày:tháng hiện tại</string>
+		<string>ngày:trong tháng</string>
+	</array>
+	<key>THIS_WEEK</key>
+	<array>
+		<string>ngày:tuần này</string>
+		<string>ngày:tuần hiện tại</string>
+		<string>ngày:trong tuần</string>
+	</array>
+	<key>THIS_YEAR</key>
+	<array>
+		<string>ngày:năm nay</string>
+		<string>ngày:trong năm</string>
+	</array>
+	<key>TODAY</key>
+	<array>
+		<string>ngày:hôm nay</string>
+		<string>ngày:trong ngày</string>
+	</array>
+	<key>TOMORROW</key>
+	<array>
+		<string>ngày:ngày mai</string>
+		<string>ngày:hôm sau</string>
+	</array>
+	<key>YESTERDAY</key>
+	<array>
+		<string>ngày:hôm qua</string>
+		<string>ngày:hôm trước</string>
+	</array>
+	<key>DATE</key>
+	<array>
+		<string>ngày:</string>
+	</array>
+	<key>BOOKMARKS</key>
+	<array>
+		<string>loại:dấu trang</string>
+        <string>loại:url</string>
+		<string>loại:trang web</string>
+		<string>loại:trang mạng</string>
+	</array>
+	<key>FONTS</key>
+	<array>
+		<string>loại:phông chữ</string>
+		<string>loại:phông</string>
+		<string>loại:font</string>
+		<string>loại:kiểu chữ</string>
+	</array>
+	<key>PRESENTATIONS</key>
+	<array>
+		<string>loại:bài thuyết trình</string>
+		<string>loại:bản trình bày</string>
+		<string>loại:bản trình chiếu</string>
+	</array>
+	<key>SPREADSHEETS</key>
+	<array>
+		<string>loại:bảng tính</string>
+		<string>loại:trang tính</string>
+	</array>
+	<key>SOURCE</key>
+	<array>
+		<string>loại:nhà phát triển</string>
+		<string>loại:nguồn</string>
+	</array>
+	<key>TEXT</key>
+	<array>
+		<string>loại:văn bản</string>
+		<string>loại:chữ</string>
+	</array>
+	<key>TIPS</key>
+	<array>
+		<string>loại:mẹo</string>
+		<string>loại:bí quyết</string>
+		<string>loại:lời khuyên</string>
+		<string>loại:thủ thuật</string>
+	</array>
+	<key>HELP</key>
+	<array>
+		<string>loại:trợ giúp</string>
+		<string>loại:hỗ trợ</string>
+		<string>loại:giúp đỡ</string>
+	</array>
+</dict>
+</plist>

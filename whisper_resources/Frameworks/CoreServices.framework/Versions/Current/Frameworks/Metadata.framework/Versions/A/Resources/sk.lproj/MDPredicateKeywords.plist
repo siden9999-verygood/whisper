@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>MESSAGES</key>
+	<array>
+		<string>druh:správa</string>
+		<string>druh:správy</string>
+	</array>
+	<key>APPLICATIONS</key>
+	<array>
+		<string>druh:aplikácia</string>
+		<string>druh:aplikácie</string>
+		<string>druh:apl.</string>
+		<string>druh:aplik.</string>
+		<string>druh:app</string>
+		<string>druh:apps</string>
+		<string>druh:apka</string>
+		<string>druh:apky</string>
+		<string>druh:program</string>
+		<string>druh:programy</string>
+	</array>
+	<key>CONTACT</key>
+	<array>
+		<string>druh:kontakt</string>
+		<string>druh:kontakty</string>
+		<string>druh:ľudia</string>
+	</array>
+	<key>DOCUMENTS</key>
+	<array>
+		<string>druh:dokument</string>
+		<string>druh:dokumenty</string>
+	</array>
+	<key>DIRECTORIES</key>
+	<array>
+		<string>druh:priečinok</string>
+		<string>druh:priečinky</string>
+	</array>
+	<key>EMAIL</key>
+	<array>
+		<string>druh:email</string>
+		<string>druh:emaily</string>
+		<string>druh:e-mail</string>
+		<string>druh:e-maily</string>
+		<string>druh:mail</string>
+		<string>druh:emailová správa</string>
+		<string>druh:emailové správy</string>
+		<string>druh:e-mailová správa</string>
+		<string>druh:e-mailová správy</string>
+	</array>
+	<key>EVENT</key>
+	<array>
+		<string>druh:udalosť</string>
+		<string>druh:udalosti</string>
+	</array>
+	<key>TODO</key>
+	<array>
+		<string>druh:pripomienka</string>
+		<string>druh:pripomienky</string>
+	</array>
+	<key>EVENT_TODO</key>
+	<array>
+		<string>druh:udalosti a pripomienky</string>
+		<string>druh:pripomienky a udalosti</string>
+		<string>druh:udalosti &amp; pripomienky</string>
+		<string>druh:pripomienky &amp; udalosti</string>
+		<string>druh:udalosť alebo pripomienka</string>
+		<string>druh:pripomienka alebo udalosť</string>
+	</array>
+	<key>IMAGES</key>
+	<array>
+		<string>druh:obrázok</string>
+		<string>druh:obrázky</string>
+	</array>
+	<key>MOVIES</key>
+	<array>
+		<string>druh:film</string>
+		<string>druh:filmy</string>
+	</array>
+	<key>MUSIC</key>
+	<array>
+		<string>druh:hudba</string>
+		<string>druh:audio</string>
+		<string>druh:skladba</string>
+		<string>druh:skladby</string>
+	</array>
+	<key>NEXT_MONTH</key>
+	<array>
+		<string>dátum:nasledujúci mesiac</string>
+		<string>dátum:ďalší mesiac</string>
+		<string>dátum:budúci mesiac</string>
+	</array>
+	<key>NEXT_WEEK</key>
+	<array>
+		<string>dátum:nasledujúci týždeň</string>
+		<string>dátum:ďalší týždeň</string>
+		<string>dátum:budúci týždeň</string>
+	</array>
+	<key>NEXT_YEAR</key>
+	<array>
+		<string>dátum:nasledujúci rok</string>
+		<string>dátum:ďalší rok</string>
+		<string>dátum:budúci rok</string>
+	</array>
+	<key>PDF</key>
+	<array>
+		<string>druh:pdf</string>
+		<string>druh:pdf dokument</string>
+		<string>druh:pdf dokumenty</string>
+	</array>
+	<key>SYSTEM_PREFS</key>
+	<array>
+		<string>druh:systémové nastavenia</string>
+		<string>druh:nastavenia</string>
+		<string>druh:nastavenie</string>
+		<string>druh:syst. nastavenia</string>
+		<string>druh:systémové nast.</string>
+		<string>druh:sys. nastavenia</string>
+		<string>druh:nast.</string>
+	</array>
+	<key>THIS_MONTH</key>
+	<array>
+		<string>dátum:tento mesiac</string>
+	</array>
+	<key>THIS_WEEK</key>
+	<array>
+		<string>dátum:tento týždeň</string>
+	</array>
+	<key>THIS_YEAR</key>
+	<array>
+		<string>dátum:tento rok</string>
+	</array>
+	<key>TODAY</key>
+	<array>
+		<string>dátum:dnes</string>
+	</array>
+	<key>TOMORROW</key>
+	<array>
+		<string>dátum:zajtra</string>
+	</array>
+	<key>YESTERDAY</key>
+	<array>
+		<string>dátum:včera</string>
+	</array>
+	<key>DATE</key>
+	<array>
+		<string>dátum:</string>
+	</array>
+	<key>BOOKMARKS</key>
+	<array>
+		<string>druh:záložka</string>
+		<string>druh:záložky</string>
+		<string>druh:url</string>
+		<string>druh:webová stránka</string>
+		<string>druh:webové stránky</string>
+	</array>
+	<key>FONTS</key>
+	<array>
+		<string>druh:písmo</string>
+		<string>druh:písma</string>
+	</array>
+	<key>PRESENTATIONS</key>
+	<array>
+		<string>druh:prezentácia</string>
+		<string>druh:prezentácie</string>
+	</array>
+	<key>SPREADSHEETS</key>
+	<array>
+		<string>druh:tabuľka</string>
+		<string>druh:tabuľky</string>
+	</array>
+	<key>SOURCE</key>
+	<array>
+		<string>druh:vývojár</string>
+		<string>druh:zdroj</string>
+	</array>
+	<key>TEXT</key>
+	<array>
+		<string>druh:text</string>
+	</array>
+	<key>TIPS</key>
+	<array>
+		<string>druh:tipy</string>
+		<string>druh:tip</string>
+	</array>
+	<key>HELP</key>
+	<array>
+		<string>kind:pomocník</string>
+	</array>
+</dict>
+</plist>

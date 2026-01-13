@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>MESSAGES</key>
+	<array>
+		<string>type:besked</string>
+		<string>type:beskeder</string>
+	</array>
+	<key>APPLICATIONS</key>
+	<array>
+		<string>type:program</string>
+		<string>type:programmer</string>
+		<string>type:app</string>
+		<string>type:apps</string>
+	</array>
+	<key>CONTACT</key>
+	<array>
+		<string>type:kontakt</string>
+		<string>type:kontakter</string>
+		<string>type:personer</string>
+	</array>
+	<key>DOCUMENTS</key>
+	<array>
+		<string>type:dokument</string>
+		<string>type:dokumenter</string>
+	</array>
+	<key>DIRECTORIES</key>
+	<array>
+		<string>type:mappe</string>
+		<string>type:mapper</string>
+	</array>
+	<key>EMAIL</key>
+	<array>
+		<string>type:e-mail</string>
+		<string>type:e-mails</string>
+		<string>type:e-mailbesked</string>
+		<string>type:e-mailbeskeder</string>
+		<string>type:mail</string>
+		<string>type:mails</string>
+	</array>
+	<key>EVENT</key>
+	<array>
+		<string>type:begivenhed</string>
+		<string>type:begivenheder</string>
+	</array>
+	<key>TODO</key>
+	<array>
+		<string>type:påmindelse</string>
+		<string>type:påmindelser</string>
+	</array>
+	<key>EVENT_TODO</key>
+	<array>
+		<string>type:begivenheder &amp; påmindelser</string>
+		<string>type:påmindelser &amp; begivenheder</string>
+		<string>type:begivenheder og påmindelser</string>
+		<string>type:påmindelser og begivenheder</string>
+		<string>type:begivenhed eller påmindelse</string>
+		<string>type:påmindelse eller begivenhed</string>
+	</array>
+		<key>IMAGES</key>
+	<array>
+		<string>type:billede</string>
+		<string>type:billeder</string>		
+	</array>
+	<key>MOVIES</key>
+	<array>
+		<string>type:film</string>
+	</array>
+	<key>MUSIC</key>
+	<array>
+		<string>type:musik</string>
+		<string>type:sang</string>
+		<string>type:sange</string>
+		<string>type:lyd</string>
+	</array>
+	<key>NEXT_MONTH</key>
+	<array>
+		<string>dato:næste måned</string>
+	</array>
+	<key>NEXT_WEEK</key>
+	<array>
+		<string>dato:næste uge</string>
+	</array>
+	<key>NEXT_YEAR</key>
+	<array>
+		<string>dato:næste år</string>
+	</array>
+	<key>PDF</key>
+	<array>
+		<string>type:pdf</string>
+		<string>type:pdf'er</string>
+		<string>type:pdf-dokument</string>
+		<string>type:pdf-dokumenter</string>
+	</array>
+	<key>SYSTEM_PREFS</key>
+	<array>
+		<string>type:systemind.</string>
+		<string>type:systeminds.</string>
+		<string>type:systemindst.</string>
+		<string>type:ind.</string>
+		<string>type:inds.</string>
+		<string>type:indst.</string>
+		<string>type:indstilling</string>
+		<string>type:indstillinger</string>
+		<string>type:systemindstillinger</string>
+		<string>type:systemindstilling</string>
+	</array>
+	<key>THIS_MONTH</key>
+	<array>
+		<string>dato:denne måned</string>
+	</array>
+	<key>THIS_WEEK</key>
+	<array>
+		<string>dato:denne uge</string>
+	</array>
+	<key>THIS_YEAR</key>
+	<array>
+		<string>dato:dette år</string>
+	</array>
+	<key>TODAY</key>
+	<array>
+		<string>dato:i dag</string>
+	</array>
+	<key>TOMORROW</key>
+	<array>
+		<string>dato:i morgen</string>
+	</array>
+	<key>YESTERDAY</key>
+	<array>
+		<string>dato:i går</string>
+	</array>
+	<key>DATE</key>
+	<array>
+		<string>dato:</string>
+	</array>
+	<key>BOOKMARKS</key>
+	<array>
+		<string>type:bogmærke</string>
+		<string>type:bogmærker</string>
+		<string>type:url</string>
+		<string>type:url-adresser</string>
+		<string>type:webside</string>
+		<string>type:websider</string>
+	</array>
+	<key>FONTS</key>
+	<array>
+		<string>type:skrift</string>
+		<string>type:skrifter</string>
+	</array>
+	<key>PRESENTATIONS</key>
+	<array>
+		<string>type:præsentationer</string>
+		<string>type:præsentation</string>
+	</array>
+	<key>SPREADSHEETS</key>
+	<array>
+		<string>type:regneark</string>
+	</array>
+	<key>SOURCE</key>
+	<array>
+		<string>type:udvikler</string>
+		<string>type:kilde</string>
+	</array>
+	<key>TEXT</key>
+	<array>
+		<string>type:tekst</string>
+	</array>
+		<key>TIPS</key>
+	<array>
+		<string>type:tips</string>
+		<string>type:tip</string>
+	</array>
+	<key>HELP</key>
+	<array>
+		<string>type:hjælp</string>
+	</array>
+</dict>
+</plist>

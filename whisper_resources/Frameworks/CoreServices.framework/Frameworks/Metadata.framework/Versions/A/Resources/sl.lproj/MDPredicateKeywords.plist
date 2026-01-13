@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>MESSAGES</key>
+	<array>
+		<string>kind:sporočilo</string>
+		<string>kind:sporočila</string>
+	</array>
+	<key>APPLICATIONS</key>
+	<array>
+		<string>kind:aplikacija</string>
+		<string>kind:aplikacije</string>
+	</array>
+	<key>CONTACT</key>
+	<array>
+		<string>kind:stik</string>
+		<string>kind:stiki</string>
+		<string>kind:osebe</string>
+	</array>
+	<key>DOCUMENTS</key>
+	<array>
+		<string>kind:dokument</string>
+		<string>kind:dokumenti</string>
+	</array>
+	<key>DIRECTORIES</key>
+	<array>
+		<string>kind:mapa</string>
+		<string>kind:mape</string>
+	</array>
+	<key>EMAIL</key>
+	<array>
+		<string>kind:e-pošta</string>
+		<string>kind:pošta</string>
+		<string>kind:e-poštno sporočilo</string>
+		<string>kind:e-poštna sporočila</string>
+	</array>
+	<key>EVENT</key>
+	<array>
+		<string>kind:dogodek</string>
+		<string>kind:dogodki</string>
+	</array>
+	<key>TODO</key>
+	<array>
+		<string>kind:opomnik</string>
+		<string>kind:opomniki</string>
+	</array>
+	<key>EVENT_TODO</key>
+	<array>
+		<string>kind:dogodki in opomniki</string>
+		<string>kind:opomniki in dogodki</string>
+		<string>kind:dogodek ali opomnik</string>
+		<string>kind:opomnik ali dogodek</string>
+	</array>
+	<key>IMAGES</key>
+	<array>
+		<string>kind:slika</string>
+		<string>kind:slike</string>
+	</array>
+	<key>MOVIES</key>
+	<array>
+		<string>kind:film</string>
+		<string>kind:filmi</string>
+	</array>
+	<key>MUSIC</key>
+	<array>
+		<string>kind:glasba</string>
+		<string>kind:skladba</string>
+		<string>kind:skladbe</string>
+		<string>kind:zvok</string>
+	</array>
+	<key>NEXT_MONTH</key>
+	<array>
+		<string>date:naslednji mesec</string>
+	</array>
+	<key>NEXT_WEEK</key>
+	<array>
+		<string>date:naslednji teden</string>
+	</array>
+	<key>NEXT_YEAR</key>
+	<array>
+		<string>date:naslednje leto</string>
+	</array>
+	<key>PDF</key>
+	<array>
+		<string>kind:pdf</string>
+		<string>kind:pdf-ji</string>
+		<string>kind:dokument pdf</string>
+		<string>kind:dokumenti pdf</string>
+	</array>
+	<key>SYSTEM_PREFS</key>
+	<array>
+		<string>kind:nastavitve sistema</string>
+		<string>kind:sistemske nastavitve</string>
+		<string>kind:nastavitve</string>
+		<string>kind:nastavitev</string>
+	</array>
+	<key>THIS_MONTH</key>
+	<array>
+		<string>date:ta mesec</string>
+	</array>
+	<key>THIS_WEEK</key>
+	<array>
+		<string>date:ta teden</string>
+	</array>
+	<key>THIS_YEAR</key>
+	<array>
+		<string>date:letos</string>
+	</array>
+	<key>TODAY</key>
+	<array>
+		<string>date:danes</string>
+	</array>
+	<key>TOMORROW</key>
+	<array>
+		<string>date:jutri</string>
+	</array>
+	<key>YESTERDAY</key>
+	<array>
+		<string>date:včeraj</string>
+	</array>
+	<key>DATE</key>
+	<array>
+		<string>date:</string>
+	</array>
+	<key>BOOKMARKS</key>
+	<array>
+		<string>kind:zaznamek</string>
+		<string>kind:zaznamki</string>
+		<string>kind:url</string>
+		<string>kind:url-ji</string>
+		<string>kind:spletna stran</string>
+		<string>kind:spletne strani</string>
+	</array>
+	<key>FONTS</key>
+	<array>
+		<string>kind:pisava</string>
+		<string>kind:pisave</string>
+	</array>
+	<key>PRESENTATIONS</key>
+	<array>
+		<string>kind:predstavitev</string>
+		<string>kind:predstavitve</string>
+	</array>
+	<key>SPREADSHEETS</key>
+	<array>
+		<string>kind:preglednica</string>
+		<string>kind:preglednice</string>
+	</array>
+	<key>SOURCE</key>
+	<array>
+		<string>kind:razvijalec</string>
+		<string>kind:vir</string>
+	</array>
+	<key>TEXT</key>
+	<array>
+		<string>kind:besedilo</string>
+	</array>
+	<key>TIPS</key>
+	<array>
+		<string>kind:nasveti</string>
+		<string>kind:nasvet</string>
+	</array>
+	<key>HELP</key>
+	<array>
+		<string>kind:pomoč</string>
+	</array>
+</dict>
+</plist>

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>MESSAGES</key>
+	<array>
+		<string>tipus:missatge</string>
+		<string>tipus:missatges</string>
+	</array>
+	<key>APPLICATIONS</key>
+	<array>
+		<string>tipus:aplicació</string>
+		<string>tipus:aplicacions</string>
+		<string>tipus:aplicació mòbil</string>
+		<string>tipus:aplicacions mòbils</string>
+		<string>tipus:app</string>
+		<string>tipus:apps</string>
+		<string>tipus:app mòbil</string>
+		<string>tipus:apps mòbils</string>
+		<string>tipus:apli</string>
+		<string>tipus:aplis</string>
+		<string>apli mòbil</string>
+		<string>aplis mòbils</string>
+	</array>
+	<key>CONTACT</key>
+	<array>
+		<string>tipus:contacte</string>
+		<string>tipus:contactes</string>
+		<string>tipus:persones</string>
+	</array>
+	<key>DOCUMENTS</key>
+	<array>
+		<string>tipus:document</string>
+		<string>tipus:documents</string>
+	</array>
+	<key>DIRECTORIES</key>
+	<array>
+		<string>tipus:carpeta</string>
+		<string>tipus:carpetes</string>
+	</array>
+	<key>EMAIL</key>
+	<array>
+		<string>tipus:correu electrònic</string>
+		<string>tipus:correus electrònics</string>
+		<string>tipus:correu</string>
+		<string>tipus:correus</string>
+		<string>tipus:c/e</string>
+		<string>tipus:correu-e</string>
+		<string>tipus:correus-e</string>
+		<string>tipus:missatge electrònic</string>
+		<string>tipus:missatges electrònics</string>
+		<string>tipus:missatge de correu electrònic</string>
+		<string>tipus:missatges de correu electrònic</string>
+		<string>tipus:missatge de correu</string>
+		<string>tipus:missatges de correu</string>
+	</array>
+	<key>EVENT</key>
+	<array>
+		<string>tipus:esdeveniment</string>
+		<string>tipus:esdeveniments</string>
+	</array>
+	<key>TODO</key>
+	<array>
+		<string>tipus:recordatori</string>
+		<string>tipus:recordatoris</string>
+	</array>
+	<key>EVENT_TODO</key>
+	<array>
+		<string>tipus:esdeveniments i recordatoris</string>
+		<string>tipus:recordatoris i esdeveniments</string>
+		<string>tipus:esdeveniment o recordatori</string>
+		<string>tipus:recordatori o esdeveniment</string>
+	</array>
+	<key>IMAGES</key>
+	<array>
+		<string>tipus:imatge</string>
+		<string>tipus:imatges</string>
+	</array>
+	<key>MOVIES</key>
+	<array>
+		<string>tipus:vídeo</string>
+		<string>tipus:vídeos</string>
+		<string>tipus:pel·lícula</string>
+		<string>tipus:pel·lícules</string>
+	</array>
+	<key>MUSIC</key>
+	<array>
+		<string>tipus:música</string>
+		<string>tipus:cançó</string>
+		<string>tipus:cançons</string>
+		<string>tipus:àudio</string>
+	</array>
+	<key>NEXT_MONTH</key>
+	<array>
+		<string>data:mes vinent</string>
+		<string>data:mes que ve</string>
+		<string>data:proper mes</string>
+		<string>data:pròxim mes</string>
+		<string>data:mes següent</string>
+		<string>data:següent mes</string>
+	</array>
+	<key>NEXT_WEEK</key>
+	<array>
+		<string>data:setmana vinent</string>
+		<string>data:setmana que ve</string>
+		<string>data:propera setmana</string>
+		<string>data:pròxima setmana</string>
+		<string>data:setmana següent</string>
+		<string>data:següent setmana</string>
+	</array>
+	<key>NEXT_YEAR</key>
+	<array>
+		<string>data:any vinent</string>
+		<string>data:any que ve</string>
+		<string>data:proper any</string>
+		<string>data:pròxim any</string>
+		<string>data:any següent</string>
+		<string>data:següent any</string>
+	</array>
+	<key>PDF</key>
+	<array>
+		<string>tipus:pdf</string>
+		<string>tipus:pdfs</string>
+		<string>tipus:document pdf</string>
+		<string>tipus:documents pdf</string>
+	</array>
+	<key>SYSTEM_PREFS</key>
+	<array>
+		<string>tipus:preferència del sistema</string>
+		<string>tipus:preferències del sistema</string>
+		<string>tipus:preferència</string>
+		<string>tipus:preferències</string>
+		<string>tipus:configuració del sistema</string>
+		<string>tipus:configuracions del sistema</string>
+		<string>tipus:configuració</string>
+		<string>tipus:configuracions</string>
+	</array>
+	<key>THIS_MONTH</key>
+	<array>
+		<string>data:aquest mes</string>
+	</array>
+	<key>THIS_WEEK</key>
+	<array>
+		<string>data:aquesta setmana</string>
+	</array>
+	<key>THIS_YEAR</key>
+	<array>
+		<string>data:aquest any</string>
+		<string>data:enguany</string>
+	</array>
+	<key>TODAY</key>
+	<array>
+		<string>data:avui</string>
+	</array>
+	<key>TOMORROW</key>
+	<array>
+		<string>data:demà</string>
+	</array>
+	<key>YESTERDAY</key>
+	<array>
+		<string>data:ahir</string>
+	</array>
+	<key>DATE</key>
+	<array>
+		<string>data:</string>
+	</array>
+	<key>BOOKMARKS</key>
+	<array>
+		<string>tipus:marcador</string>
+		<string>tipus:marcadors</string>
+		<string>tipus:url</string>
+		<string>tipus:urls</string>
+		<string>tipus:pàgina web</string>
+		<string>tipus:pàgines web</string>
+	</array>
+	<key>FONTS</key>
+	<array>
+		<string>tipus:tipus de lletra</string>
+		<string>tipus:tipus de lletres</string>
+	</array>
+	<key>PRESENTATIONS</key>
+	<array>
+		<string>tipus:presentació</string>
+		<string>tipus:presentacions</string>
+	</array>
+	<key>SPREADSHEETS</key>
+	<array>
+		<string>tipus:fulls de càlcul</string>
+		<string>tipus:full de càlcul</string>
+	</array>
+	<key>SOURCE</key>
+	<array>
+		<string>tipus:desenvolupador</string>
+		<string>tipus:desenvolupadora</string>
+		<string>tipus:desenvolupadors</string>
+		<string>tipus:desenvolupadores</string>
+		<string>tipus:desenvolupament</string>
+		<string>tipus:font</string>
+		<string>tipus:codi font</string>
+	</array>
+	<key>TEXT</key>
+	<array>
+		<string>tipus:text</string>
+	</array>
+	<key>TIPS</key>
+	<array>
+		<string>tipus:consell</string>
+		<string>tipus:consells</string>
+	</array>
+	<key>HELP</key>
+	<array>
+		<string>tipus:ajuda</string>
+	</array>
+</dict>
+</plist>

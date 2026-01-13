@@ -1,0 +1,166 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+<struct name='FSEventStreamContext' type64='{FSEventStreamContext=&quot;version&quot;q&quot;info&quot;^v&quot;retain&quot;^?&quot;release&quot;^?&quot;copyDescription&quot;^?}'/>
+<opaque name='ConstFSEventStreamRef' type64='^{__FSEventStream=}'/>
+<opaque name='FSEventStreamRef' type64='^{__FSEventStream=}'/>
+<enum name='kFSEventStreamCreateFlagFileEvents' value64='16'/>
+<enum name='kFSEventStreamCreateFlagFullHistory' value64='128'/>
+<enum name='kFSEventStreamCreateFlagIgnoreSelf' value64='8'/>
+<enum name='kFSEventStreamCreateFlagMarkSelf' value64='32'/>
+<enum name='kFSEventStreamCreateFlagNoDefer' value64='2'/>
+<enum name='kFSEventStreamCreateFlagNone' value64='0'/>
+<enum name='kFSEventStreamCreateFlagUseCFTypes' value64='1'/>
+<enum name='kFSEventStreamCreateFlagUseExtendedData' value64='64'/>
+<enum name='kFSEventStreamCreateFlagWatchRoot' value64='4'/>
+<enum name='kFSEventStreamCreateWithDocID' value64='256'/>
+<enum name='kFSEventStreamEventFlagEventIdsWrapped' value64='8'/>
+<enum name='kFSEventStreamEventFlagHistoryDone' value64='16'/>
+<enum name='kFSEventStreamEventFlagItemChangeOwner' value64='16384'/>
+<enum name='kFSEventStreamEventFlagItemCloned' value64='4194304'/>
+<enum name='kFSEventStreamEventFlagItemCreated' value64='256'/>
+<enum name='kFSEventStreamEventFlagItemFinderInfoMod' value64='8192'/>
+<enum name='kFSEventStreamEventFlagItemInodeMetaMod' value64='1024'/>
+<enum name='kFSEventStreamEventFlagItemIsDir' value64='131072'/>
+<enum name='kFSEventStreamEventFlagItemIsFile' value64='65536'/>
+<enum name='kFSEventStreamEventFlagItemIsHardlink' value64='1048576'/>
+<enum name='kFSEventStreamEventFlagItemIsLastHardlink' value64='2097152'/>
+<enum name='kFSEventStreamEventFlagItemIsSymlink' value64='262144'/>
+<enum name='kFSEventStreamEventFlagItemModified' value64='4096'/>
+<enum name='kFSEventStreamEventFlagItemRemoved' value64='512'/>
+<enum name='kFSEventStreamEventFlagItemRenamed' value64='2048'/>
+<enum name='kFSEventStreamEventFlagItemXattrMod' value64='32768'/>
+<enum name='kFSEventStreamEventFlagKernelDropped' value64='4'/>
+<enum name='kFSEventStreamEventFlagMount' value64='64'/>
+<enum name='kFSEventStreamEventFlagMustScanSubDirs' value64='1'/>
+<enum name='kFSEventStreamEventFlagNone' value64='0'/>
+<enum name='kFSEventStreamEventFlagOwnEvent' value64='524288'/>
+<enum name='kFSEventStreamEventFlagRootChanged' value64='32'/>
+<enum name='kFSEventStreamEventFlagUnmount' value64='128'/>
+<enum name='kFSEventStreamEventFlagUserDropped' value64='2'/>
+<enum name='kFSEventStreamEventIdSinceNow' value64='-1'/>
+<function name='FSEventStreamCopyDescription'>
+<arg type64='^{__FSEventStream=}'/>
+<retval already_retained='true' type64='^{__CFString=}'/>
+</function>
+<function name='FSEventStreamCopyPathsBeingWatched'>
+<arg type64='^{__FSEventStream=}'/>
+<retval already_retained='true' type64='^{__CFArray=}'/>
+</function>
+<function name='FSEventStreamCreate'>
+<arg type64='^{__CFAllocator=}' type_modifier='n'/>
+<arg function_pointer='true' type64='^?' type_modifier='n'>
+<arg type64='^{__FSEventStream=}'/>
+<arg type64='^v'/>
+<arg type64='Q'/>
+<arg type64='^v'/>
+<arg type64='^I'/>
+<arg type64='^Q'/>
+<retval type64='v'/>
+</arg>
+<arg type64='^{FSEventStreamContext=q^v^?^?^?}' type_modifier='n'/>
+<arg type64='^{__CFArray=}'/>
+<arg type64='Q'/>
+<arg type64='d'/>
+<arg type64='I'/>
+<retval already_retained='true' type64='^{__FSEventStream=}'/>
+</function>
+<function name='FSEventStreamCreateRelativeToDevice'>
+<arg type64='^{__CFAllocator=}' type_modifier='n'/>
+<arg function_pointer='true' type64='^?' type_modifier='n'>
+<arg type64='^{__FSEventStream=}'/>
+<arg type64='^v'/>
+<arg type64='Q'/>
+<arg type64='^v'/>
+<arg type64='^I'/>
+<arg type64='^Q'/>
+<retval type64='v'/>
+</arg>
+<arg type64='^{FSEventStreamContext=q^v^?^?^?}' type_modifier='n'/>
+<arg type64='i'/>
+<arg type64='^{__CFArray=}' type_modifier='n'/>
+<arg type64='Q'/>
+<arg type64='d'/>
+<arg type64='I'/>
+<retval already_retained='true' type64='^{__FSEventStream=}'/>
+</function>
+<function name='FSEventStreamFlushAsync'>
+<arg type64='^{__FSEventStream=}'/>
+<retval type64='Q'/>
+</function>
+<function name='FSEventStreamFlushSync'>
+<arg type64='^{__FSEventStream=}'/>
+<retval type64='v'/>
+</function>
+<function name='FSEventStreamGetDeviceBeingWatched'>
+<arg type64='^{__FSEventStream=}'/>
+<retval type64='i'/>
+</function>
+<function name='FSEventStreamGetLatestEventId'>
+<arg type64='^{__FSEventStream=}'/>
+<retval type64='Q'/>
+</function>
+<function name='FSEventStreamInvalidate'>
+<arg type64='^{__FSEventStream=}'/>
+<retval type64='v'/>
+</function>
+<function name='FSEventStreamRelease'>
+<arg type64='^{__FSEventStream=}'/>
+<retval type64='v'/>
+</function>
+<function name='FSEventStreamRetain'>
+<arg type64='^{__FSEventStream=}'/>
+<retval type64='v'/>
+</function>
+<function name='FSEventStreamScheduleWithRunLoop'>
+<arg type64='^{__FSEventStream=}'/>
+<arg type64='^{__CFRunLoop=}' type_modifier='n'/>
+<arg type64='^{__CFString=}' type_modifier='n'/>
+<retval type64='v'/>
+</function>
+<function name='FSEventStreamSetDispatchQueue'>
+<arg type64='^{__FSEventStream=}'/>
+<arg type64='@'/>
+<retval type64='v'/>
+</function>
+<function name='FSEventStreamSetExclusionPaths'>
+<arg type64='^{__FSEventStream=}'/>
+<arg type64='^{__CFArray=}'/>
+<retval type64='B'/>
+</function>
+<function name='FSEventStreamShow'>
+<arg type64='^{__FSEventStream=}'/>
+<retval type64='v'/>
+</function>
+<function name='FSEventStreamStart'>
+<arg type64='^{__FSEventStream=}'/>
+<retval type64='B'/>
+</function>
+<function name='FSEventStreamStop'>
+<arg type64='^{__FSEventStream=}'/>
+<retval type64='v'/>
+</function>
+<function name='FSEventStreamUnscheduleFromRunLoop'>
+<arg type64='^{__FSEventStream=}'/>
+<arg type64='^{__CFRunLoop=}' type_modifier='n'/>
+<arg type64='^{__CFString=}' type_modifier='n'/>
+<retval type64='v'/>
+</function>
+<function name='FSEventsCopyUUIDForDevice'>
+<arg type64='i'/>
+<retval already_retained='true' type64='^{__CFUUID=}'/>
+</function>
+<function name='FSEventsGetCurrentEventId'>
+<retval type64='Q'/>
+</function>
+<function name='FSEventsGetLastEventIdForDeviceBeforeTime'>
+<arg type64='i'/>
+<arg type64='d'/>
+<retval type64='Q'/>
+</function>
+<function name='FSEventsPurgeEventsForDeviceUpToEventId'>
+<arg type64='i'/>
+<arg type64='Q'/>
+<retval type64='B'/>
+</function>
+</signatures>

@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist SYSTEM "file://localhost/System/Library/DTDs/PropertyList.dtd">
+<plist version="0.9">
+<dict>
+	<key>KeyNames</key>
+	<array>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string>($0A)</string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string>Return</string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string>टैब</string>
+		<string>स्पेस</string>
+		<string></string>
+		<string>डिलीट</string>
+		<string>($34)</string>
+		<string>Esc</string>
+		<string>कंट्रोल</string>
+		<string>कमांड</string>
+		<string>शिफ़्ट</string>
+		<string>कैप्स लॉक</string>
+		<string>ऑप्शन</string>
+		<string>कंट्रोल</string>
+		<string>शिफ़्ट</string>
+		<string>ऑप्शन</string>
+		<string>कंट्रोल</string>
+		<string>($3F)</string>
+		<string>F17</string>
+		<string>. (कीपैड)</string>
+		<string>($42)</string>
+		<string>* (कीपैड)</string>
+		<string>($44)</string>
+		<string>+ (कीपैड)</string>
+		<string>($46)</string>
+		<string>Clear</string>
+		<string>($48)</string>
+		<string>($49)</string>
+		<string>($4A)</string>
+		<string>/ (कीपैड)</string>
+		<string>Enter</string>
+		<string>($4D)</string>
+		<string>- (कीपैड)</string>
+		<string>F18</string>
+		<string>F19</string>
+		<string>= (कीपैड)</string>
+		<string>0 (कीपैड)</string>
+		<string>1 (कीपैड)</string>
+		<string>2 (कीपैड)</string>
+		<string>3 (कीपैड)</string>
+		<string>4 (कीपैड)</string>
+		<string>5 (कीपैड)</string>
+		<string>6 (कीपैड)</string>
+		<string>7 (कीपैड)</string>
+		<string>($5A)</string>
+		<string>8 (कीपैड)</string>
+		<string>9 (कीपैड)</string>
+		<string>($5D)</string>
+		<string>($5E)</string>
+		<string>($5F)</string>
+		<string>F5</string>
+		<string>F6</string>
+		<string>F7</string>
+		<string>F3</string>
+		<string>F8</string>
+		<string>F9</string>
+		<string>($66)</string>
+		<string>F11</string>
+		<string>($68)</string>
+		<string>F13</string>
+		<string>F16</string>
+		<string>F14</string>
+		<string>($6C)</string>
+		<string>F10</string>
+		<string>($6E)</string>
+		<string>F12</string>
+		<string>रिकॉर्ड</string>
+		<string>F15</string>
+		<string>सहायता</string>
+		<string>होम</string>
+		<string>पेज अप</string>
+		<string>Del</string>
+		<string>F4</string>
+		<string>समाप्त</string>
+		<string>F2</string>
+		<string>पेज डाउन</string>
+		<string>F1</string>
+		<string>बायाँ तीर</string>
+		<string>दायाँ तीर</string>
+		<string>नीचे तीर</string>
+		<string>ऊपर तीर</string>
+		<string>आरंभ</string>
+	</array>
+	<key>ModifierKeyNames</key>
+	<array>
+		<string>कमांड+</string>
+		<string>शिफ़्ट+</string>
+		<string>कैप्स लॉक+</string>
+		<string>ऑप्शन+</string>
+		<string>कंट्रोल+</string>
+	</array>
+	<key>ValidListenKeys</key>
+	<array>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<true/>
+		<false/>
+		<false/>
+		<true/>
+		<false/>
+		<false/>
+		<true/>
+		<false/>
+		<false/>
+		<true/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<true/>
+		<false/>
+		<true/>
+		<true/>
+		<true/>
+		<true/>
+		<false/>
+		<false/>
+		<true/>
+		<false/>
+		<false/>
+		<true/>
+		<true/>
+		<false/>
+		<true/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<true/>
+		<false/>
+		<true/>
+		<false/>
+		<true/>
+		<false/>
+		<true/>
+		<false/>
+		<false/>
+		<false/>
+		<true/>
+		<false/>
+		<false/>
+		<true/>
+		<false/>
+		<false/>
+		<true/>
+		<true/>
+		<true/>
+		<true/>
+		<true/>
+		<true/>
+		<true/>
+		<true/>
+		<true/>
+		<false/>
+		<true/>
+		<true/>
+		<false/>
+		<false/>
+		<false/>
+		<true/>
+		<true/>
+		<true/>
+		<false/>
+		<true/>
+		<true/>
+		<false/>
+		<true/>
+		<false/>
+		<true/>
+		<false/>
+		<true/>
+		<false/>
+		<true/>
+		<false/>
+		<true/>
+		<false/>
+		<true/>
+		<false/>
+		<false/>
+		<false/>
+		<true/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<false/>
+		<true/>
+	</array>
+</dict>
+</plist>

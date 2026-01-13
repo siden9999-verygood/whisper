@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>MESSAGES</key>
+	<array>
+		<string>tipo:mensagem</string>
+		<string>tipo:mensagens</string>
+	</array>
+	<key>APPLICATIONS</key>
+	<array>
+		<string>tipo:aplicativo</string>
+		<string>tipo:aplicativos</string>
+		<string>tipo:app</string>
+		<string>tipo:apps</string>
+	</array>
+	<key>CONTACT</key>
+	<array>
+		<string>tipo:contato</string>
+		<string>tipo:contatos</string>
+		<string>tipo:pessoa</string>
+		<string>tipo:pessoas</string>
+	</array>
+	<key>DOCUMENTS</key>
+	<array>
+		<string>tipo:documento</string>
+		<string>tipo:documentos</string>
+	</array>
+	<key>DIRECTORIES</key>
+	<array>
+		<string>tipo:pasta</string>
+		<string>tipo:pastas</string>
+	</array>
+	<key>EMAIL</key>
+	<array>
+		<string>tipo:e-mail</string>
+		<string>tipo:e-mails</string>
+		<string>tipo:correio</string>
+		<string>tipo:mensagem de correio</string>
+		<string>tipo:mensagens de correio</string>
+	</array>
+	<key>EVENT</key>
+	<array>
+		<string>tipo:evento</string>
+		<string>tipo:eventos</string>
+	</array>
+	<key>TODO</key>
+	<array>
+		<string>tipo:lembrete</string>
+		<string>tipo:lembretes</string>
+	</array>
+	<key>EVENT_TODO</key>
+	<array>
+		<string>tipo:eventos &amp; lembretes</string>
+		<string>tipo:lembretes &amp; eventos</string>
+		<string>tipo:eventos e lembretes</string>
+		<string>tipo:lembretes e eventos</string>
+		<string>tipo:evento ou lembrete</string>
+		<string>tipo:lembrete ou evento</string>
+	</array>
+	<key>IMAGES</key>
+	<array>
+		<string>tipo:imagem</string>
+		<string>tipo:imagens</string>
+	</array>
+	<key>MOVIES</key>
+	<array>
+		<string>tipo:filme</string>
+		<string>tipo:filmes</string>
+	</array>
+	<key>MUSIC</key>
+	<array>
+		<string>tipo:música</string>
+		<string>tipo:canção</string>
+		<string>tipo:músicas</string>
+		<string>tipo:áudio</string>
+	</array>
+	<key>NEXT_MONTH</key>
+	<array>
+		<string>data:próximo mês</string>
+		<string>data:mês que vem</string>
+	</array>
+	<key>NEXT_WEEK</key>
+	<array>
+		<string>data:próxima semana</string>
+		<string>data:semana que vem</string>
+	</array>
+	<key>NEXT_YEAR</key>
+	<array>
+		<string>data:próximo ano</string>
+		<string>data:ano que vem</string>
+	</array>
+	<key>PDF</key>
+	<array>
+		<string>tipo:pdf</string>
+		<string>tipo:pdfs</string>
+		<string>tipo:documento pdf</string>
+		<string>tipo:documentos pdf</string>
+	</array>
+	<key>SYSTEM_PREFS</key>
+	<array>
+		<string>tipo:preferência do sistema</string>
+		<string>tipo:preferências do sistema</string>
+		<string>tipo:preferencias do sistema</string>
+		<string>tipo:preferencia</string>
+		<string>tipo:preferencias</string>
+		<string>tipo:preferência</string>
+		<string>tipo:preferências</string>
+		<string>tipo:ajustes do sistema</string>
+		<string>tipo:ajuste do sistema</string>
+		<string>tipo:ajustes</string>
+		<string>tipo:ajuste</string>
+	</array>
+	<key>THIS_MONTH</key>
+	<array>
+		<string>data:este mês</string>
+	</array>
+	<key>THIS_WEEK</key>
+	<array>
+		<string>data:esta semana</string>
+	</array>
+	<key>THIS_YEAR</key>
+	<array>
+		<string>data:este ano</string>
+	</array>
+	<key>TODAY</key>
+	<array>
+		<string>data:hoje</string>
+	</array>
+	<key>TOMORROW</key>
+	<array>
+		<string>data:amanhã</string>
+	</array>
+	<key>YESTERDAY</key>
+	<array>
+		<string>data:ontem</string>
+	</array>
+	<key>DATE</key>
+	<array>
+		<string>data:</string>
+	</array>
+	<key>BOOKMARKS</key>
+	<array>
+		<string>tipo:favorito</string>
+		<string>tipo:favoritos</string>
+		<string>tipo:url</string>
+		<string>tipo:urls</string>
+		<string>tipo:página web</string>
+		<string>tipo:páginas web</string>
+	</array>
+	<key>FONTS</key>
+	<array>
+		<string>tipo:fonte</string>
+		<string>tipo:fontes</string>
+	</array>
+	<key>PRESENTATIONS</key>
+	<array>
+		<string>tipo:apresentações</string>
+		<string>tipo:apresentação</string>
+	</array>
+	<key>SPREADSHEETS</key>
+	<array>
+		<string>tipo:planilhas</string>
+		<string>tipo:planilha</string>
+	</array>
+	<key>SOURCE</key>
+	<array>
+		<string>tipo:desenvolvedor</string>
+		<string>tipo:código-fonte</string>
+	</array>
+	<key>TEXT</key>
+	<array>
+		<string>tipo:texto</string>
+	</array>
+	<key>TIPS</key>
+	<array>
+		<string>tipo:dicas</string>
+		<string>tipo:dica</string>
+	</array>
+	<key>HELP</key>
+	<array>
+		<string>tipo:ajuda</string>
+	</array>
+</dict>
+</plist>

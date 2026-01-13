@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>MESSAGES</key>
+	<array>
+		<string>typ:meddelande</string>
+		<string>typ:meddelanden</string>
+	</array>
+	<key>APPLICATIONS</key>
+	<array>
+		<string>typ:program</string>
+		<string>typ:applikation</string>
+		<string>typ:app</string>
+		<string>typ:appar</string>
+		<string>typ:applikationer</string>
+	</array>
+	<key>CONTACT</key>
+	<array>
+		<string>typ:kontakt</string>
+		<string>typ:kontakter</string>
+		<string>typ:person</string>
+		<string>typ:personer</string>
+		<string>typ:folk</string>
+	</array>
+	<key>DOCUMENTS</key>
+	<array>
+		<string>typ:dokument</string>
+	</array>
+	<key>DIRECTORIES</key>
+	<array>
+		<string>typ:mapp</string>
+		<string>typ:mappar</string>
+	</array>
+	<key>EMAIL</key>
+	<array>
+		<string>typ:e-brev</string>
+		<string>typ:brev</string>
+		<string>typ:e-post</string>
+		<string>typ:mejl</string>
+		<string>typ:e-postmeddelande</string>
+		<string>typ:e-postmeddelanden</string>
+		<string>typ:mail</string>
+		<string>typ:email</string>
+	</array>
+	<key>EVENT</key>
+	<array>
+		<string>typ:aktivitet</string>
+		<string>typ:aktiviteter</string>
+		<string>typ:händelse</string>
+		<string>typ:händelser</string>
+		<string>typ:event</string>
+	</array>
+	<key>TODO</key>
+	<array>
+		<string>typ:påminnelse</string>
+		<string>typ:påminnelser</string>
+	</array>
+	<key>EVENT_TODO</key>
+	<array>
+		<string>typ:aktiviteter och påminnelser</string>
+		<string>typ:påminnelser och aktiviteter</string>
+		<string>typ:aktiviteter eller påminnelser</string>
+		<string>typ:påminnelser eller aktiviteter</string>
+		<string>typ:händelser och påminnelser</string>
+		<string>typ:påminnelser och händelser</string>
+		<string>typ:händelser eller påminnelser</string>
+		<string>typ:påminnelser eller händelser</string>
+	</array>
+	<key>IMAGES</key>
+	<array>
+		<string>typ:bild</string>
+		<string>typ:bilder</string>
+	</array>
+	<key>MOVIES</key>
+	<array>
+		<string>typ:film</string>
+		<string>typ:filmer</string>
+	</array>
+	<key>MUSIC</key>
+	<array>
+		<string>typ:musik</string>
+		<string>typ:låt</string>
+		<string>typ:låtar</string>
+		<string>typ:ljud</string>
+	</array>
+	<key>NEXT_MONTH</key>
+	<array>
+		<string>datum:nästa månad</string>
+	</array>
+	<key>NEXT_WEEK</key>
+	<array>
+		<string>datum:nästa vecka</string>
+	</array>
+	<key>NEXT_YEAR</key>
+	<array>
+		<string>datum:nästa år</string>
+	</array>
+	<key>PDF</key>
+	<array>
+		<string>typ:pdf</string>
+		<string>typ:pdf:er</string>
+		<string>typ:pdf-dokument</string>
+	</array>
+	<key>SYSTEM_PREFS</key>
+	<array>
+		<string>typ:systeminställning</string>
+		<string>typ:systeminställningar</string>
+		<string>typ:inställning</string>
+		<string>typ:inställningar</string>
+		<string>typ:konfiguration</string>
+		<string>typ:konfigurationer</string>
+	</array>
+	<key>THIS_MONTH</key>
+	<array>
+		<string>datum:denna månad</string>
+	</array>
+	<key>THIS_WEEK</key>
+	<array>
+		<string>datum:denna vecka</string>
+	</array>
+	<key>THIS_YEAR</key>
+	<array>
+		<string>datum:detta år</string>
+	</array>
+	<key>TODAY</key>
+	<array>
+		<string>datum:idag</string>
+		<string>datum:i dag</string>
+	</array>
+	<key>TOMORROW</key>
+	<array>
+		<string>datum:imorgon</string>
+		<string>datum:i morgon</string>
+	</array>
+	<key>YESTERDAY</key>
+	<array>
+		<string>datum:igår</string>
+		<string>datum:i går</string>
+	</array>
+	<key>DATE</key>
+	<array>
+		<string>datum:</string>
+	</array>
+	<key>BOOKMARKS</key>
+	<array>
+		<string>typ:bokmärke</string>
+		<string>typ:bokmärken</string>
+		<string>typ:url</string>
+		<string>typ:webbsida</string>
+		<string>typ:webbsidor</string>
+	</array>
+	<key>FONTS</key>
+	<array>
+		<string>typ:typsnitt</string>
+		<string>typ:teckensnitt</string>
+	</array>
+	<key>PRESENTATIONS</key>
+	<array>
+		<string>typ:presentationer</string>
+		<string>typ:presentation</string>
+	</array>
+	<key>SPREADSHEETS</key>
+	<array>
+		<string>typ:kalkylblad</string>
+	</array>
+	<key>SOURCE</key>
+	<array>
+		<string>typ:utvecklare</string>
+		<string>typ:källkod</string>
+		<string>typ:källa</string>
+	</array>
+	<key>TEXT</key>
+	<array>
+		<string>typ:text</string>
+	</array>
+	<key>TIPS</key>
+	<array>
+		<string>typ:tips</string>
+		<string>typ:tip</string>
+	</array>
+	<key>HELP</key>
+	<array>
+		<string>typ:hjälp</string>
+	</array>
+</dict>
+</plist>

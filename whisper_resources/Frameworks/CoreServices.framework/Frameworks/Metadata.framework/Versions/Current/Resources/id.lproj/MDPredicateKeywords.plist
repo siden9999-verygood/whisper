@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>MESSAGES</key>
+	<array>
+		<string>jenis:pesan</string>
+		<string>jenis:pesan</string>
+	</array>
+	<key>APPLICATIONS</key>
+	<array>
+		<string>jenis:aplikasi</string>
+		<string>jenis:aplikasi</string>
+		<string>jenis:app</string>
+		<string>jenis:app</string>
+	</array>
+	<key>CONTACT</key>
+	<array>
+		<string>jenis:kontak</string>
+		<string>jenis:kontak</string>
+		<string>jenis:orang</string>
+	</array>
+	<key>DOCUMENTS</key>
+	<array>
+		<string>jenis:dokumen</string>
+		<string>jenis:dokumen</string>
+	</array>
+	<key>DIRECTORIES</key>
+	<array>
+		<string>jenis:folder</string>
+		<string>jenis:folder</string>
+	</array>
+	<key>EMAIL</key>
+	<array>
+		<string>jenis:email</string>
+		<string>jenis:email</string>
+		<string>jenis:mail</string>
+		<string>jenis:pesan mail</string>
+		<string>jenis:pesan mail</string>
+	</array>
+	<key>EVENT</key>
+	<array>
+		<string>jenis:acara</string>
+		<string>jenis:acara</string>
+	</array>
+	<key>TODO</key>
+	<array>
+		<string>jenis:pengingat</string>
+		<string>jenis:pengingat</string>
+	</array>
+	<key>EVENT_TODO</key>
+	<array>
+		<string>jenis:acara &amp; pengingat</string>
+		<string>jenis:pengingat &amp; acara</string>
+		<string>jenis:acara dan pengingat</string>
+		<string>jenis:pengingat dan acara</string>
+		<string>jenis:acara atau pengingat</string>
+		<string>jenis:pengingat atau acara</string>
+	</array>
+	<key>IMAGES</key>
+	<array>
+		<string>jenis:gambar</string>
+		<string>jenis:gambar</string>
+	</array>
+	<key>MOVIES</key>
+	<array>
+		<string>jenis:film</string>
+		<string>jenis:film</string>
+	</array>
+	<key>MUSIC</key>
+	<array>
+		<string>jenis:musik</string>
+		<string>jenis:lagu</string>
+		<string>jenis:lagu</string>
+		<string>jenis:audio</string>
+	</array>
+	<key>NEXT_MONTH</key>
+	<array>
+		<string>tanggal:bulan depan</string>
+	</array>
+	<key>NEXT_WEEK</key>
+	<array>
+		<string>tanggal:minggu depan</string>
+	</array>
+	<key>NEXT_YEAR</key>
+	<array>
+		<string>tanggal:tahun depan</string>
+	</array>
+	<key>PDF</key>
+	<array>
+		<string>jenis:pdf</string>
+		<string>jenis:pdf</string>
+		<string>jenis:dokumen pdf</string>
+		<string>jenis:dokumen pdf</string>
+	</array>
+	<key>SYSTEM_PREFS</key>
+	<array>
+		<string>jenis:pref sistem</string>
+		<string>jenis:pref sistem</string>
+		<string>jenis:preferensi sistem</string>
+		<string>jenis:pref</string>
+		<string>jenis:pref</string>
+		<string>jenis:preferensi</string>
+		<string>jenis:preferensi</string>
+		<string>jenis:pengaturan sistem</string>
+		<string>jenis:pengaturan sistem</string>
+		<string>jenis:pengaturan</string>
+		<string>jenis:pengaturan</string>
+	</array>
+	<key>THIS_MONTH</key>
+	<array>
+		<string>tanggal:bulan ini</string>
+	</array>
+	<key>THIS_WEEK</key>
+	<array>
+		<string>tanggal:minggu ini</string>
+	</array>
+	<key>THIS_YEAR</key>
+	<array>
+		<string>tanggal:tahun ini</string>
+	</array>
+	<key>TODAY</key>
+	<array>
+		<string>tanggal:hari ini</string>
+	</array>
+	<key>TOMORROW</key>
+	<array>
+		<string>tanggal:besok</string>
+	</array>
+	<key>YESTERDAY</key>
+	<array>
+		<string>tanggal:kemarin</string>
+	</array>
+	<key>DATE</key>
+	<array>
+		<string>tanggal:</string>
+	</array>
+	<key>BOOKMARKS</key>
+	<array>
+		<string>jenis:penanda</string>
+		<string>jenis:penanda</string>
+        <string>jenis:url</string>
+		<string>jenis:url</string>
+		<string>jenis:halaman web</string>
+		<string>jenis:halaman web</string>
+	</array>
+	<key>FONTS</key>
+	<array>
+		<string>jenis:font</string>
+		<string>jenis:font</string>
+	</array>
+	<key>PRESENTATIONS</key>
+	<array>
+		<string>jenis:presentasi</string>
+		<string>jenis:presentasi</string>
+	</array>
+	<key>SPREADSHEETS</key>
+	<array>
+		<string>jenis:spreadsheet</string>
+		<string>jenis:spreadsheet</string>
+	</array>
+	<key>SOURCE</key>
+	<array>
+		<string>jenis:pengembang</string>
+		<string>jenis:sumber</string>
+	</array>
+	<key>TEXT</key>
+	<array>
+		<string>jenis:teks</string>
+	</array>
+	<key>TIPS</key>
+	<array>
+		<string>jenis:kiat</string>
+		<string>jenis:kiat</string>
+	</array>
+	<key>HELP</key>
+	<array>
+		<string>jenis:bantuan</string>
+	</array>
+</dict>
+</plist>

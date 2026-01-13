@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BuildMachineOSBuild</key>
+	<string>22A380021</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>com.apple.nameddata</string>
+	<key>CFBundleExecutable</key>
+	<string>csnameddatad</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.apple.carboncore.csnameddata</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>csnameddatad</string>
+	<key>CFBundlePackageType</key>
+	<string>XPC!</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleSupportedPlatforms</key>
+	<array>
+		<string>MacOSX</string>
+	</array>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>DTCompiler</key>
+	<string>com.apple.compilers.llvm.clang.1_0</string>
+	<key>DTPlatformBuild</key>
+	<string></string>
+	<key>DTPlatformName</key>
+	<string>macosx</string>
+	<key>DTPlatformVersion</key>
+	<string>15.1</string>
+	<key>DTSDKBuild</key>
+	<string>24B65</string>
+	<key>DTSDKName</key>
+	<string>macosx15.1.internal</string>
+	<key>DTXcode</key>
+	<string>1600</string>
+	<key>DTXcodeBuild</key>
+	<string>16A6170g</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>15.1</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2020 Apple Inc. All rights reserved.</string>
+	<key>XPCService</key>
+	<dict>
+		<key>ServiceType</key>
+		<string>User</string>
+		<key>_ProcessType</key>
+		<string>Adaptive</string>
+	</dict>
+</dict>
+</plist>

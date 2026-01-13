@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>APPLICATIONS</key>
+	<array>
+		<string>种类:应用程序</string>
+		<string>kind:application</string>
+		<string>kind:applications</string>
+		<string>kind:app</string>
+		<string>kind:apps</string>
+		<string>种类:application</string>
+		<string>种类:applications</string>
+		<string>种类:app</string>
+		<string>种类:apps</string>
+		<string>种类：application</string>
+		<string>种类：applications</string>
+		<string>种类：app</string>
+		<string>种类：apps</string>
+		<string>种类：应用程序</string>
+		<string>种类:应用</string>
+		<string>种类：应用</string>
+	</array>
+	<key>BOOKMARKS</key>
+	<array>
+		<string>种类:书签</string>
+		<string>kind:bookmark</string>
+		<string>kind:bookmarks</string>
+		<string>种类:bookmark</string>
+		<string>种类:bookmarks</string>
+		<string>种类：bookmark</string>
+		<string>种类：bookmarks</string>
+		<string>种类：书签</string>
+		<string>kind:url</string>
+		<string>kind:urls</string>
+		<string>种类:url</string>
+		<string>种类:urls</string>
+		<string>种类：url</string>
+		<string>种类：urls</string>
+		<string>种类:统一资源定位符</string>
+		<string>种类：统一资源定位符</string>
+		<string>kind:webpage</string>
+		<string>kind:webpages</string>
+		<string>种类:webpage</string>
+		<string>种类:webpages</string>
+		<string>种类：webpage</string>
+		<string>种类：webpages</string>
+		<string>种类:网页</string>
+		<string>种类：网页</string>
+	</array>
+	<key>CONTACT</key>
+	<array>
+		<string>种类:联系人</string>
+		<string>kind:contact</string>
+		<string>kind:contacts</string>
+		<string>kind:people</string>
+		<string>种类:contact</string>
+		<string>种类:contacts</string>
+		<string>种类:people</string>
+		<string>种类：contact</string>
+		<string>种类：contacts</string>
+		<string>种类：people</string>
+		<string>种类:通讯录</string>
+		<string>种类：联系人</string>
+		<string>种类：通讯录</string>
+	</array>
+	<key>DATE</key>
+	<array>
+		<string>date:</string>
+		<string>日期:</string>
+		<string>日期：</string>
+	</array>
+	<key>DIRECTORIES</key>
+	<array>
+		<string>种类:文件夹</string>
+		<string>kind:folder</string>
+		<string>kind:folders</string>
+		<string>种类:folder</string>
+		<string>种类:folders</string>
+		<string>种类：folder</string>
+		<string>种类：folders</string>
+		<string>种类：文件夹</string>
+	</array>
+	<key>DOCUMENTS</key>
+	<array>
+		<string>种类:文稿</string>
+		<string>kind:document</string>
+		<string>kind:documents</string>
+		<string>种类:document</string>
+		<string>种类:documents</string>
+		<string>种类：document</string>
+		<string>种类：documents</string>
+		<string>种类：文稿</string>
+		<string>种类:文件</string>
+		<string>种类：文件</string>
+	</array>
+	<key>EMAIL</key>
+	<array>
+		<string>种类:电子邮件</string>
+		<string>kind:email</string>
+		<string>kind:emails</string>
+		<string>种类:email</string>
+		<string>种类:emails</string>
+		<string>种类：email</string>
+		<string>种类：emails</string>
+		<string>种类：电子邮件</string>
+		<string>kind:mail</string>
+		<string>种类:mail</string>
+		<string>种类：mail</string>
+		<string>种类:邮件</string>
+		<string>种类：邮件</string>
+		<string>kind:mail message</string>
+		<string>kind:mail messages</string>
+		<string>种类:mail message</string>
+		<string>种类:mail messages</string>
+		<string>种类：mail message</string>
+		<string>种类：mail messages</string>
+		<string>种类:邮件信息</string>
+		<string>种类：邮件信息</string>
+	</array>
+	<key>EVENT</key>
+	<array>
+		<string>种类:日程</string>
+		<string>kind:event</string>
+		<string>kind:events</string>
+		<string>种类:event</string>
+		<string>种类:events</string>
+		<string>种类：event</string>
+		<string>种类：events</string>
+		<string>种类：日程</string>
+	</array>
+	<key>EVENT_TODO</key>
+	<array>
+		<string>种类:日程 &amp; 提醒事项</string>
+		<string>kind:events &amp; reminders</string>
+		<string>种类:events &amp; reminders</string>
+		<string>种类：events &amp; reminders</string>
+		<string>种类：日程 &amp; 提醒事项</string>
+		<string>种类:日程&amp;提醒事项</string>
+		<string>种类：日程&amp;提醒事项</string>
+		<string>kind:reminders &amp; events</string>
+		<string>种类:reminders &amp; events</string>
+		<string>种类：reminders &amp; events</string>
+		<string>种类:提醒事项 &amp; 日程</string>
+		<string>种类：提醒事项 &amp; 日程</string>
+		<string>种类:提醒事项&amp;日程</string>
+		<string>种类：提醒事项&amp;日程</string>
+		<string>kind:events and reminders</string>
+		<string>种类:events and reminders</string>
+		<string>种类：events and reminders</string>
+		<string>种类:日程和提醒事项</string>
+		<string>种类：日程和提醒事项</string>
+		<string>种类:日程与提醒事项</string>
+		<string>种类：日程与提醒事项</string>
+		<string>kind:reminders and events</string>
+		<string>种类:reminders and events</string>
+		<string>种类：reminders and events</string>
+		<string>种类:提醒事项和日程</string>
+		<string>种类：提醒事项和日程</string>
+		<string>种类:提醒事项与日程</string>
+		<string>种类：提醒事项与日程</string>
+		<string>kind:event or reminder</string>
+		<string>种类:event or reminder</string>
+		<string>种类：event or reminder</string>
+		<string>种类:日程或提醒事项</string>
+		<string>种类：日程或提醒事项</string>
+		<string>kind:reminder or event</string>
+		<string>种类:reminder or event</string>
+		<string>种类：reminder or event</string>
+		<string>种类:提醒事项或日程</string>
+		<string>种类：提醒事项或日程</string>
+	</array>
+	<key>FONTS</key>
+	<array>
+		<string>种类:字体</string>
+		<string>kind:font</string>
+		<string>kind:fonts</string>
+		<string>种类:font</string>
+		<string>种类:fonts</string>
+		<string>种类：font</string>
+		<string>种类：fonts</string>
+		<string>种类：字体</string>
+	</array>
+	<key>HELP</key>
+	<array>
+		<string>种类:帮助</string>
+		<string>kind:help</string>
+		<string>种类:help</string>
+		<string>种类：help</string>
+		<string>种类：帮助</string>
+	</array>
+	<key>IMAGES</key>
+	<array>
+		<string>种类:图像</string>
+		<string>kind:image</string>
+		<string>kind:images</string>
+		<string>种类:image</string>
+		<string>种类:images</string>
+		<string>种类：image</string>
+		<string>种类：images</string>
+		<string>种类：图像</string>
+	</array>
+	<key>MESSAGES</key>
+	<array>
+		<string>种类:信息</string>
+		<string>kind:message</string>
+		<string>kind:messages</string>
+		<string>种类:message</string>
+		<string>种类:messages</string>
+		<string>种类：message</string>
+		<string>种类：messages</string>
+		<string>种类：信息</string>
+	</array>
+	<key>MOVIES</key>
+	<array>
+		<string>种类:影片</string>
+		<string>kind:movie</string>
+		<string>kind:movies</string>
+		<string>种类:movie</string>
+		<string>种类:movies</string>
+		<string>种类：movie</string>
+		<string>种类：movies</string>
+		<string>种类：影片</string>
+		<string>种类:电影</string>
+		<string>种类：电影</string>
+	</array>
+	<key>MUSIC</key>
+	<array>
+		<string>种类:音乐</string>
+		<string>kind:music</string>
+		<string>种类:music</string>
+		<string>种类：music</string>
+		<string>种类：音乐</string>
+		<string>kind:song</string>
+		<string>kind:songs</string>
+		<string>种类:song</string>
+		<string>种类:songs</string>
+		<string>种类：song</string>
+		<string>种类：songs</string>
+		<string>种类:歌曲</string>
+		<string>种类：歌曲</string>
+		<string>种类:乐曲</string>
+		<string>种类：乐曲</string>
+		<string>kind:audio</string>
+		<string>种类:audio</string>
+		<string>种类：audio</string>
+		<string>种类:音频</string>
+		<string>种类：音频</string>
+	</array>
+	<key>NEXT_MONTH</key>
+	<array>
+		<string>日期:下个月</string>
+		<string>date:next month</string>
+		<string>日期:next month</string>
+		<string>日期：next month</string>
+		<string>日期：下个月</string>
+	</array>
+	<key>NEXT_WEEK</key>
+	<array>
+		<string>日期:下周</string>
+		<string>date:next week</string>
+		<string>日期:next week</string>
+		<string>日期：next week</string>
+		<string>日期：下周</string>
+		<string>日期:下星期</string>
+		<string>日期：下星期</string>
+	</array>
+	<key>NEXT_YEAR</key>
+	<array>
+		<string>日期:明年</string>
+		<string>date:next year</string>
+		<string>日期:next year</string>
+		<string>日期：next year</string>
+		<string>日期：明年</string>
+		<string>日期:来年</string>
+		<string>日期：来年</string>
+		<string>日期:下一年</string>
+		<string>日期：下一年</string>
+	</array>
+	<key>PDF</key>
+	<array>
+		<string>种类:pdf</string>
+		<string>kind:pdf</string>
+		<string>kind:pdfs</string>
+		<string>种类:pdfs</string>
+		<string>种类：pdf</string>
+		<string>种类：pdfs</string>
+		<string>kind:pdf document</string>
+		<string>kind:pdf documents</string>
+		<string>种类:pdf document</string>
+		<string>种类:pdf documents</string>
+		<string>种类：pdf document</string>
+		<string>种类：pdf documents</string>
+		<string>种类:pdf 文稿</string>
+		<string>种类：pdf 文稿</string>
+		<string>种类:pdf文稿</string>
+		<string>种类：pdf文稿</string>
+		<string>种类:pdf 文件</string>
+		<string>种类：pdf 文件</string>
+		<string>种类:pdf文件</string>
+		<string>种类：pdf文件</string>
+	</array>
+	<key>PRESENTATIONS</key>
+	<array>
+		<string>种类:演示文稿</string>
+		<string>kind:presentations</string>
+		<string>kind:presentation</string>
+		<string>种类:presentations</string>
+		<string>种类:presentation</string>
+		<string>种类：presentations</string>
+		<string>种类：presentation</string>
+		<string>种类：演示文稿</string>
+	</array>
+	<key>SOURCE</key>
+	<array>
+		<string>种类:开发者</string>
+		<string>kind:developer</string>
+		<string>种类:developer</string>
+		<string>种类：developer</string>
+		<string>种类：开发者</string>
+		<string>种类:开发人员</string>
+		<string>种类：开发人员</string>
+		<string>种类:开发商</string>
+		<string>种类：开发商</string>
+		<string>kind:source</string>
+		<string>种类:source</string>
+		<string>种类：source</string>
+		<string>种类:源</string>
+		<string>种类：源</string>
+		<string>种类:来源</string>
+		<string>种类：来源</string>
+	</array>
+	<key>SPREADSHEETS</key>
+	<array>
+		<string>种类:电子表格</string>
+		<string>kind:spreadsheets</string>
+		<string>kind:spreadsheet</string>
+		<string>种类:spreadsheets</string>
+		<string>种类:spreadsheet</string>
+		<string>种类：spreadsheets</string>
+		<string>种类：spreadsheet</string>
+		<string>种类：电子表格</string>
+	</array>
+	<key>SYSTEM_PREFS</key>
+	<array>
+		<string>种类:系统偏好设置</string>
+		<string>kind:system pref</string>
+		<string>kind:system prefs</string>
+		<string>kind:system preferences</string>
+		<string>种类:system pref</string>
+		<string>种类：system pref</string>
+		<string>种类:system prefs</string>
+		<string>种类：system prefs</string>
+		<string>种类:system preferences</string>
+		<string>种类：system preferences</string>
+		<string>种类：系统偏好设置</string>
+		<string>kind:pref</string>
+		<string>kind:prefs</string>
+		<string>kind:preferences</string>
+		<string>种类:pref</string>
+		<string>种类：pref</string>
+		<string>种类:prefs</string>
+		<string>种类：prefs</string>
+		<string>种类:preferences</string>
+		<string>种类：preferences</string>
+		<string>种类:偏好设置</string>
+		<string>种类：偏好设置</string>
+		<string>种类:系统设置</string>
+		<string>kind:system settings</string>
+		<string>种类：system settings</string>
+		<string>种类:system settings</string>
+		<string>种类：系统设置</string>
+		<string>kind:system setting</string>
+		<string>种类：system setting</string>
+		<string>种类:system setting</string>
+		<string>种类:设置</string>
+		<string>kind:settings</string>
+		<string>种类:settings</string>
+		<string>种类：settings</string>
+		<string>种类：设置</string>
+		<string>kind:setting</string>
+		<string>种类:setting</string>
+		<string>种类：setting</string>
+	</array>
+	<key>TEXT</key>
+	<array>
+		<string>种类:文本</string>
+		<string>kind:text</string>
+		<string>种类:text</string>
+		<string>种类：text</string>
+		<string>种类：文本</string>
+		<string>种类:文字</string>
+		<string>种类：文字</string>
+	</array>
+	<key>THIS_MONTH</key>
+	<array>
+		<string>日期:本月</string>
+		<string>date:this month</string>
+		<string>日期:this month</string>
+		<string>日期：this month</string>
+		<string>日期：本月</string>
+		<string>日期:这个月</string>
+		<string>日期：这个月</string>
+	</array>
+	<key>THIS_WEEK</key>
+	<array>
+		<string>日期:本周</string>
+		<string>date:this week</string>
+		<string>日期:this week</string>
+		<string>日期：this week</string>
+		<string>日期：本周</string>
+		<string>日期:这星期</string>
+		<string>日期：这星期</string>
+	</array>
+	<key>THIS_YEAR</key>
+	<array>
+		<string>日期:今年</string>
+		<string>date:this year</string>
+		<string>日期:this year</string>
+		<string>日期：this year</string>
+		<string>日期：今年</string>
+	</array>
+	<key>TIPS</key>
+	<array>
+		<string>种类:提示</string>
+		<string>kind:tips</string>
+		<string>kind:tip</string>
+		<string>种类:tips</string>
+		<string>种类:tip</string>
+		<string>种类：tips</string>
+		<string>种类：tip</string>
+		<string>种类：提示</string>
+	</array>
+	<key>TODAY</key>
+	<array>
+		<string>日期:今天</string>
+		<string>date:today</string>
+		<string>日期:today</string>
+		<string>日期：today</string>
+		<string>日期：今天</string>
+		<string>日期:今日</string>
+		<string>日期：今日</string>
+	</array>
+	<key>TODO</key>
+	<array>
+		<string>种类:提醒事项</string>
+		<string>kind:reminder</string>
+		<string>kind:reminders</string>
+		<string>种类:reminder</string>
+		<string>种类:reminders</string>
+		<string>种类：reminder</string>
+		<string>种类：reminders</string>
+		<string>种类：提醒事项</string>
+	</array>
+	<key>TOMORROW</key>
+	<array>
+		<string>日期:明天</string>
+		<string>date:tomorrow</string>
+		<string>日期:tomorrow</string>
+		<string>日期：tomorrow</string>
+		<string>日期：明天</string>
+		<string>日期:明日</string>
+		<string>日期：明日</string>
+	</array>
+	<key>YESTERDAY</key>
+	<array>
+		<string>日期:昨天</string>
+		<string>date:yesterday</string>
+		<string>日期:yesterday</string>
+		<string>日期：yesterday</string>
+		<string>日期：昨天</string>
+		<string>日期:昨日</string>
+		<string>日期：昨日</string>
+	</array>
+</dict>
+</plist>

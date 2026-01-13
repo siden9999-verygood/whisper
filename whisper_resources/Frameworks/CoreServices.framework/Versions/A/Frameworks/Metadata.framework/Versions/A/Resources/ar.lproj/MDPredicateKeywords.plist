@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>APPLICATIONS</key>
+	<array>
+		<string>النوع‫:‬تطبيق</string>
+		<string>النوع‫:‬تطبيقات</string>
+		<string>النوع‫:‬التطبيق</string>
+		<string>النوع:التطبيقات</string>
+	</array>
+	<key>BOOKMARKS</key>
+	<array>
+		<string>النوع‫:‬إشارة مرجعية</string>
+		<string>النوع‫:‬إشارات مرجعية</string>
+		<string>النوع:عنوان url</string>
+		<string>النوع:عناوين url</string>
+		<string>النوع‫:‬صفحة ويب</string>
+		<string>النوع‫:‬صفحات ويب</string>
+	</array>
+	<key>CONTACT</key>
+	<array>
+		<string>النوع‫:‬جهة اتصال</string>
+		<string>النوع‫:‬جهات اتصال</string>
+		<string>النوع:أشخاص</string>
+	</array>
+	<key>DIRECTORIES</key>
+	<array>
+		<string>النوع‫:‬مجلد</string>
+		<string>النوع‫:‬مجلدات</string>
+	</array>
+	<key>DOCUMENTS</key>
+	<array>
+		<string>النوع‫:‬مستند</string>
+		<string>النوع‫:‬مستندات</string>
+	</array>
+	<key>EMAIL</key>
+	<array>
+		<string>النوع‫:‬بريد إلكتروني</string>
+		<string>النوع‫:‬بريد إلكتروني</string>
+		<string>النوع:بريد</string>
+		<string>النوع‫:‬رسالة بريدية</string>
+		<string>النوع‫:‬رسائل بريدية</string>
+	</array>
+	<key>EVENT</key>
+	<array>
+		<string>النوع‫:‬حدث</string>
+		<string>النوع‫:‬أحداث</string>
+	</array>
+	<key>EVENT_TODO</key>
+	<array>
+		<string>النوع‫:‬أحداث &amp; تذكيرات</string>
+		<string>النوع:تذكيرات &amp; أحداث</string>
+		<string>النوع:أحداث وتذكيرات</string>
+		<string>النوع:تذكيرات وأحداث</string>
+		<string>النوع‫:‬حدث أو تذكير</string>
+		<string>النوع‫:‬تذكير أو حدث</string>
+	</array>
+	<key>FONTS</key>
+	<array>
+		<string>النوع‫:‬خط</string>
+		<string>النوع‫:‬خطوط</string>
+	</array>
+	<key>IMAGES</key>
+	<array>
+		<string>النوع‫:‬صورة</string>
+		<string>النوع‫:‬صور</string>
+	</array>
+	<key>MESSAGES</key>
+	<array>
+		<string>النوع‫:‬رسالة</string>
+		<string>النوع‫:‬رسائل</string>
+	</array>
+	<key>MOVIES</key>
+	<array>
+		<string>النوع‫:‬فيلم</string>
+		<string>النوع‫:‬أفلام</string>
+	</array>
+	<key>MUSIC</key>
+	<array>
+		<string>النوع‫:‬موسيقى</string>
+		<string>النوع:أغنية</string>
+		<string>النوع:أغانٍ</string>
+		<string>النوع‫:‬صوت</string>
+	</array>
+	<key>NEXT_MONTH</key>
+	<array>
+		<string>التاريخ‫:‬الشهر القادم</string>
+	</array>
+	<key>NEXT_WEEK</key>
+	<array>
+		<string>التاريخ‫:‬الأسبوع القادم</string>
+	</array>
+	<key>NEXT_YEAR</key>
+	<array>
+		<string>التاريخ‫:‬العام القادم</string>
+	</array>
+	<key>PDF</key>
+	<array>
+		<string>النوع‫:pdf‬</string>
+		<string>النوع‫:‬ملفات pdf</string>
+		<string>النوع‫:‬مستند pdf</string>
+		<string>النوع‫:‬مستندات pdf</string>
+	</array>
+	<key>PRESENTATIONS</key>
+	<array>
+		<string>النوع‫:‬عروض تقديمية</string>
+		<string>النوع‫:‬عرض تقديمي</string>
+	</array>
+	<key>SOURCE</key>
+	<array>
+		<string>النوع:مطور</string>
+		<string>النوع‫:‬مصدر</string>
+	</array>
+	<key>SPREADSHEETS</key>
+	<array>
+		<string>النوع‫:‬جداول بيانات</string>
+		<string>النوع‫:‬جدول بيانات</string>
+	</array>
+	<key>SYSTEM_PREFS</key>
+	<array>
+		<string>النوع: تفضيل النظام</string>
+		<string>النوع: تفضيلات النظام</string>
+		<string>النوع: تفضيل</string>
+		<string>النوع: تفضيلات </string>
+		<string>النوع: إعدادات نظام</string>
+		<string>النوع: إعداد نظام</string>
+		<string>النوع: إعدادات</string>
+		<string>النوع: إعدادات النظام</string>
+		<string>النوع: إعداد النظام</string>
+		<string>النوع: الإعدادات</string>
+		<string>النوع: إعداد</string>
+	</array>
+	<key>TEXT</key>
+	<array>
+		<string>النوع‫:‬نص</string>
+	</array>
+	<key>THIS_MONTH</key>
+	<array>
+		<string>التاريخ‫:‬هذا الشهر</string>
+	</array>
+	<key>THIS_WEEK</key>
+	<array>
+		<string>التاريخ‫:‬هذا الأسبوع</string>
+	</array>
+	<key>THIS_YEAR</key>
+	<array>
+		<string>التاريخ‫:‬هذا العام</string>
+	</array>
+	<key>TODAY</key>
+	<array>
+		<string>التاريخ‫:‬اليوم</string>
+	</array>
+	<key>TODO</key>
+	<array>
+		<string>النوع‫:‬تذكير</string>
+		<string>النوع‫:‬تذكيرات</string>
+	</array>
+	<key>TOMORROW</key>
+	<array>
+		<string>التاريخ‫:‬غدًا</string>
+	</array>
+	<key>YESTERDAY</key>
+	<array>
+		<string>التاريخ‫:‬الأمس</string>
+	</array>
+	<key>DATE</key>
+	<array>
+		<string>التاريخ:</string>
+	</array>
+	<key>TIPS</key>
+	<array>
+		<string>النوع:تلميحات</string>
+		<string>النوع:تلميح</string>
+	</array>
+	<key>HELP</key>
+	<array>
+		<string>النوع:مساعدة</string>
+	</array>
+</dict>
+</plist>

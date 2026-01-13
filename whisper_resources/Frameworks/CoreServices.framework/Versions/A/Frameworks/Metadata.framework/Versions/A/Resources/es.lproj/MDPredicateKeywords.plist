@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>MESSAGES</key>
+	<array>
+		<string>clase:mensaje</string>
+		<string>clase:mensajes</string>
+	</array>
+	<key>APPLICATIONS</key>
+	<array>
+		<string>clase:aplicación</string>
+		<string>clase:aplicaciones</string>
+		<string>clase:app</string>
+		<string>clase:apps</string>
+	</array>
+	<key>CONTACT</key>
+	<array>
+		<string>clase:contacto</string>
+		<string>clase:contactos</string>
+		<string>clase:persona</string>
+		<string>clase:personas</string>
+	</array>
+	<key>DOCUMENTS</key>
+	<array>
+		<string>clase:documento</string>
+		<string>clase:documentos</string>
+	</array>
+	<key>DIRECTORIES</key>
+	<array>
+		<string>clase:carpeta</string>
+		<string>clase:carpetas</string>
+	</array>
+	<key>EMAIL</key>
+	<array>
+		<string>clase:correo electrónico</string>
+		<string>clase:correos electrónicos</string>
+		<string>clase:correo</string>
+		<string>clase:mensaje de correo</string>
+		<string>clase:mensajes de correo</string>
+	</array>
+	<key>EVENT</key>
+	<array>
+		<string>clase:evento</string>
+		<string>clase:eventos</string>
+	</array>
+	<key>TODO</key>
+	<array>
+		<string>clase:recordatorio</string>
+		<string>clase:recordatorios</string>
+	</array>
+	<key>EVENT_TODO</key>
+	<array>
+		<string>clase:eventos y recordatorios</string>
+		<string>clase:recordatorios y eventos</string>
+		<string>clase:evento o recordatorio</string>
+		<string>clase:recordatorio o evento</string>
+		<string>clase:eventos o recordatorios</string>
+		<string>clase:recordatorios o eventos</string>
+	</array>
+	<key>IMAGES</key>
+	<array>
+		<string>clase:imagen</string>
+		<string>clase:imágenes</string>
+	</array>
+	<key>MOVIES</key>
+	<array>
+		<string>clase:película</string>
+		<string>clase:películas</string>
+	</array>
+	<key>MUSIC</key>
+	<array>
+		<string>clase:música</string>
+		<string>clase:canción</string>
+		<string>clase:canciones</string>
+		<string>clase:audio</string>
+	</array>
+	<key>NEXT_MONTH</key>
+	<array>
+		<string>fecha:mes siguiente</string>
+	</array>
+	<key>NEXT_WEEK</key>
+	<array>
+		<string>fecha:semana siguiente</string>
+	</array>
+	<key>NEXT_YEAR</key>
+	<array>
+		<string>fecha:año siguiente</string>
+	</array>
+	<key>PDF</key>
+	<array>
+		<string>clase:pdf</string>
+		<string>clase:archivo pdf</string>
+		<string>clase:archivos pdf</string>
+		<string>clase:documento pdf</string>
+		<string>clase:documentos pdf</string>
+	</array>
+	<key>SYSTEM_PREFS</key>
+	<array>
+		<string>clase:pref. del sistema</string>
+		<string>clase:preferencias del sistema</string>
+		<string>clase:pref.</string>
+		<string>clase:preferencia</string>
+		<string>clase:preferencias</string>
+		<string>clase:ajustes del sistema</string>
+		<string>clase:ajuste del sistema</string>
+		<string>clase:ajustes</string>
+		<string>clase:ajuste</string>
+	</array>
+	<key>THIS_MONTH</key>
+	<array>
+		<string>fecha:este mes</string>
+	</array>
+	<key>THIS_WEEK</key>
+	<array>
+		<string>fecha:esta semana</string>
+	</array>
+	<key>THIS_YEAR</key>
+	<array>
+		<string>fecha:este año</string>
+	</array>
+	<key>TODAY</key>
+	<array>
+		<string>fecha:hoy</string>
+	</array>
+	<key>TOMORROW</key>
+	<array>
+		<string>fecha:mañana</string>
+	</array>
+	<key>YESTERDAY</key>
+	<array>
+		<string>fecha:ayer</string>
+	</array>
+	<key>DATE</key>
+	<array>
+		<string>fecha:</string>
+	</array>
+	<key>BOOKMARKS</key>
+	<array>
+		<string>clase:marcador</string>
+		<string>clase:marcadores</string>
+		<string>clase:url</string>
+		<string>clase:direcciones urls</string>
+		<string>clase:página web</string>
+		<string>clase:páginas web</string>
+	</array>
+	<key>FONTS</key>
+	<array>
+		<string>clase:tipo de letra</string>
+		<string>clase:tipos de letra</string>
+	</array>
+	<key>PRESENTATIONS</key>
+	<array>
+		<string>clase:presentaciones</string>
+		<string>clase:presentación</string>
+	</array>
+	<key>SPREADSHEETS</key>
+	<array>
+		<string>clase:hojas de cálculo</string>
+		<string>clase:hoja de cálculo</string>
+	</array>
+	<key>SOURCE</key>
+	<array>
+		<string>clase:desarrollador</string>
+		<string>clase:origen</string>
+	</array>
+	<key>TEXT</key>
+	<array>
+		<string>clase:texto</string>
+	</array>
+	<key>TIPS</key>
+	<array>
+		<string>clase:consejos</string>
+		<string>clase:consejo</string>
+	</array>
+	<key>HELP</key>
+	<array>
+		<string>clase:ayuda</string>
+	</array></dict>
+</plist>

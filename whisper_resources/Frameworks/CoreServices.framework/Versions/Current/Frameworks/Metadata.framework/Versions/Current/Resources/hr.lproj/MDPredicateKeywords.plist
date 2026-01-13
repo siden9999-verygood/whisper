@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>APPLICATIONS</key>
+	<array>
+		<string>vrsta:aplikacija</string>
+		<string>vrsta:aplikacije</string>
+		<string>vrsta:aplikacija</string>
+		<string>vrsta:aplikacije</string>
+	</array>
+	<key>BOOKMARKS</key>
+	<array>
+		<string>vrsta:knjižna oznaka</string>
+		<string>vrsta:knjižne oznake</string>
+		<string>vrsta:url</string>
+		<string>vrsta:url adrese</string>
+		<string>vrsta:internetska stranica</string>
+		<string>vrsta:internetske stranice</string>
+	</array>
+	<key>CONTACT</key>
+	<array>
+		<string>vrsta:kontakt</string>
+		<string>vrsta:kontakti</string>
+		<string>vrsta:osobe</string>
+	</array>
+	<key>DIRECTORIES</key>
+	<array>
+		<string>vrsta:mapa</string>
+		<string>vrsta:mape</string>
+	</array>
+	<key>DOCUMENTS</key>
+	<array>
+		<string>vrsta:dokument</string>
+		<string>vrsta:dokumenti</string>
+	</array>
+	<key>EMAIL</key>
+	<array>
+		<string>vrsta:e-mail</string>
+		<string>vrsta:e-mail poruke</string>
+		<string>vrsta:e-mail</string>
+		<string>vrsta:e-mail poruka</string>
+		<string>vrsta:e-mail poruke</string>
+		<string>vrsta:e-pošta</string>
+		<string>vrsta:pošta</string>
+		<string>vrsta:poruka e-pošte</string>
+		<string>vrsta:poruke e-pošte</string>
+	</array>
+	<key>EVENT</key>
+	<array>
+		<string>vrsta:događaj</string>
+		<string>vrsta:događaji</string>
+		<string>vrsta:event</string>
+		<string>vrsta:eventi</string>
+	</array>
+	<key>EVENT_TODO</key>
+	<array>
+		<string>vrsta:događaji i podsjetnici</string>
+		<string>vrsta:podsjetnici i događaji</string>
+		<string>vrsta:događaj i podsjetnici</string>
+		<string>vrsta:podsjetnik i događaji</string>
+		<string>vrsta:događaj ili podsjetnik</string>
+		<string>vrsta:podsjetnik ili događaj</string>
+		<string>vrsta:događaj i podsjetnik</string>
+		<string>vrsta:podsjetnik i događaj</string>
+	</array>
+	<key>FONTS</key>
+	<array>
+		<string>vrsta:font</string>
+		<string>vrsta:fontovi</string>
+	</array>
+	<key>IMAGES</key>
+	<array>
+		<string>vrsta:slika</string>
+		<string>vrsta:slike</string>
+		<string>vrsta:foto</string>
+		<string>vrsta:fotografija</string>
+		<string>vrsta:fotografije</string>
+	</array>
+	<key>MESSAGES</key>
+	<array>
+		<string>vrsta:poruka</string>
+		<string>vrsta:poruke</string>
+	</array>
+	<key>MOVIES</key>
+	<array>
+		<string>vrsta:film</string>
+		<string>vrsta:filmovi</string>
+		<string>vrsta:video</string>
+		<string>vrsta:videozapis</string>
+		<string>vrsta:videozapisi</string>
+		<string>vrsta:video zapis</string>
+		<string>vrsta:video zapisi</string>
+		<string>vrsta:snimka</string>
+		<string>vrsta:snimke</string>
+	</array>
+	<key>MUSIC</key>
+	<array>
+		<string>vrsta:glazba</string>
+		<string>vrsta:pjesma</string>
+		<string>vrsta:pjesme</string>
+		<string>vrsta:audio</string>
+		<string>vrsta:muzika</string>
+	</array>
+	<key>NEXT_MONTH</key>
+	<array>
+		<string>datum:sljedeći mjesec</string>
+	</array>
+	<key>NEXT_WEEK</key>
+	<array>
+		<string>datum:sljedeći tjedan</string>
+	</array>
+	<key>NEXT_YEAR</key>
+	<array>
+		<string>datum:sljedeće godine</string>
+	</array>
+	<key>PDF</key>
+	<array>
+		<string>vrsta:pdf</string>
+		<string>vrsta:pdf dokumenti</string>
+		<string>vrsta:pdf dokument</string>
+		<string>vrsta:pdf dokumenti</string>
+	</array>
+	<key>PRESENTATIONS</key>
+	<array>
+		<string>vrsta:prezentacije</string>
+		<string>vrsta:prezentacija</string>
+	</array>
+	<key>SOURCE</key>
+	<array>
+		<string>vrsta:programer</string>
+		<string>vrsta:izvor</string>
+	</array>
+	<key>SPREADSHEETS</key>
+	<array>
+		<string>vrsta:tablični dokumenti</string>
+		<string>vrsta:tablični dokument</string>
+	</array>
+	<key>SYSTEM_PREFS</key>
+	<array>
+		<string>vrsta:postavka sustava</string>
+		<string>vrsta:postavke sustava</string>
+		<string>vrsta:postavke sustava</string>
+		<string>vrsta:postavka</string>
+		<string>vrsta:postavke</string>
+		<string>vrsta:postavka</string>
+		<string>vrsta:postavke</string>
+	</array>
+	<key>TEXT</key>
+	<array>
+		<string>vrsta:tekst</string>
+	</array>
+	<key>THIS_MONTH</key>
+	<array>
+		<string>datum:ovaj mjesec</string>
+	</array>
+	<key>THIS_WEEK</key>
+	<array>
+		<string>datum:ovaj tjedan</string>
+	</array>
+	<key>THIS_YEAR</key>
+	<array>
+		<string>datum:ove godine</string>
+	</array>
+	<key>TODAY</key>
+	<array>
+		<string>datum:danas</string>
+	</array>
+	<key>TODO</key>
+	<array>
+		<string>vrsta:podsjetnik</string>
+		<string>vrsta:podsjetnici</string>
+	</array>
+	<key>TOMORROW</key>
+	<array>
+		<string>datum:sutra</string>
+	</array>
+	<key>YESTERDAY</key>
+	<array>
+		<string>datum:jučer</string>
+	</array>
+	<key>DATE</key>
+	<array>
+		<string>datum:</string>	
+	</array>
+	<key>TIPS</key>
+	<array>
+		<string>vrsta:savjeti</string>
+		<string>vrsta:savjet</string>
+	</array>
+	<key>HELP</key>
+	<array>
+		<string>vrsta:pomoć</string>
+	</array>
+</dict>
+</plist>

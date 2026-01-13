@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>MESSAGES</key>
+	<array>
+		<string>тип:сообщение</string>
+		<string>тип:сообщения</string>
+	</array>
+	<key>APPLICATIONS</key>
+	<array>
+		<string>тип:программа</string>
+		<string>тип:программы</string>
+		<string>тип:приложение</string>
+		<string>тип:приложения</string>
+		<string>тип:ПО</string>
+	</array>
+	<key>CONTACT</key>
+	<array>
+		<string>тип:контакт</string>
+		<string>тип:контакты</string>
+		<string>тип:люди</string>
+	</array>
+	<key>DOCUMENTS</key>
+	<array>
+		<string>тип:документ</string>
+		<string>тип:документы</string>
+	</array>
+	<key>DIRECTORIES</key>
+	<array>
+		<string>тип:папка</string>
+		<string>тип:папки</string>
+	</array>
+	<key>EMAIL</key>
+	<array>
+		<string>тип:e-mail</string>
+		<string>тип:сообщение e-mail</string>
+		<string>тип:сообщения e-mail</string>
+		<string>тип:сообщение</string>
+		<string>тип:сообщения</string>
+		<string>тип:имейл</string>
+		<string>тип:имейлы</string>
+		<string>тип:имэйл</string>
+		<string>тип:имэйлы</string>
+		<string>тип:электронное письмо</string>
+		<string>тип:электронные письма</string>
+		<string>тип:электронное сообщение</string>
+		<string>тип:электронные сообщения</string>
+		<string>тип:электронная почта</string>
+	</array>
+	<key>EVENT</key>
+	<array>
+		<string>тип:событие</string>
+		<string>тип:события</string>
+	</array>
+	<key>TODO</key>
+	<array>
+		<string>тип:напоминание</string>
+		<string>тип:напоминания</string>
+	</array>
+	<key>EVENT_TODO</key>
+	<array>
+		<string>тип:события и напоминания</string>
+		<string>тип:напоминания и события</string>
+		<string>тип:событие или напоминание</string>
+		<string>тип:напоминание или событие</string>
+	</array>
+	<key>IMAGES</key>
+	<array>
+		<string>тип:изображение</string>
+		<string>тип:изображения</string>
+		<string>тип:фото</string>
+		<string>тип:фотография</string>
+		<string>тип:фотографии</string>
+		<string>тип:картинка</string>
+		<string>тип:картинки</string>
+	</array>
+	<key>MOVIES</key>
+	<array>
+		<string>тип:фильм</string>
+		<string>тип:фильмы</string>
+	</array>
+	<key>MUSIC</key>
+	<array>
+		<string>тип:музыка</string>
+		<string>тип:песня</string>
+		<string>тип:песни</string>
+		<string>тип:аудио</string>
+		<string>тип:композиция</string>
+		<string>тип:композиции</string>
+		<string>тип:дорожка</string>
+		<string>тип:дорожки</string>
+		<string>тип:трек</string>
+		<string>тип:треки</string>
+	</array>
+	<key>NEXT_MONTH</key>
+	<array>
+		<string>дата:следующий месяц</string>
+		<string>дата:на следующий месяц</string>
+		<string>дата:в следующем месяце</string>
+	</array>
+	<key>NEXT_WEEK</key>
+	<array>
+		<string>дата:следующая неделя</string>
+		<string>дата:на следующей неделе</string>
+	</array>
+	<key>NEXT_YEAR</key>
+	<array>
+		<string>дата:следующий год</string>
+		<string>дата:на следующий год</string>
+		<string>дата:в следующем году</string>
+	</array>
+	<key>PDF</key>
+	<array>
+		<string>тип:pdf</string>
+		<string>тип:файл pdf</string>
+		<string>тип:файлы pdf</string>
+		<string>тип:документ pdf</string>
+		<string>тип:документы pdf</string>
+		<string>тип:pdf-документ</string>
+		<string>тип:pdf-документы</string>
+	</array>
+	<key>SYSTEM_PREFS</key>
+	<array>
+		<string>тип:системные настройки</string>
+		<string>тип:настройки</string>
+		<string>тип:настройки системы</string>
+		<string>тип:системная настройка</string>
+		<string>тип:настройка</string>
+		<string>тип:настройка системы</string>
+		<string>тип:системные параметры</string>
+		<string>тип:параметры</string>
+		<string>тип:параметры системы</string>
+		<string>тип:системный параметр</string>
+		<string>тип:параметр</string>
+		<string>тип:параметр системы</string>
+	</array>
+	<key>THIS_MONTH</key>
+	<array>
+		<string>дата:этот месяц</string>
+		<string>дата:в этот месяц</string>
+		<string>дата:в этом месяце</string>
+	</array>
+	<key>THIS_WEEK</key>
+	<array>
+		<string>дата:эта неделя</string>
+		<string>дата:на этой неделе</string>
+		<string>дата:на текущей неделе</string>
+		<string>дата:текущая неделя</string>
+	</array>
+	<key>THIS_YEAR</key>
+	<array>
+		<string>дата:этот год</string>
+		<string>дата:на этот год</string>
+		<string>дата:в этом году</string>
+		<string>дата:текущий год</string>
+		<string>дата:в текущем году</string>
+	</array>
+	<key>TODAY</key>
+	<array>
+		<string>дата:сегодня</string>
+	</array>
+	<key>TOMORROW</key>
+	<array>
+		<string>дата:завтра</string>
+	</array>
+	<key>YESTERDAY</key>
+	<array>
+		<string>дата:вчера</string>
+	</array>
+	<key>DATE</key>
+	<array>
+		<string>дата:</string>
+	</array>
+	<key>BOOKMARKS</key>
+	<array>
+		<string>тип:закладка</string>
+		<string>тип:закладки</string>
+		<string>тип:веб-страница</string>
+		<string>тип:веб-страницы</string>
+		<string>тип:веб-сайт</string>
+		<string>тип:веб-сайты</string>
+		<string>тип:сайт</string>
+		<string>тип:сайты</string>
+	</array>
+	<key>FONTS</key>
+	<array>
+		<string>тип:шрифт</string>
+		<string>тип:шрифты</string>
+	</array>
+	<key>PRESENTATIONS</key>
+	<array>
+		<string>тип:презентация</string>
+		<string>тип:презентации</string>
+	</array>
+	<key>SPREADSHEETS</key>
+	<array>
+		<string>тип:таблица</string>
+		<string>тип:таблицы</string>
+		<string>тип:электронная таблица</string>
+		<string>тип:электронные таблицы</string>
+	</array>
+	<key>SOURCE</key>
+	<array>
+		<string>тип:разработчик</string>
+		<string>тип:разработчики</string>
+		<string>тип:источник</string>
+		<string>тип:источники</string>
+	</array>
+	<key>TEXT</key>
+	<array>
+		<string>тип:текст</string>
+		<string>тип:тексты</string>
+	</array>
+	<key>TIPS</key>
+	<array>
+		<string>тип:советы</string>
+		<string>тип:совет</string>
+		<string>тип:полезные советы</string>
+		<string>тип:полезный совет</string>
+	</array>
+	<key>HELP</key>
+	<array>
+		<string>тип:помощь</string>
+		<string>тип:справка</string>
+		<string>тип:служба поддержки</string>
+		<string>тип:поддержка</string>
+	</array>
+</dict>
+</plist>

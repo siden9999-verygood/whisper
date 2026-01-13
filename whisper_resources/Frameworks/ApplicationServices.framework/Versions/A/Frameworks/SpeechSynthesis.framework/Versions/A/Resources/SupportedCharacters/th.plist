@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+		<array>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>33</integer>		<key>UnicodeCharEnd</key>	<integer>37</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>39</integer>		<key>UnicodeCharEnd</key>	<integer>63</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>65</integer>		<key>UnicodeCharEnd</key>	<integer>95</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>97</integer>		<key>UnicodeCharEnd</key>	<integer>126</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>128</integer>		<key>UnicodeCharEnd</key>	<integer>128</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>161</integer>		<key>UnicodeCharEnd</key>	<integer>251</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>3585</integer>		<key>UnicodeCharEnd</key>	<integer>3642</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>3647</integer>		<key>UnicodeCharEnd</key>	<integer>3675</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>8364</integer>		<key>UnicodeCharEnd</key>	<integer>8364</integer>	</dict>
+		</array>
+</plist>

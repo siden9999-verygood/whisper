@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>MESSAGES</key>
+	<array>
+		<string>प्रकार:संदेश</string>
+		<string>प्रकार:मैसेज</string>
+		<string>प्रकार:मेसेज</string>
+	</array>
+	<key>APPLICATIONS</key>
+	<array>
+		<string>प्रकार:ऐप्लिकेशन</string>
+		<string>प्रकार:एप्लिकेशन</string>
+		<string>प्रकार:ऐप</string>
+		<string>प्रकार:ऐप्स</string>
+	</array>
+	<key>CONTACT</key>
+	<array>
+		<string>प्रकार:संपर्क</string>
+		<string>प्रकार:कॉन्टैक्ट</string>
+		<string>प्रकार:लोग</string>
+	</array>
+	<key>DOCUMENTS</key>
+	<array>
+		<string>प्रकार:दस्तावेज़</string>
+		<string>प्रकार:डॉक्युमेंट</string>
+	</array>
+	<key>DIRECTORIES</key>
+	<array>
+		<string>प्रकार:फ़ोल्डर</string>
+	</array>
+	<key>EMAIL</key>
+	<array>
+		<string>प्रकार:ईमेल</string>
+		<string>प्रकार:मेल</string>
+		<string>प्रकार:मेल संदेश</string>
+	</array>
+	<key>EVENT</key>
+	<array>
+		<string>प्रकार:इवेंट</string>
+	</array>
+	<key>TODO</key>
+	<array>
+		<string>प्रकार:रिमाइंडर</string>
+	</array>
+	<key>EVENT_TODO</key>
+	<array>
+		<string>प्रकार:इवेंट और रिमाइंडर</string>
+		<string>प्रकार:रिमाइंडर और इवेंट</string>
+		<string>प्रकार:इवेंट या रिमाइंडर</string>
+		<string>प्रकार:रिमाइंडर या इवेंट</string>
+	</array>
+	<key>IMAGES</key>
+	<array>
+		<string>प्रकार:इमेज</string>
+		<string>प्रकार:छवि</string>
+	</array>
+	<key>MOVIES</key>
+	<array>
+		<string>प्रकार:फ़िल्म</string>
+		<string>प्रकार:मूवी</string>
+		<string>प्रकार:चलचित्र</string>
+	</array>
+	<key>MUSIC</key>
+	<array>
+		<string>प्रकार:संगीत</string>
+		<string>प्रकार:गीत</string>
+		<string>प्रकार:ध्वनि</string>
+		<string>प्रकार:ऑडियो</string>
+	</array>
+	<key>NEXT_MONTH</key>
+	<array>
+		<string>तिथि:अगला महीना</string>
+		<string>तिथि:अगले महीने</string>
+	</array>
+	<key>NEXT_WEEK</key>
+	<array>
+		<string>तिथि:अगला सप्ताह</string>
+		<string>तिथि:अगले सप्ताह</string>
+	</array>
+	<key>NEXT_YEAR</key>
+	<array>
+		<string>तिथि:अगला वर्ष</string>
+		<string>तिथि:अगले वर्ष</string>
+		<string>तिथि:अगला साल</string>
+		<string>तिथि:अगले साल</string>
+	</array>
+	<key>PDF</key>
+	<array>
+		<string>प्रकार:pdf</string>
+		<string>प्रकार:pdf दस्तावेज़</string>
+	</array>
+	<key>SYSTEM_PREFS</key>
+	<array>
+		<string>प्रकार:सिस्टम प्राथमिकता</string>
+		<string>प्रकार:प्राथमिकता</string>
+		<string>प्रकार:सिस्टम सेटिंग्ज़</string>
+		<string>प्रकार:सिस्टम सेटिंग</string>
+		<string>प्रकार:सेटिंग्ज़</string>
+		<string>प्रकार:सेटिंग</string>
+	</array>
+	<key>THIS_MONTH</key>
+	<array>
+		<string>तिथि:इस महीने</string>
+		<string>तिथि:यह महीना</string>
+		<string>तिथि:इस माह</string>
+		<string>तिथि:यह माह</string>
+	</array>
+	<key>THIS_WEEK</key>
+	<array>
+		<string>तिथि:इस सप्ताह</string>
+		<string>तिथि:यह सप्ताह</string>
+		<string>तिथि:इस हफ़्ते</string>
+		<string>तिथि:यह हफ़्ता</string>
+	</array>
+	<key>THIS_YEAR</key>
+	<array>
+		<string>तिथि:इस वर्ष</string>
+		<string>तिथि:यह वर्ष</string>
+		<string>तिथि:इस साल</string>
+		<string>तिथि:यह साल</string>
+	</array>
+	<key>TODAY</key>
+	<array>
+		<string>तिथि:आज</string>
+	</array>
+	<key>TOMORROW</key>
+	<array>
+		<string>तिथि:कल</string>
+	</array>
+	<key>YESTERDAY</key>
+	<array>
+		<string>तिथि:बीता कल</string>
+	</array>
+	<key>DATE</key>
+	<array>
+		<string>तिथि:</string>
+	</array>
+	<key>BOOKMARKS</key>
+	<array>
+		<string>प्रकार:बुकमार्क</string>
+		<string>प्रकार:url</string>
+		<string>प्रकार:वेबपृष्ठ</string>
+		<string>प्रकार:वेबपेज</string>
+	</array>
+	<key>FONTS</key>
+	<array>
+		<string>प्रकार:फ़ॉन्ट</string>
+	</array>
+	<key>PRESENTATIONS</key>
+	<array>
+		<string>प्रकार:प्रस्तुतीकरण</string>
+		<string>प्रकार:प्रेज़ेंटेशन</string>
+	</array>
+	<key>SPREADSHEETS</key>
+	<array>
+		<string>प्रकार:स्प्रेडशीट</string>
+	</array>
+	<key>SOURCE</key>
+	<array>
+		<string>प्रकार:डेवलपर</string>
+		<string>प्रकार:सोर्स</string>
+	</array>
+	<key>TEXT</key>
+	<array>
+		<string>प्रकार:टेक्स्ट</string>
+	</array>
+	<key>TIPS</key>
+	<array>
+		<string>प्रकार:टिप्स</string>
+		<string>प्रकार:टिप</string>
+		<string>प्रकार:नुस्ख़ा</string>
+		<string>प्रकार:नुस्ख़े</string>
+	</array>
+	<key>HELP</key>
+	<array>
+		<string>प्रकार:सहायता</string>
+		<string>प्रकार:हेल्प</string>
+	</array>
+</dict>
+</plist>

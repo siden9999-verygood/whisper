@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+		<array>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>33</integer>		<key>UnicodeCharEnd</key>	<integer>123</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>125</integer>		<key>UnicodeCharEnd</key>	<integer>127</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>163</integer>		<key>UnicodeCharEnd</key>	<integer>163</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>165</integer>		<key>UnicodeCharEnd</key>	<integer>165</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>171</integer>		<key>UnicodeCharEnd</key>	<integer>171</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>187</integer>		<key>UnicodeCharEnd</key>	<integer>187</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>192</integer>		<key>UnicodeCharEnd</key>	<integer>197</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>199</integer>		<key>UnicodeCharEnd</key>	<integer>207</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>210</integer>		<key>UnicodeCharEnd</key>	<integer>214</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>217</integer>		<key>UnicodeCharEnd</key>	<integer>220</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>224</integer>		<key>UnicodeCharEnd</key>	<integer>229</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>231</integer>		<key>UnicodeCharEnd</key>	<integer>239</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>242</integer>		<key>UnicodeCharEnd</key>	<integer>246</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>249</integer>		<key>UnicodeCharEnd</key>	<integer>252</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>1548</integer>		<key>UnicodeCharEnd</key>	<integer>1548</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>1563</integer>		<key>UnicodeCharEnd</key>	<integer>1563</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>1567</integer>		<key>UnicodeCharEnd</key>	<integer>1567</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>1569</integer>		<key>UnicodeCharEnd</key>	<integer>1594</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>1600</integer>		<key>UnicodeCharEnd</key>	<integer>1618</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>1632</integer>		<key>UnicodeCharEnd</key>	<integer>1642</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>1648</integer>		<key>UnicodeCharEnd</key>	<integer>1649</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>1662</integer>		<key>UnicodeCharEnd</key>	<integer>1662</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>1670</integer>		<key>UnicodeCharEnd</key>	<integer>1670</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>1700</integer>		<key>UnicodeCharEnd</key>	<integer>1700</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>1748</integer>		<key>UnicodeCharEnd</key>	<integer>1748</integer>	</dict>
+			<dict>	<key>UnicodeCharBegin</key>	<integer>8364</integer>		<key>UnicodeCharEnd</key>	<integer>8364</integer>	</dict>
+		</array>
+</plist>

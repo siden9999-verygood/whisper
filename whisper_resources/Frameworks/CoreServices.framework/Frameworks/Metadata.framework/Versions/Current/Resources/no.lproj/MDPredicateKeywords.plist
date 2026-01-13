@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>MESSAGES</key>
+	<array>
+		<string>type:message</string>
+		<string>type:messages</string>
+		<string>type:melding</string>
+		<string>type:meldinger</string>
+	</array>
+	<key>APPLICATIONS</key>
+	<array>
+		<string>type:application</string>
+		<string>type:applications</string>
+		<string>type:app</string>
+		<string>type:apps</string>
+		<string>type:program</string>
+		<string>type:programmer</string>
+		<string>type:app</string>
+		<string>type:apper</string>
+	</array>
+	<key>CONTACT</key>
+	<array>
+		<string>type:contact</string>
+		<string>type:contacts</string>
+		<string>kind:people</string>
+		<string>type:kontakt</string>
+		<string>type:kontakter</string>
+		<string>kind:personer</string>
+	</array>
+	<key>DOCUMENTS</key>
+	<array>
+		<string>type:document</string>
+		<string>type:documents</string>
+		<string>type:dokument</string>
+		<string>type:dokumenter</string>
+	</array>
+	<key>DIRECTORIES</key>
+	<array>
+		<string>type:folder</string>
+		<string>type:folders</string>
+		<string>type:mappe</string>
+		<string>type:mapper</string>
+	</array>
+	<key>EMAIL</key>
+	<array>
+		<string>type:email</string>
+		<string>type:emails</string>
+		<string>type:mail</string>
+		<string>type:mail message</string>
+		<string>type:mail messages</string>
+		<string>type:e-post</string>
+		<string>type:e-poster</string>
+		<string>type:mail</string>
+		<string>type:e-postmelding</string>
+		<string>type:e-postmeldinger</string>
+		<string>type:mail-melding</string>
+		<string>type:mail-meldinger</string>
+	</array>
+	<key>EVENT</key>
+	<array>
+		<string>type:event</string>
+		<string>type:events</string>
+		<string>type:hendelse</string>
+		<string>type:hendelser</string>
+	</array>
+	<key>TODO</key>
+	<array>
+		<string>type:reminder</string>
+		<string>type:reminders</string>
+		<string>type:påminnelse</string>
+		<string>type:påminnelser</string>
+	</array>
+	<key>EVENT_TODO</key>
+	<array>
+		<string>type:events &amp; reminders</string>
+		<string>type:reminders &amp; events</string>
+		<string>type:events and reminders</string>
+		<string>type:reminders and events</string>
+		<string>type:event or reminder</string>
+		<string>type:reminder or event</string>
+		<string>type:hendelser og påminnelser</string>
+		<string>type:påminnelser og hendelser</string>
+		<string>type:hendelse eller påminnelse</string>
+		<string>type:påminnelse eller hendelse</string>
+	</array>
+	<key>IMAGES</key>
+	<array>
+		<string>type:image</string>
+		<string>type:images</string>
+		<string>type:bilde</string>
+		<string>type:bilder</string>
+	</array>
+	<key>MOVIES</key>
+	<array>
+		<string>type:movie</string>
+		<string>type:movies</string>
+		<string>type:film</string>
+		<string>type:filmer</string>
+	</array>
+	<key>MUSIC</key>
+	<array>
+		<string>type:music</string>
+		<string>type:song</string>
+		<string>type:songs</string>
+		<string>type:audio</string>
+		<string>type:musikk</string>
+		<string>type:sang</string>
+		<string>type:sanger</string>
+		<string>type:lyd</string>
+	</array>
+	<key>NEXT_MONTH</key>
+	<array>
+		<string>date:next month</string>
+		<string>dato:neste måned</string>
+	</array>
+	<key>NEXT_WEEK</key>
+	<array>
+		<string>date:next week</string>
+		<string>dato:neste uke</string>
+	</array>
+	<key>NEXT_YEAR</key>
+	<array>
+		<string>date:next year</string>
+		<string>dato:neste år</string>
+	</array>
+	<key>PDF</key>
+	<array>
+		<string>type:pdf</string>
+		<string>type:pdfs</string>
+		<string>type:pdf document</string>
+		<string>type:pdf documents</string>
+		<string>type:pdf</string>
+		<string>type:pdf-er</string>
+		<string>type:pdf-dokument</string>
+		<string>type:pdf-dokumenter</string>
+	</array>
+	<key>SYSTEM_PREFS</key>
+	<array>
+		<string>type:system pref</string>
+		<string>type:system prefs</string>
+		<string>type:system preferences</string>
+		<string>type:setting</string>
+		<string>type:settings</string>
+		<string>type:preferences</string>
+		<string>type:systemvalg</string>
+		<string>type:valg</string>
+		<string>type:systeminnstillinger</string>
+		<string>type:systeminnstilling</string>
+		<string>type:innstillinger</string>
+		<string>type:innstilling</string>		
+	</array>
+	<key>THIS_MONTH</key>
+	<array>
+		<string>date:this month</string>
+		<string>dato:denne måneden</string>
+	</array>
+	<key>THIS_WEEK</key>
+	<array>
+		<string>date:this week</string>
+		<string>dato:denne uken</string>
+	</array>
+	<key>THIS_YEAR</key>
+	<array>
+		<string>date:this year</string>
+		<string>dato:i år</string>
+	</array>
+	<key>TODAY</key>
+	<array>
+		<string>date:today</string>
+		<string>dato:i dag</string>
+	</array>
+	<key>TOMORROW</key>
+	<array>
+		<string>date:tomorrow</string>
+		<string>dato:i morgen</string>
+	</array>
+	<key>YESTERDAY</key>
+	<array>
+		<string>date:yesterday</string>
+		<string>dato:i går</string>
+	</array>
+	<key>DATE</key>
+	<array>
+		<string>dato:</string>
+	</array>
+	<key>BOOKMARKS</key>
+	<array>
+		<string>type:bookmark</string>
+		<string>type:bookmarks</string>
+        <string>type:url</string>
+		<string>type:urls</string>
+		<string>type:webpage</string>
+		<string>type:webpages</string>
+		<string>type:bokmerke</string>
+		<string>type:bokmerker</string>
+        <string>type:url</string>
+		<string>type:url-er</string>
+		<string>type:nettside</string>
+		<string>type:nettsider</string>
+	</array>
+	<key>FONTS</key>
+	<array>
+		<string>type:font</string>
+		<string>type:fonts</string>
+		<string>type:font</string>
+		<string>type:fonter</string>
+	</array>
+	<key>PRESENTATIONS</key>
+	<array>
+		<string>type:presentations</string>
+		<string>type:presentation</string>
+		<string>type:presentasjoner</string>
+		<string>type:presentasjon</string>
+	</array>
+	<key>SPREADSHEETS</key>
+	<array>
+		<string>type:spreadsheets</string>
+		<string>type:spreadsheet</string>
+		<string>type:regneark</string>
+	</array>
+	<key>SOURCE</key>
+	<array>
+		<string>type:developer</string>
+		<string>type:source</string>
+		<string>type:utvikler</string>
+		<string>type:kilde</string>
+	</array>
+	<key>TEXT</key>
+	<array>
+		<string>type:text</string>
+		<string>type:tekst</string>
+	</array>
+	<key>TIPS</key>
+	<array>
+		<string>type:tips</string>
+		<string>type:tips</string>
+	</array>
+	<key>HJELP</key>
+	<array>
+		<string>kind:help</string>
+		<string>kind:hjelp</string>
+	</array>
+</dict>
+</plist>

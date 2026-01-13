@@ -1,0 +1,36 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+<enum name='kAHInternalErr' value64='-10790'/>
+<enum name='kAHInternetConfigPrefErr' value64='-10791'/>
+<enum name='kAHTOCTypeDeveloper' value64='1'/>
+<enum name='kAHTOCTypeUser' value64='0'/>
+<function name='AHGotoMainTOC'>
+<arg type64='s'/>
+<retval type64='i'/>
+</function>
+<function name='AHGotoPage'>
+<arg type64='^{__CFString=}'/>
+<arg type64='^{__CFString=}'/>
+<arg type64='^{__CFString=}'/>
+<retval type64='i'/>
+</function>
+<function name='AHLookupAnchor'>
+<arg type64='^{__CFString=}'/>
+<arg type64='^{__CFString=}'/>
+<retval type64='i'/>
+</function>
+<function name='AHRegisterHelpBook'>
+<arg type64='^{FSRef=[80C]}'/>
+<retval type64='i'/>
+</function>
+<function name='AHRegisterHelpBookWithURL'>
+<arg type64='^{__CFURL=}'/>
+<retval type64='i'/>
+</function>
+<function name='AHSearch'>
+<arg type64='^{__CFString=}'/>
+<arg type64='^{__CFString=}'/>
+<retval type64='i'/>
+</function>
+</signatures>

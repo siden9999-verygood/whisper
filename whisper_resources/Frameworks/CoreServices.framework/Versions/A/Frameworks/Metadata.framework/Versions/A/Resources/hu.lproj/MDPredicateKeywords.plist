@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>MESSAGES</key>
+	<array>
+		<string>fajta:üzenet</string>
+		<string>fajta:üzenetek</string>
+	</array>
+	<key>APPLICATIONS</key>
+	<array>
+		<string>fajta:alkalmazás</string>
+		<string>fajta:alkalmazások</string>
+		<string>fajta:app</string>
+		<string>fajta:appok</string>
+	</array>
+	<key>CONTACT</key>
+	<array>
+		<string>fajta:kontakt</string>
+		<string>fajta:kontaktok</string>
+		<string>fajta:személyek</string>
+	</array>
+	<key>DOCUMENTS</key>
+	<array>
+		<string>fajta:dokumentum</string>
+		<string>fajta:dokumentumok</string>
+	</array>
+	<key>DIRECTORIES</key>
+	<array>
+		<string>fajta:mappa</string>
+		<string>fajta:mappák</string>
+	</array>
+	<key>EMAIL</key>
+	<array>
+		<string>fajta:e-mail</string>
+		<string>fajta:e-mailek</string>
+		<string>fajta:levél</string>
+		<string>fajta:e-mail-üzenet</string>
+		<string>fajta:e-mail-üzenetek</string>
+	</array>
+	<key>EVENT</key>
+	<array>
+		<string>fajta:esemény</string>
+		<string>fajta:események</string>
+	</array>
+	<key>TODO</key>
+	<array>
+		<string>fajta:emlékeztető</string>
+		<string>fajta:emlékeztetők</string>
+	</array>
+	<key>EVENT_TODO</key>
+	<array>
+		<string>fajta:események és emlékeztetők</string>
+		<string>fajta:emlékeztetők és események</string>
+		<string>fajta:események és emlékeztetők</string>
+		<string>fajta:emlékeztetők és események</string>
+		<string>fajta:esemény vagy emlékeztető</string>
+		<string>fajta:emlékeztető vagy esemény</string>
+	</array>
+	<key>IMAGES</key>
+	<array>
+		<string>fajta:kép</string>
+		<string>fajta:képek</string>
+	</array>
+	<key>MOVIES</key>
+	<array>
+		<string>fajta:film</string>
+		<string>fajta:filmek</string>
+	</array>
+	<key>MUSIC</key>
+	<array>
+		<string>fajta:zene</string>
+		<string>fajta:dal</string>
+		<string>fajta:dalok</string>
+		<string>fajta:audió</string>
+	</array>
+	<key>NEXT_MONTH</key>
+	<array>
+		<string>dátum:következő hónapban</string>
+	</array>
+	<key>NEXT_WEEK</key>
+	<array>
+		<string>dátum:következő héten</string>
+	</array>
+	<key>NEXT_YEAR</key>
+	<array>
+		<string>dátum:következő évben</string>
+	</array>
+	<key>PDF</key>
+	<array>
+		<string>fajta:pdf</string>
+		<string>fajta:pdf-ek</string>
+		<string>fajta:pdf-dokumentum</string>
+		<string>fajta:pdf-dokumentumok</string>
+	</array>
+	<key>SYSTEM_PREFS</key>
+	<array>
+		<string>fajta:rendszerbeállítások</string>
+		<string>fajta:system preferences</string>
+		<string>fajta:beállítás</string>
+		<string>fajta:beállítások</string>
+		<string>fajta:beáll</string>
+		<string>fajta:rendszerbeállítás</string>
+	</array>
+	<key>THIS_MONTH</key>
+	<array>
+		<string>dátum:ebben a hónapban</string>
+	</array>
+	<key>THIS_WEEK</key>
+	<array>
+		<string>dátum:ezen a héten</string>
+	</array>
+	<key>THIS_YEAR</key>
+	<array>
+		<string>dátum:ebben az évben</string>
+	</array>
+	<key>TODAY</key>
+	<array>
+		<string>dátum:ma</string>
+	</array>
+	<key>TOMORROW</key>
+	<array>
+		<string>dátum:holnap</string>
+	</array>
+	<key>YESTERDAY</key>
+	<array>
+		<string>dátum:tegnap</string>
+	</array>
+	<key>DATE</key>
+	<array>
+		<string>dátum:</string>
+	</array>
+	<key>BOOKMARKS</key>
+	<array>
+		<string>fajta:könyvjelző</string>
+		<string>fajta:könyvjelzők</string>
+		<string>fajta:URL</string>
+		<string>fajta:URL-ek</string>
+		<string>fajta:weboldal</string>
+		<string>fajta:weboldalak</string>
+	</array>
+	<key>FONTS</key>
+	<array>
+		<string>fajta:betűtípus</string>
+		<string>fajta:betűtípusok</string>
+	</array>
+	<key>PRESENTATIONS</key>
+	<array>
+		<string>fajta:bemutatók</string>
+		<string>fajta:bemutató</string>
+		<string>fajta:prezentáció</string>
+		<string>fajta:prezentációk</string>
+	</array>
+	<key>SPREADSHEETS</key>
+	<array>
+        <string>fajta:munkalapok</string>
+		<string>fajta:munkalap</string>
+		<string>fajta:munkafüzet</string>
+		<string>fajta:munkafüzetek</string>
+        <string>fajta:táblázat</string>
+		<string>fajta:táblázatok</string>
+	</array>
+	<key>SOURCE</key>
+	<array>
+		<string>fajta:fejlesztő</string>
+		<string>fajta:forrás</string>
+	</array>
+	<key>TEXT</key>
+	<array>
+		<string>fajta:szöveg</string>
+	</array>
+	<key>TIPS</key>
+	<array>
+		<string>fajta:tippek</string>
+		<string>fajta:tipp</string>
+	</array>
+	<key>HELP</key>
+	<array>
+		<string>fajta:súgó</string>
+	</array>
+</dict>
+</plist>

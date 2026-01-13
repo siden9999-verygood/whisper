@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>MESSAGES</key>
+	<array>
+		<string>kind:message</string>
+		<string>kind:messages</string>
+	</array>
+	<key>APPLICATIONS</key>
+	<array>
+		<string>kind:application</string>
+		<string>kind:applications</string>
+		<string>kind:app</string>
+		<string>kind:apps</string>
+	</array>
+	<key>CONTACT</key>
+	<array>
+		<string>kind:contact</string>
+		<string>kind:contacts</string>
+		<string>kind:people</string>
+	</array>
+	<key>DOCUMENTS</key>
+	<array>
+		<string>kind:document</string>
+		<string>kind:documents</string>
+	</array>
+	<key>DIRECTORIES</key>
+	<array>
+		<string>kind:folder</string>
+		<string>kind:folders</string>
+	</array>
+	<key>EMAIL</key>
+	<array>
+		<string>kind:email</string>
+		<string>kind:emails</string>
+		<string>kind:mail</string>
+		<string>kind:mail message</string>
+		<string>kind:mail messages</string>
+	</array>
+	<key>EVENT</key>
+	<array>
+		<string>kind:event</string>
+		<string>kind:events</string>
+	</array>
+	<key>TODO</key>
+	<array>
+		<string>kind:reminder</string>
+		<string>kind:reminders</string>
+	</array>
+	<key>EVENT_TODO</key>
+	<array>
+		<string>kind:events &amp; reminders</string>
+		<string>kind:reminders &amp; events</string>
+		<string>kind:events and reminders</string>
+		<string>kind:reminders and events</string>
+		<string>kind:event or reminder</string>
+		<string>kind:reminder or event</string>
+	</array>
+	<key>IMAGES</key>
+	<array>
+		<string>kind:image</string>
+		<string>kind:images</string>
+	</array>
+	<key>MOVIES</key>
+	<array>
+		<string>kind:movie</string>
+		<string>kind:movies</string>
+	</array>
+	<key>MUSIC</key>
+	<array>
+		<string>kind:music</string>
+		<string>kind:song</string>
+		<string>kind:songs</string>
+		<string>kind:audio</string>
+	</array>
+	<key>NEXT_MONTH</key>
+	<array>
+		<string>date:next month</string>
+	</array>
+	<key>NEXT_WEEK</key>
+	<array>
+		<string>date:next week</string>
+	</array>
+	<key>NEXT_YEAR</key>
+	<array>
+		<string>date:next year</string>
+	</array>
+	<key>PDF</key>
+	<array>
+		<string>kind:pdf</string>
+		<string>kind:pdfs</string>
+		<string>kind:pdf document</string>
+		<string>kind:pdf documents</string>
+	</array>
+	<key>SYSTEM_PREFS</key>
+	<array>
+		<string>kind:system pref</string>
+		<string>kind:system prefs</string>
+		<string>kind:system preferences</string>
+		<string>kind:pref</string>
+		<string>kind:prefs</string>
+		<string>kind:preference</string>
+		<string>kind:preferences</string>
+		<string>kind:system settings</string>
+		<string>kind:system setting</string>
+		<string>kind:settings</string>
+		<string>kind:setting</string>
+	</array>
+	<key>THIS_MONTH</key>
+	<array>
+		<string>date:this month</string>
+	</array>
+	<key>THIS_WEEK</key>
+	<array>
+		<string>date:this week</string>
+	</array>
+	<key>THIS_YEAR</key>
+	<array>
+		<string>date:this year</string>
+	</array>
+	<key>TODAY</key>
+	<array>
+		<string>date:today</string>
+	</array>
+	<key>TOMORROW</key>
+	<array>
+		<string>date:tomorrow</string>
+	</array>
+	<key>YESTERDAY</key>
+	<array>
+		<string>date:yesterday</string>
+	</array>
+	<key>DATE</key>
+	<array>
+		<string>date:</string>
+	</array>
+	<key>BOOKMARKS</key>
+	<array>
+		<string>kind:bookmark</string>
+		<string>kind:bookmarks</string>
+		<string>kind:url</string>
+		<string>kind:urls</string>
+		<string>kind:web page</string>
+		<string>kind:web pages</string>
+	</array>
+	<key>FONTS</key>
+	<array>
+		<string>kind:font</string>
+		<string>kind:fonts</string>
+	</array>
+	<key>PRESENTATIONS</key>
+	<array>
+		<string>kind:presentations</string>
+		<string>kind:presentation</string>
+	</array>
+	<key>SPREADSHEETS</key>
+	<array>
+		<string>kind:spreadsheets</string>
+		<string>kind:spreadsheet</string>
+	</array>
+	<key>SOURCE</key>
+	<array>
+		<string>kind:developer</string>
+		<string>kind:source</string>
+	</array>
+	<key>TEXT</key>
+	<array>
+		<string>kind:text</string>
+	</array>
+	<key>TIPS</key>
+	<array>
+		<string>kind:tips</string>
+		<string>kind:tip</string>
+	</array>
+	<key>HELP</key>
+	<array>
+		<string>kind:help</string>
+	</array>
+</dict>
+</plist>

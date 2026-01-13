@@ -1,0 +1,17 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+<opaque name='DCSDictionaryRef' type64='^{__DCSDictionary=}'/>
+<function name='DCSCopyTextDefinition'>
+<arg type64='^{__DCSDictionary=}'/>
+<arg type64='^{__CFString=}'/>
+<arg type64='{_CFRange=qq}'/>
+<retval already_retained='true' type64='^{__CFString=}'/>
+</function>
+<function name='DCSGetTermRangeInString'>
+<arg type64='^{__DCSDictionary=}'/>
+<arg type64='^{__CFString=}'/>
+<arg type64='q'/>
+<retval type64='{_CFRange=qq}'/>
+</function>
+</signatures>

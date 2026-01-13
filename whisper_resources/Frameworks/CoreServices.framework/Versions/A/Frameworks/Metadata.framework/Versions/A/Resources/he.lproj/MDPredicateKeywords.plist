@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>MESSAGES</key>
+	<array>
+		<string>סוג:הודעה</string>
+		<string>סוג:הודעות</string>
+	</array>
+	<key>APPLICATIONS</key>
+	<array>
+		<string>סוג:יישום</string>
+		<string>סוג:יישומים</string>
+		<string>סוג:יישום</string>
+		<string>סוג:יישומים</string>
+	</array>
+	<key>CONTACT</key>
+	<array>
+		<string>סוג:איש קשר</string>
+		<string>סוג:אנשי קשר</string>
+		<string>סוג:אנשים</string>
+	</array>
+	<key>DOCUMENTS</key>
+	<array>
+		<string>סוג:מסמך</string>
+		<string>סוג:מסמכים</string>
+	</array>
+	<key>DIRECTORIES</key>
+	<array>
+		<string>סוג:תיקיה</string>
+		<string>סוג:תיקיות</string>
+	</array>
+	<key>EMAIL</key>
+	<array>
+		<string>סוג:דוא״ל</string>
+		<string>סוג:הודעות דוא״ל</string>
+		<string>סוג:דוא״ל</string>
+		<string>סוג:הודעת דוא״ל</string>
+		<string>סוג:הודעות דוא״ל</string>
+	</array>
+	<key>EVENT</key>
+	<array>
+		<string>סוג:אירוע</string>
+		<string>סוג:אירועים</string>
+	</array>
+	<key>TODO</key>
+	<array>
+		<string>סוג:תזכורת</string>
+		<string>סוג:תזכורות</string>
+	</array>
+	<key>EVENT_TODO</key>
+	<array>
+		<string>סוג:אירועים ותזכורות</string>
+		<string>סוג:תזכורות ואירועים</string>
+		<string>סוג:אירועים ותזכורות</string>
+		<string>סוג:תזכורות ואירועים</string>
+		<string>סוג:אירוע או תזכורת</string>
+		<string>סוג:תזכורת או סוג:אירוע</string>
+	</array>
+	<key>IMAGES</key>
+	<array>
+		<string>סוג:תמונה</string>
+		<string>סוג:תמונות</string>
+	</array>
+	<key>MOVIES</key>
+	<array>
+		<string>סוג:סרט</string>
+		<string>סוג:סרטים</string>
+	</array>
+	<key>MUSIC</key>
+	<array>
+		<string>סוג:מוזיקה</string>
+		<string>סוג:שיר</string>
+		<string>סוג:שירים</string>
+		<string>סוג:שמע</string>
+	</array>
+	<key>NEXT_MONTH</key>
+	<array>
+		<string>תאריך:בחודש הבא</string>
+	</array>
+	<key>NEXT_WEEK</key>
+	<array>
+		<string>תאריך:בשבוע הבא</string>
+	</array>
+	<key>NEXT_YEAR</key>
+	<array>
+		<string>תאריך:בשנה הבאה</string>
+	</array>
+	<key>PDF</key>
+	<array>
+		<string>סוג:pdf</string>
+		<string>סוג:pdfs</string>
+		<string>סוג:מסמך pdf</string>
+		<string>סוג:מסמכי pdf</string>
+	</array>
+	<key>SYSTEM_PREFS</key>
+	<array>
+		<string>סוג:העדפת מערכת</string>
+		<string>סוג:העדפת המערכת</string>
+		<string>סוג:העדפות מערכת</string>
+		<string>סוג:העדפות המערכת</string>
+		<string>סוג:העדפה</string>
+		<string>סוג:העדפות</string>
+		<string>סוג:הגדרות המערכת</string>
+		<string>סוג:הגדרות מערכת</string>
+		<string>סוג:הגדרת מערכת</string>
+		<string>סוג:הגדרת המערכת</string>
+		<string>סוג:הגדרות</string>
+		<string>סוג:הגדרה</string>
+	</array>
+	<key>THIS_MONTH</key>
+	<array>
+		<string>תאריך:החודש</string>
+	</array>
+	<key>THIS_WEEK</key>
+	<array>
+		<string>תאריך:השבוע</string>
+	</array>
+	<key>THIS_YEAR</key>
+	<array>
+		<string>תאריך:השנה</string>
+	</array>
+	<key>TODAY</key>
+	<array>
+		<string>תאריך:היום</string>
+	</array>
+	<key>TOMORROW</key>
+	<array>
+		<string>תאריך:מחר</string>
+	</array>
+	<key>YESTERDAY</key>
+	<array>
+		<string>תאריך:אתמול</string>
+	</array>
+	<key>DATE</key>
+	<array>
+		<string>תאריך:</string>
+	</array>
+	<key>BOOKMARKS</key>
+	<array>
+		<string>סוג:סימניה</string>
+		<string>סוג:סימניות</string>
+		<string>סוג:כתובת אינטרנט</string>
+		<string>סוג:כתובות אינטרנט</string>
+		<string>סוג:עמוד אינטרנט</string>
+		<string>סוג:עמודי אינטרנט</string>
+	</array>
+	<key>FONTS</key>
+	<array>
+		<string>סוג:גופן</string>
+		<string>סוג:גופנים</string>
+	</array>
+	<key>PRESENTATIONS</key>
+	<array>
+		<string>סוג:מצגות</string>
+		<string>סוג:מצגת</string>
+	</array>
+	<key>SPREADSHEETS</key>
+	<array>
+		<string>סוג:גליונות אלקטרוניים</string>
+		<string>סוג:גיליון אלקטרוני</string>
+	</array>
+	<key>SOURCE</key>
+	<array>
+		<string>סוג:מפתח</string>
+		<string>סוג:משאב</string>
+	</array>
+	<key>TEXT</key>
+	<array>
+		<string>סוג:מלל</string>
+	</array>
+	<key>TIPS</key>
+	<array>
+		<string>סוג:טיפים</string>
+		<string>סוג:טיפ</string>
+	</array>
+	<key>HELP</key>
+	<array>
+		<string>סוג:עזרה</string>
+	</array>
+</dict>
+</plist>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>MESSAGES</key>
+	<array>
+		<string>Art:Nachricht</string>
+		<string>Art:Nachrichten</string>
+	</array>
+	<key>APPLICATIONS</key>
+	<array>
+		<string>Art:Programm</string>
+		<string>Art:Programme</string>
+		<string>Art:App</string>
+		<string>Art:Apps</string>
+	</array>
+	<key>CONTACT</key>
+	<array>
+		<string>Art:Kontakt</string>
+		<string>Art:Kontakte</string>
+		<string>Art:Personen</string>
+	</array>
+	<key>DOCUMENTS</key>
+	<array>
+		<string>Art:Dokument</string>
+		<string>Art:Dokumente</string>
+	</array>
+	<key>DIRECTORIES</key>
+	<array>
+		<string>Art:Ordner</string>
+		<string>Art:Ordner</string>
+	</array>
+	<key>EMAIL</key>
+	<array>
+		<string>Art:E-Mail</string>
+		<string>Art:E-Mails</string>
+		<string>Art:Mail</string>
+		<string>Art:Mail</string>
+		<string>Art:Mails</string>
+	</array>
+	<key>EVENT</key>
+	<array>
+		<string>Art:Ereignis</string>
+		<string>Art:Ereignisse</string>
+	</array>
+	<key>TODO</key>
+	<array>
+		<string>Art:Erinnerung</string>
+		<string>Art:Erinnerungen</string>
+	</array>
+	<key>EVENT_TODO</key>
+	<array>
+		<string>Art:Ereignisse &amp; Erinnerungen</string>
+		<string>Art:Erinnerungen &amp; Ereignisse</string>
+		<string>Art:Ereignisse und Erinnerungen</string>
+		<string>Art:Erinnerungen und Ereignisse</string>
+		<string>Art:Ereignis oder Erinnerung</string>
+		<string>Art:Erinnerung oder Ereignis</string>
+	</array>
+	<key>IMAGES</key>
+	<array>
+		<string>Art:Bild</string>
+		<string>Art:Bilder</string>
+	</array>
+	<key>MOVIES</key>
+	<array>
+		<string>Art:Film</string>
+		<string>Art:Filme</string>
+	</array>
+	<key>MUSIC</key>
+	<array>
+		<string>Art:Musik</string>
+		<string>Art:Lied</string>
+		<string>Art:Lieder</string>
+		<string>Art:Audio</string>
+	</array>
+	<key>NEXT_MONTH</key>
+	<array>
+		<string>Datum:nächster Monat</string>
+	</array>
+	<key>NEXT_WEEK</key>
+	<array>
+		<string>Datum:nächste Woche</string>
+	</array>
+	<key>NEXT_YEAR</key>
+	<array>
+		<string>Datum:next year</string>
+	</array>
+	<key>PDF</key>
+	<array>
+		<string>Art:Pdf</string>
+		<string>Art:Pdfs</string>
+		<string>Art:Pdf-Dokument</string>
+		<string>Art:Pdf-Dokumente</string>
+	</array>
+	<key>SYSTEM_PREFS</key>
+	<array>
+		<string>Art:Systemeinstellung</string>
+		<string>Art:Systemeinstellungen</string>
+		<string>Art:Systemeinstellungen</string>
+		<string>Art:Voreinstellung</string>
+		<string>Art:Voreinstellungen</string>
+		<string>Art:Voreinstellung</string>
+		<string>Art:Einstellungen</string>
+		<string>Art:Systemeinstellungen</string>
+		<string>Art:Systemeinstellung</string>
+		<string>Art:Einstellungen</string>
+		<string>Art:Einstellung</string>
+	</array>
+	<key>THIS_MONTH</key>
+	<array>
+		<string>Datum:dieser Monat</string>
+	</array>
+	<key>THIS_WEEK</key>
+	<array>
+		<string>Datum:diese Woche</string>
+	</array>
+	<key>THIS_YEAR</key>
+	<array>
+		<string>Datum:dieses Jahr</string>
+	</array>
+	<key>TODAY</key>
+	<array>
+		<string>Datum:heute</string>
+	</array>
+	<key>TOMORROW</key>
+	<array>
+		<string>Datum:morgen</string>
+	</array>
+	<key>YESTERDAY</key>
+	<array>
+		<string>Datum:gestern</string>
+	</array>
+	<key>DATE</key>
+	<array>
+		<string>Datum:</string>
+	</array>
+	<key>BOOKMARKS</key>
+	<array>
+		<string>Art:Lesezeichen</string>
+		<string>Art:Lesezeichen</string>
+		<string>Art:Url</string>
+		<string>Art:Urls</string>
+		<string>Art:Webseite</string>
+		<string>Art:Webseiten</string>
+	</array>
+	<key>FONTS</key>
+	<array>
+		<string>Art:Schrift</string>
+		<string>Art:Schriften</string>
+	</array>
+	<key>PRESENTATIONS</key>
+	<array>
+		<string>Art:Präsentationen</string>
+		<string>Art:Präsentation</string>
+	</array>
+	<key>SPREADSHEETS</key>
+	<array>
+		<string>Art:Tabellenkalkulationen</string>
+		<string>Art:Tabellenkalkulation</string>
+	</array>
+	<key>SOURCE</key>
+	<array>
+		<string>Art:Entwickler</string>
+		<string>Art:Quelltext</string>
+	</array>
+	<key>TEXT</key>
+	<array>
+		<string>Art:Text</string>
+	</array>
+	<key>TIPS</key>
+	<array>
+		<string>Art:Tipps</string>
+		<string>Art:Tipp</string>
+	</array>
+	<key>HELP</key>
+	<array>
+		<string>Art:Hilfe</string>
+	</array>
+</dict>
+</plist>

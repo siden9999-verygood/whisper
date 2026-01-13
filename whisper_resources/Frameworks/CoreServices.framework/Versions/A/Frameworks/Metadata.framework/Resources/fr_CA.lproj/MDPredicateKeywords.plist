@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>MESSAGES</key>
+	<array>
+		<string>type:message</string>
+		<string>type:messages</string>
+	</array>
+	<key>APPLICATIONS</key>
+	<array>
+		<string>type:application</string>
+		<string>type:applications</string>
+		<string>type:app</string>
+		<string>type:apps</string>
+	</array>
+	<key>CONTACT</key>
+	<array>
+		<string>type:contact</string>
+		<string>type:contacts</string>
+		<string>type:personnes</string>
+	</array>
+	<key>DOCUMENTS</key>
+	<array>
+		<string>type:document</string>
+		<string>type:documents</string>
+	</array>
+	<key>DIRECTORIES</key>
+	<array>
+		<string>type:dossier</string>
+		<string>type:dossiers</string>
+	</array>
+	<key>EMAIL</key>
+	<array>
+		<string>type:courriel</string>
+		<string>type:courriels</string>
+	</array>
+	<key>EVENT</key>
+	<array>
+		<string>type:événement</string>
+		<string>type:événements</string>
+	</array>
+	<key>TODO</key>
+	<array>
+		<string>type:rappel</string>
+		<string>type:rappels</string>
+	</array>
+	<key>EVENT_TODO</key>
+	<array>
+		<string>type:événements &amp; rappels</string>
+		<string>type:rappels &amp; événements</string>
+		<string>type:événements et rappels</string>
+		<string>type:rappels et événements</string>
+		<string>type:événement ou rappel</string>
+		<string>type:rappel ou événement</string>
+	</array>
+	<key>IMAGES</key>
+	<array>
+		<string>type:image</string>
+		<string>type:images</string>
+	</array>
+	<key>MOVIES</key>
+	<array>
+		<string>type:film</string>
+		<string>type:vidéo</string>
+		<string>type:films</string>
+		<string>type:vidéos</string>
+	</array>
+	<key>MUSIC</key>
+	<array>
+		<string>type:musique</string>
+		<string>type:chanson</string>
+		<string>type:chansons</string>
+		<string>type:audio</string>
+	</array>
+	<key>NEXT_MONTH</key>
+	<array>
+		<string>date:mois prochain</string>
+	</array>
+	<key>NEXT_WEEK</key>
+	<array>
+		<string>date:semaine prochaine</string>
+	</array>
+	<key>NEXT_YEAR</key>
+	<array>
+		<string>date:année prochaine</string>
+	</array>
+	<key>PDF</key>
+	<array>
+		<string>type:pdf</string>
+		<string>type:document pdf</string>
+		<string>type:documents pdf</string>
+	</array>
+	<key>SYSTEM_PREFS</key>
+	<array>
+		<string>type:préférence système</string>
+		<string>type:préférences système</string>
+		<string>type:préférence</string>
+		<string>type:préférences</string>
+		<string>type:réglage système</string>
+		<string>type:réglages système</string>
+		<string>type:réglage</string>
+		<string>type:réglages</string>
+	</array>
+	<key>THIS_MONTH</key>
+	<array>
+		<string>date:ce mois-ci</string>
+	</array>
+	<key>THIS_WEEK</key>
+	<array>
+		<string>date:cette semaine</string>
+	</array>
+	<key>THIS_YEAR</key>
+	<array>
+		<string>date:cette année</string>
+	</array>
+	<key>TODAY</key>
+	<array>
+		<string>date:aujourd&apos;hui</string>
+	</array>
+	<key>TOMORROW</key>
+	<array>
+		<string>date:demain</string>
+	</array>
+	<key>YESTERDAY</key>
+	<array>
+		<string>date:hier</string>
+	</array>
+	<key>DATE</key>
+	<array>
+		<string>date:</string>
+	</array>
+	<key>BOOKMARKS</key>
+	<array>
+		<string>type:signet</string>
+		<string>type:signets</string>
+		<string>type:url</string>
+		<string>type:page web</string>
+		<string>type:pages web</string>
+	</array>
+	<key>FONTS</key>
+	<array>
+		<string>type:police</string>
+		<string>type:polices</string>
+	</array>
+	<key>PRESENTATIONS</key>
+	<array>
+		<string>type:présentations</string>
+		<string>type:présentation</string>
+	</array>
+	<key>SPREADSHEETS</key>
+	<array>
+		<string>type:feuilles de calcul</string>
+		<string>type:feuille de calcul</string>
+	</array>
+	<key>SOURCE</key>
+	<array>
+		<string>type:développeur</string>
+		<string>type:source</string>
+	</array>
+	<key>TEXT</key>
+	<array>
+		<string>type:texte</string>
+	</array>
+	<key>TIPS</key>
+	<array>
+		<string>type:astuces</string>
+		<string>type:astuce</string>
+		<string>type:conseils</string>
+		<string>type:conseil</string>
+	</array>
+	<key>HELP</key>
+	<array>
+		<string>type:aide</string>
+	</array>
+</dict>
+</plist>

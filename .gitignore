@@ -1,30 +1,64 @@
-# Python
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-*.pyo
-.pytest_cache/
-.coverage
-coverage.xml
-htmlcov/
+*$py.class
 
-# Virtual envs
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Virtual environment
 venv/
-.venv/
-whisper_resources/
+ENV/
+env/
 
-# OS / Editor
-.DS_Store
+# IDE
 .idea/
 .vscode/
-._*
+*.swp
+*.swo
+.DS_Store
 
-# Logs & temp
-logs/
-*.log
+# Whisper models (downloaded on first run)
+whisper_resources/ggml-*.bin
+!whisper_resources/.gitkeep
+
+# Temporary files
 *.tmp
-tmp/
+*.temp
+*.log
+*.whisper.wav
 
-# Build artifacts
-dist/
-build/
-*.egg-info/
+# Test output
+tests/test_output/
+tests/test_data/*.wav
+
+# Kiro / Agent files
+.kiro/
+.agent/
+
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/

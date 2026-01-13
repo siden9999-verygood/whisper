@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>MESSAGES</key>
+	<array>
+		<string>tipo:messaggio</string>
+		<string>tipo:messaggi</string>
+	</array>
+	<key>APPLICATIONS</key>
+	<array>
+		<string>tipo:applicazione</string>
+		<string>tipo:applicazioni</string>
+		<string>tipo:app</string>
+		<string>tipo:programma</string>
+		<string>tipo:programmi</string>
+	</array>
+	<key>CONTACT</key>
+	<array>
+		<string>tipo:contatto</string>
+		<string>tipo:contatti</string>
+		<string>tipo:persone</string>
+	</array>
+	<key>DOCUMENTS</key>
+	<array>
+		<string>tipo:documento</string>
+		<string>tipo:documenti</string>
+		<string>tipo:file</string>
+		<string>tipo:archivio</string>
+		<string>tipo:archivi</string>
+	</array>
+	<key>DIRECTORIES</key>
+	<array>
+		<string>tipo:cartella</string>
+		<string>tipo:cartelle</string>
+		<string>tipo:directory</string>
+	</array>
+	<key>EMAIL</key>
+	<array>
+		<string>tipo:e-mail</string>
+		<string>tipo:messaggio di posta</string>
+		<string>tipo:messaggi di posta</string>
+		<string>tipo:email</string>
+		<string>tipo:mail</string>
+	</array>
+	<key>EVENT</key>
+	<array>
+		<string>tipo:evento</string>
+		<string>tipo:eventi</string>
+	</array>
+	<key>TODO</key>
+	<array>
+		<string>tipo:promemoria</string>
+	</array>
+	<key>EVENT_TODO</key>
+	<array>
+		<string>tipo:eventi e promemoria</string>
+		<string>tipo:promemoria ed eventi</string>
+		<string>tipo:promemoria e eventi</string>
+		<string>tipo:evento o promemoria</string>
+		<string>tipo:promemoria o evento</string>
+	</array>
+	<key>IMAGES</key>
+	<array>
+		<string>tipo:immagine</string>
+		<string>tipo:immagini</string>
+	</array>
+	<key>MOVIES</key>
+	<array>
+		<string>tipo:filmato</string>
+		<string>tipo:filmati</string>
+		<string>tipo:film</string>
+		<string>tipo:video</string>
+	</array>
+	<key>MUSIC</key>
+	<array>
+		<string>tipo:musica</string>
+		<string>tipo:brano</string>
+		<string>tipo:brani</string>
+		<string>tipo:canzone</string>
+		<string>tipo:canzoni</string>
+		<string>tipo:audio</string>
+	</array>
+	<key>NEXT_MONTH</key>
+	<array>
+		<string>data:il mese successivo</string>
+		<string>data:il mese prossimo</string>
+		<string>data:il prossimo mese</string>
+		<string>data:mese successivo</string>
+		<string>data:mese prossimo</string>
+		<string>data:prossimo mese</string>
+	</array>
+	<key>NEXT_WEEK</key>
+	<array>
+		<string>data:la prossima settimana</string>
+		<string>data:la settimana successiva</string>
+		<string>data:la settimana prossima</string>
+		<string>data:prossima settimana</string>
+		<string>data:settimana prossima</string>
+		<string>data:settimana successiva</string>
+	</array>
+	<key>NEXT_YEAR</key>
+	<array>
+		<string>data:l&apos;anno prossimo</string>
+		<string>data:anno prossimo</string>
+		<string>data:anno successivo</string>
+		<string>data:l&apos;anno successivo</string>
+		<string>data:il prossimo anno</string>
+		<string>data:prossimo anno</string>
+	</array>
+	<key>PDF</key>
+	<array>
+		<string>tipo:pdf</string>
+		<string>tipo:documento pdf</string>
+		<string>tipo:documenti pdf</string>
+		<string>tipo:file pdf</string>
+	</array>
+	<key>SYSTEM_PREFS</key>
+	<array>
+		<string>tipo:preferenza di sistema</string>
+		<string>tipo:preferenze di sistema</string>
+		<string>tipo:preferenza</string>
+		<string>tipo:preferenze</string>
+		<string>tipo:impostazioni di sistema</string>
+		<string>tipo:impostazione di sistema</string>
+		<string>tipo:impostazioni</string>
+		<string>tipo:impostazione</string>
+	</array>
+	<key>THIS_MONTH</key>
+	<array>
+		<string>data:questo mese</string>
+		<string>data:mese corrente</string>
+	</array>
+	<key>THIS_WEEK</key>
+	<array>
+		<string>data:questa settimana</string>
+		<string>data:settimana corrente</string>
+	</array>
+	<key>THIS_YEAR</key>
+	<array>
+		<string>data:quest&apos;anno</string>
+		<string>data:anno corrente</string>
+	</array>
+	<key>TODAY</key>
+	<array>
+		<string>data:oggi</string>
+	</array>
+	<key>TOMORROW</key>
+	<array>
+		<string>data:domani</string>
+	</array>
+	<key>YESTERDAY</key>
+	<array>
+		<string>data:ieri</string>
+	</array>
+	<key>DATE</key>
+	<array>
+		<string>data:</string>
+	</array>
+	<key>BOOKMARKS</key>
+	<array>
+		<string>tipo:preferito</string>
+		<string>tipo:preferiti</string>
+		<string>tipo:segnalibro</string>
+		<string>tipo:segnalibri</string>
+		<string>tipo:pagina web</string>
+		<string>tipo:pagine web</string>
+		<string>tipo:url</string>
+	</array>
+	<key>FONTS</key>
+	<array>
+		<string>tipo:font</string>
+		<string>tipo:carattere</string>
+		<string>tipo:caratteri</string>
+	</array>
+	<key>PRESENTATIONS</key>
+	<array>
+		<string>tipo:presentazioni</string>
+		<string>tipo:presentazione</string>
+	</array>
+	<key>SPREADSHEETS</key>
+	<array>
+		<string>tipo:fogli di calcolo</string>
+		<string>tipo:foglio di calcolo</string>
+		<string>tipo:fogli di lavoro</string>
+		<string>tipo:foglio di lavoro</string>
+	</array>
+	<key>SOURCE</key>
+	<array>
+		<string>tipo:sorgente</string>
+		<string>tipo:sviluppatore</string>
+	</array>
+	<key>TEXT</key>
+	<array>
+		<string>tipo:testo</string>
+	</array>
+	<key>TIPS</key>
+	<array>
+		<string>tipo:suggerimento</string>
+		<string>tipo:suggerimenti</string>
+	</array>
+	<key>HELP</key>
+	<array>
+		<string>tipo:aiuto</string>
+	</array>
+</dict>
+</plist>

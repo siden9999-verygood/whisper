@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>MESSAGES</key>
+	<array>
+		<string>тип:повідомлення</string>
+		<string>тип:повідомлень</string>
+		<string>тип:звістка</string>
+		<string>тип:звістки</string>
+	</array>
+	<key>APPLICATIONS</key>
+	<array>
+		<string>тип:програма</string>
+		<string>тип:програми</string>
+		<string>тип:прога</string>
+		<string>тип:проги</string>
+		<string>тип:доданок</string>
+		<string>тип:доданки</string>
+		<string>тип:застосунок</string>
+		<string>тип:застосунки</string>
+	</array>
+	<key>CONTACT</key>
+	<array>
+		<string>тип:контакт</string>
+		<string>тип:контакти</string>
+		<string>тип:людина</string>
+		<string>тип:люди</string>
+		<string>тип:особа</string>
+		<string>тип:особи</string>
+	</array>
+	<key>DOCUMENTS</key>
+	<array>
+		<string>тип:документ</string>
+		<string>тип:документи</string>
+	</array>
+	<key>DIRECTORIES</key>
+	<array>
+		<string>тип:папка</string>
+		<string>тип:папки</string>
+	</array>
+	<key>EMAIL</key>
+	<array>
+		<string>тип:лист</string>
+		<string>тип:листи</string>
+		<string>тип:електронна пошта</string>
+		<string>тип:електронний лист</string>
+		<string>тип:електронні листи</string>
+		<string>тип:е-лист</string>
+		<string>тип:е-листи</string>
+		<string>тип:е-пошта</string>
+		<string>тип:епошта</string>
+		<string>тип:елист</string>
+		<string>тип:елисти</string>
+	</array>
+	<key>EVENT</key>
+	<array>
+		<string>тип:подія</string>
+		<string>тип:події</string>
+	</array>
+	<key>TODO</key>
+	<array>
+		<string>тип:завдання</string>
+		<string>тип:завдань</string>
+		<string>тип:нагадування</string>
+		<string>тип:нагадувань</string>
+	</array>
+	<key>EVENT_TODO</key>
+	<array>
+		<string>тип:подія та завдання</string>
+		<string>тип:подія і завдання</string>
+		<string>тип:подія й завдання</string>
+		<string>тип:подія + завдання</string>
+		<string>тип:подія чи завдання</string>
+		<string>тип:подія та нагадування</string>
+		<string>тип:подія і нагадування</string>
+		<string>тип:подія й нагадування</string>
+		<string>тип:подія + нагадування</string>
+		<string>тип:подія чи нагадування</string>
+		<string>тип:завдання та подія</string>
+		<string>тип:завдання і подія</string>
+		<string>тип:завдання й подія</string>
+		<string>тип:завдання + подія</string>
+		<string>тип:завдання чи подія</string>
+		<string>тип:нагадування та подія</string>
+		<string>тип:нагадування і подія</string>
+		<string>тип:нагадування й подія</string>
+		<string>тип:нагадування + подія</string>
+		<string>тип:нагадування чи подія</string>
+	</array>
+	<key>IMAGES</key>
+	<array>
+		<string>тип:зображення</string>
+		<string>тип:картинки</string>
+		<string>тип:малюнки</string>
+		<string>тип:картинка</string>
+		<string>тип:малюнок</string>
+	</array>
+	<key>MOVIES</key>
+	<array>
+		<string>тип:відео</string>
+		<string>тип:фільм</string>
+		<string>тип:фільми</string>
+	</array>
+	<key>MUSIC</key>
+	<array>
+		<string>тип:музика</string>
+		<string>тип:пісня</string>
+		<string>тип:пісні</string>
+		<string>тип:звук</string>
+		<string>тип:аудіо</string>
+	</array>
+	<key>NEXT_MONTH</key>
+	<array>
+		<string>дата:наступного місяця</string>
+	</array>
+	<key>NEXT_WEEK</key>
+	<array>
+		<string>дата:наступного тижня</string>
+	</array>
+	<key>NEXT_YEAR</key>
+	<array>
+		<string>дата:наступного року</string>
+	</array>
+	<key>PDF</key>
+	<array>
+		<string>тип:pdf</string>
+		<string>тип:пдф</string>
+		<string>тип:pdf-файл</string>
+		<string>тип:pdf-файли</string>
+		<string>тип:pdf-документ</string>
+		<string>тип:pdf-документи</string>
+	</array>
+	<key>SYSTEM_PREFS</key>
+	<array>
+		<string>тип:системні параметри</string>
+		<string>тип:системний параметр</string>
+		<string>тип:параметри</string>
+		<string>тип:параметр</string>
+		<string>тип:параметрів</string>
+		<string>тип:системні налаштування</string>
+		<string>тип:системне налаштування</string>
+		<string>тип:налаштування</string>
+		<string>тип:параметри системи</string>
+		<string>тип:система</string>
+		<string>тип:настройки</string>
+		<string>тип:налаштовування</string>
+		<string>тип:опції</string>
+		<string>тип:системний</string>
+	</array>
+	<key>THIS_MONTH</key>
+	<array>
+		<string>дата:цього місяця</string>
+	</array>
+	<key>THIS_WEEK</key>
+	<array>
+		<string>дата:цього тижня</string>
+	</array>
+	<key>THIS_YEAR</key>
+	<array>
+		<string>дата:цього року</string>
+	</array>
+	<key>TODAY</key>
+	<array>
+		<string>дата:сьогодні</string>
+	</array>
+	<key>TOMORROW</key>
+	<array>
+		<string>дата:завтра</string>
+	</array>
+	<key>YESTERDAY</key>
+	<array>
+		<string>дата:вчора</string>
+	</array>
+	<key>DATE</key>
+	<array>
+		<string>дата:</string>
+	</array>
+	<key>BOOKMARKS</key>
+	<array>
+		<string>тип:закладка</string>
+		<string>тип:закладки</string>
+		<string>тип:веб-сторінка</string>
+		<string>тип:веб-сторінки</string>
+		<string>тип:вебсторінка</string>
+		<string>тип:вебсторінки</string>
+		<string>тип:url</string>
+		<string>тип:urls</string>
+		<string>тип:url-адреса</string>
+		<string>тип:url-адреси</string>
+		<string>тип:посилання</string>
+		<string>тип:лінк</string>
+	</array>
+	<key>FONTS</key>
+	<array>
+		<string>тип:шрифт</string>
+		<string>тип:шрифти</string>
+	</array>
+	<key>PRESENTATIONS</key>
+	<array>
+		<string>тип:презентації</string>
+		<string>тип:презентація</string>
+	</array>
+	<key>SPREADSHEETS</key>
+	<array>
+		<string>тип:таблиця</string>
+		<string>тип:таблиці</string>
+		<string>тип:е-таблиця</string>
+		<string>тип:е-таблиці</string>
+		<string>тип:етаблиця</string>
+		<string>тип:етаблиці</string>
+		<string>тип:електронна таблиця</string>
+		<string>тип:електронні таблиці</string>
+	</array>
+	<key>SOURCE</key>
+	<array>
+		<string>тип:розробник</string>
+		<string>тип:джерело</string>
+		<string>тип:вихідний файл</string>
+		<string>тип:source</string>
+	</array>
+	<key>TEXT</key>
+	<array>
+		<string>тип:текст</string>
+	</array>
+	<key>TIPS</key>
+	<array>
+		<string>тип:поради</string>
+		<string>тип:порада</string>
+	</array>
+	<key>HELP</key>
+	<array>
+		<string>тип:допомога</string>
+		<string>тип:довідка</string>
+		<string>тип:стаття довідки</string>
+	</array>
+</dict>
+</plist>

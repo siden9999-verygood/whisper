@@ -1,0 +1,228 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+<struct name='CalibratorInfo' type64='{CalibratorInfo=&quot;dataSize&quot;I&quot;displayID&quot;I&quot;profileLocationSize&quot;I&quot;profileLocationPtr&quot;^{CMProfileLocation}&quot;eventProc&quot;^?&quot;isGood&quot;B}'/>
+<struct name='FontSelectionQDStyle' type64='{FontSelectionQDStyle=&quot;version&quot;I&quot;instance&quot;{FMFontFamilyInstance}&quot;size&quot;s&quot;hasColor&quot;B&quot;reserved&quot;C&quot;color&quot;{RGBColor}}'/>
+<struct name='FontSelectionQDStylePtr' type64='{FontSelectionQDStyle=&quot;version&quot;I&quot;instance&quot;{FMFontFamilyInstance}&quot;size&quot;s&quot;hasColor&quot;B&quot;reserved&quot;C&quot;color&quot;{RGBColor}}'/>
+<struct name='NColorPickerInfo' type64='{NColorPickerInfo=&quot;theColor&quot;{NPMColor}&quot;dstProfile&quot;^{OpaqueCMProfileRef}&quot;flags&quot;I&quot;placeWhere&quot;s&quot;dialogOrigin&quot;{Point}&quot;pickerType&quot;I&quot;colorProc&quot;^?&quot;colorProcData&quot;^v&quot;prompt&quot;[256C]&quot;mInfo&quot;{PickerMenuItemInfo}&quot;newColorChosen&quot;B&quot;reserved&quot;C}'/>
+<struct name='NPMColor' type64='{NPMColor=&quot;profile&quot;^{OpaqueCMProfileRef}&quot;color&quot;(CMColor}}'/>
+<struct name='NPMColorPtr' type64='{NPMColor=&quot;profile&quot;^{OpaqueCMProfileRef}&quot;color&quot;(CMColor}}'/>
+<struct name='PickerMenuItemInfo' type64='{PickerMenuItemInfo=&quot;editMenuID&quot;s&quot;cutItem&quot;s&quot;copyItem&quot;s&quot;pasteItem&quot;s&quot;clearItem&quot;s&quot;undoItem&quot;s}'/>
+<opaque name='FCFontDescriptorRef' type64='^{OpaqueFCFontDescriptorRef=}'/>
+<opaque name='Picker' type64='^{OpaquePicker=}'/>
+<constant name='kFCFontCGColorAttribute' type64='^{__CFString=}'/>
+<constant name='kFCFontFaceAttribute' type64='^{__CFString=}'/>
+<constant name='kFCFontFamilyAttribute' type64='^{__CFString=}'/>
+<constant name='kFCFontNameAttribute' type64='^{__CFString=}'/>
+<constant name='kFCFontSizeAttribute' type64='^{__CFString=}'/>
+<constant name='kFCFontVisibleNameAttribute' type64='^{__CFString=}'/>
+<constant name='kFontPanelATSUFontIDKey' type64='^{__CFString=}'/>
+<constant name='kFontPanelAttributeSizesKey' type64='^{__CFString=}'/>
+<constant name='kFontPanelAttributeTagsKey' type64='^{__CFString=}'/>
+<constant name='kFontPanelAttributeValuesKey' type64='^{__CFString=}'/>
+<constant name='kFontPanelAttributesKey' type64='^{__CFString=}'/>
+<constant name='kFontPanelBackgroundColorAttributeName' type64='^{__CFString=}'/>
+<constant name='kFontPanelFeatureSelectorsKey' type64='^{__CFString=}'/>
+<constant name='kFontPanelFeatureTypesKey' type64='^{__CFString=}'/>
+<constant name='kFontPanelMouseTrackingState' type64='^{__CFString=}'/>
+<constant name='kFontPanelVariationAxesKey' type64='^{__CFString=}'/>
+<constant name='kFontPanelVariationValuesKey' type64='^{__CFString=}'/>
+<enum name='fontPanelFontSelectionQDStyleVersionErr' value64='-8882'/>
+<enum name='fontPanelSelectionStyleErr' value64='-8881'/>
+<enum name='fontPanelShowErr' value64='-8880'/>
+<enum name='kAtSpecifiedOrigin' value64='0'/>
+<enum name='kCalibratorNamePrefix' value64='1667329129'/>
+<enum name='kCenterOnMainScreen' value64='2'/>
+<enum name='kColorPickerAppIsColorSyncAware' value64='16'/>
+<enum name='kColorPickerCallColorProcLive' value64='512'/>
+<enum name='kColorPickerCanAnimatePalette' value64='8'/>
+<enum name='kColorPickerCanModifyPalette' value64='4'/>
+<enum name='kColorPickerDetachedFromChoices' value64='256'/>
+<enum name='kColorPickerDialogIsModal' value64='2'/>
+<enum name='kColorPickerDialogIsMoveable' value64='1'/>
+<enum name='kColorPickerInApplicationDialog' value64='64'/>
+<enum name='kColorPickerInPickerDialog' value64='128'/>
+<enum name='kColorPickerInSystemDialog' value64='32'/>
+<enum name='kDeepestColorScreen' value64='1'/>
+<enum name='kDefaultColorPickerHeight' value64='238'/>
+<enum name='kDefaultColorPickerWidth' value64='383'/>
+<enum name='kEventClassFont' value64='1718578804'/>
+<enum name='kEventFontPanelClosed' value64='1'/>
+<enum name='kEventFontSelection' value64='2'/>
+<enum name='kEventParamATSUFontID' value64='1635084644'/>
+<enum name='kEventParamATSUFontSize' value64='1635087226'/>
+<enum name='kEventParamCTFontDescriptor' value64='1668572772'/>
+<enum name='kEventParamDictionary' value64='1684628340'/>
+<enum name='kEventParamFMFontFamily' value64='1718445677'/>
+<enum name='kEventParamFMFontSize' value64='1718449018'/>
+<enum name='kEventParamFMFontStyle' value64='1718449012'/>
+<enum name='kEventParamFontColor' value64='1717791858'/>
+<enum name='kEventParamViewAttributesDictionary' value64='1684104291'/>
+<enum name='kFontSelectionATSUIType' value64='1634956396'/>
+<enum name='kFontSelectionCoreTextType' value64='1668572772'/>
+<enum name='kFontSelectionQDStyleVersionZero' value64='0'/>
+<enum name='kFontSelectionQDType' value64='1903391852'/>
+<enum name='kHICommandShowHideFontPanel' value64='1936221808'/>
+<enum name='typeATSUFontID' value64='1835100014'/>
+<enum name='typeATSUSize' value64='1718188132'/>
+<enum name='typeCTFontDescriptorRef' value64='1667658873'/>
+<enum name='typeFMFontFamily' value64='1936224114'/>
+<enum name='typeFMFontSize' value64='1936224114'/>
+<enum name='typeFMFontStyle' value64='1936224114'/>
+<enum name='typeFontColor' value64='1666336578'/>
+<function name='CMCalibrateDisplay'>
+<arg type64='^{CalibratorInfo=III^{CMProfileLocation}^?B}'/>
+<retval type64='s'/>
+</function>
+<function name='DisposeCalibrateEventUPP'>
+<arg function_pointer='true' type64='^?'>
+<retval type64='v'/>
+</arg>
+<retval type64='v'/>
+</function>
+<function name='DisposeCalibrateUPP'>
+<arg function_pointer='true' type64='^?'>
+<retval type64='s'/>
+</arg>
+<retval type64='v'/>
+</function>
+<function name='DisposeCanCalibrateUPP'>
+<arg function_pointer='true' type64='^?'>
+<retval type64='B'/>
+</arg>
+<retval type64='v'/>
+</function>
+<function name='DisposeNColorChangedUPP'>
+<arg function_pointer='true' type64='^?'>
+<retval type64='v'/>
+</arg>
+<retval type64='v'/>
+</function>
+<function name='FCAddCollection'>
+<arg type64='^{__CFString=}'/>
+<arg type64='I'/>
+<retval type64='i'/>
+</function>
+<function name='FCAddFontDescriptorToCollection'>
+<arg type64='^{OpaqueFCFontDescriptorRef=}'/>
+<arg type64='^{__CFString=}'/>
+<retval type64='i'/>
+</function>
+<function name='FCCopyCollectionNames'>
+<retval already_retained='true' type64='^{__CFArray=}'/>
+</function>
+<function name='FCCopyFontDescriptorsInCollection'>
+<arg type64='^{__CFString=}'/>
+<retval already_retained='true' type64='^{__CFArray=}'/>
+</function>
+<function name='FCFontDescriptorCreateWithFontAttributes'>
+<arg type64='^{__CFDictionary=}'/>
+<retval already_retained='true' type64='^{OpaqueFCFontDescriptorRef=}'/>
+</function>
+<function name='FCFontDescriptorCreateWithName'>
+<arg type64='^{__CFString=}'/>
+<arg type64='d'/>
+<retval already_retained='true' type64='^{OpaqueFCFontDescriptorRef=}'/>
+</function>
+<function name='FCRemoveCollection'>
+<arg type64='^{__CFString=}'/>
+<retval type64='i'/>
+</function>
+<function name='FCRemoveFontDescriptorFromCollection'>
+<arg type64='^{OpaqueFCFontDescriptorRef=}'/>
+<arg type64='^{__CFString=}'/>
+<retval type64='i'/>
+</function>
+<function name='FPIsFontPanelVisible'>
+<retval type64='B'/>
+</function>
+<function name='FPShowHideFontPanel'>
+<retval type64='i'/>
+</function>
+<function name='GetColor'>
+<arg type64='{Point=ss}'/>
+<arg type64='*'/>
+<arg type64='^{RGBColor=SSS}'/>
+<arg type64='^{RGBColor=SSS}'/>
+<retval type64='B'/>
+</function>
+<function name='InvokeCalibrateEventUPP'>
+<arg type64='^{EventRecord=SQI{Point=ss}S}'/>
+<arg function_pointer='true' type64='^?'>
+<retval type64='v'/>
+</arg>
+<retval type64='v'/>
+</function>
+<function name='InvokeCalibrateUPP'>
+<arg type64='^{CalibratorInfo=III^{CMProfileLocation}^?B}'/>
+<arg function_pointer='true' type64='^?'>
+<retval type64='s'/>
+</arg>
+<retval type64='s'/>
+</function>
+<function name='InvokeCanCalibrateUPP'>
+<arg type64='I'/>
+<arg type64='*'/>
+<arg function_pointer='true' type64='^?'>
+<retval type64='B'/>
+</arg>
+<retval type64='B'/>
+</function>
+<function name='InvokeNColorChangedUPP'>
+<arg type64='^v'/>
+<arg type64='^{NPMColor=^{OpaqueCMProfileRef}(CMColor={CMRGBColor=SSS}{CMHSVColor=SSS}{CMHLSColor=SSS}{CMXYZColor=SSS}{CMLabColor=SSS}{CMLuvColor=SSS}{CMYxyColor=SSS}{CMCMYKColor=SSSS}{CMCMYColor=SSS}{CMGrayColor=S}{CMMultichannel5Color=[5C]}{CMMultichannel6Color=[6C]}{CMMultichannel7Color=[7C]}{CMMultichannel8Color=[8C]}{CMNamedColor=I})}'/>
+<arg function_pointer='true' type64='^?'>
+<retval type64='v'/>
+</arg>
+<retval type64='v'/>
+</function>
+<function name='NPickColor'>
+<arg type64='^{NColorPickerInfo={NPMColor=^{OpaqueCMProfileRef}(CMColor={CMRGBColor=SSS}{CMHSVColor=SSS}{CMHLSColor=SSS}{CMXYZColor=SSS}{CMLabColor=SSS}{CMLuvColor=SSS}{CMYxyColor=SSS}{CMCMYKColor=SSSS}{CMCMYColor=SSS}{CMGrayColor=S}{CMMultichannel5Color=[5C]}{CMMultichannel6Color=[6C]}{CMMultichannel7Color=[7C]}{CMMultichannel8Color=[8C]}{CMNamedColor=I})}^{OpaqueCMProfileRef}Is{Point=ss}I^?^v[256C]{PickerMenuItemInfo=ssssss}BC}'/>
+<retval type64='s'/>
+</function>
+<function name='NewCalibrateEventUPP'>
+<arg function_pointer='true' type64='^?'>
+<arg type64='^{EventRecord=SQI{Point=ss}S}'/>
+<retval type64='v'/>
+</arg>
+<retval function_pointer='true' type64='^?'>
+<retval type64='v'/>
+</retval>
+</function>
+<function name='NewCalibrateUPP'>
+<arg function_pointer='true' type64='^?'>
+<arg type64='^{CalibratorInfo=III^{CMProfileLocation}^?B}'/>
+<retval type64='s'/>
+</arg>
+<retval function_pointer='true' type64='^?'>
+<retval type64='s'/>
+</retval>
+</function>
+<function name='NewCanCalibrateUPP'>
+<arg function_pointer='true' type64='^?'>
+<arg type64='I'/>
+<arg type64='*'/>
+<retval type64='B'/>
+</arg>
+<retval function_pointer='true' type64='^?'>
+<retval type64='B'/>
+</retval>
+</function>
+<function name='NewNColorChangedUPP'>
+<arg function_pointer='true' type64='^?'>
+<arg type64='^v'/>
+<arg type64='^{NPMColor=^{OpaqueCMProfileRef}(CMColor={CMRGBColor=SSS}{CMHSVColor=SSS}{CMHLSColor=SSS}{CMXYZColor=SSS}{CMLabColor=SSS}{CMLuvColor=SSS}{CMYxyColor=SSS}{CMCMYKColor=SSSS}{CMCMYColor=SSS}{CMGrayColor=S}{CMMultichannel5Color=[5C]}{CMMultichannel6Color=[6C]}{CMMultichannel7Color=[7C]}{CMMultichannel8Color=[8C]}{CMNamedColor=I})}'/>
+<retval type64='v'/>
+</arg>
+<retval function_pointer='true' type64='^?'>
+<retval type64='v'/>
+</retval>
+</function>
+<function name='SetFontInfoForSelection'>
+<arg type64='I'/>
+<arg type64='I'/>
+<arg type64='^v'/>
+<arg type64='^{OpaqueEventTargetRef=}'/>
+<retval type64='i'/>
+</function>
+</signatures>

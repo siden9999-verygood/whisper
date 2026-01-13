@@ -1,0 +1,1331 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+<struct name='AppParameters' type64='{AppParameters=&quot;theMsgEvent&quot;{?}&quot;eventRefCon&quot;I&quot;messageLength&quot;I}'/>
+<struct name='AppParametersPtr' type64='{AppParameters=&quot;theMsgEvent&quot;{?}&quot;eventRefCon&quot;I&quot;messageLength&quot;I}'/>
+<struct name='ICAppSpec' type64='{ICAppSpec=&quot;fCreator&quot;I&quot;name&quot;[64C]}'/>
+<struct name='ICAppSpecList' type64='{ICAppSpecList=&quot;numberOfItems&quot;s&quot;appSpecs&quot;[1{ICAppSpec}}'/>
+<struct name='ICAppSpecListPtr' type64='{ICAppSpecList=&quot;numberOfItems&quot;s&quot;appSpecs&quot;[1{ICAppSpec}}'/>
+<struct name='ICAppSpecPtr' type64='{ICAppSpec=&quot;fCreator&quot;I&quot;name&quot;[64C]}'/>
+<struct name='ICCharTable' type64='{ICCharTable=&quot;netToMac&quot;[256C]&quot;macToNet&quot;[256C]}'/>
+<struct name='ICCharTablePtr' type64='{ICCharTable=&quot;netToMac&quot;[256C]&quot;macToNet&quot;[256C]}'/>
+<struct name='ICFileSpec' type64='{ICFileSpec=&quot;volName&quot;[32C]&quot;volCreationDate&quot;i&quot;fss&quot;{FSSpec}&quot;alias&quot;{AliasRecord}}'/>
+<struct name='ICFileSpecPtr' type64='{ICFileSpec=&quot;volName&quot;[32C]&quot;volCreationDate&quot;i&quot;fss&quot;{FSSpec}&quot;alias&quot;{AliasRecord}}'/>
+<struct name='ICFontRecord' type64='{ICFontRecord=&quot;size&quot;s&quot;face&quot;C&quot;pad&quot;c&quot;font&quot;[256C]}'/>
+<struct name='ICFontRecordPtr' type64='{ICFontRecord=&quot;size&quot;s&quot;face&quot;C&quot;pad&quot;c&quot;font&quot;[256C]}'/>
+<struct name='ICMapEntry' type64='{ICMapEntry=&quot;totalLength&quot;s&quot;fixedLength&quot;s&quot;version&quot;s&quot;fileType&quot;I&quot;fileCreator&quot;I&quot;postCreator&quot;I&quot;flags&quot;i&quot;extension&quot;[256C]&quot;creatorAppName&quot;[256C]&quot;postAppName&quot;[256C]&quot;MIMEType&quot;[256C]&quot;entryName&quot;[256C]}'/>
+<struct name='ICMapEntryPtr' type64='{ICMapEntry=&quot;totalLength&quot;s&quot;fixedLength&quot;s&quot;version&quot;s&quot;fileType&quot;I&quot;fileCreator&quot;I&quot;postCreator&quot;I&quot;flags&quot;i&quot;extension&quot;[256C]&quot;creatorAppName&quot;[256C]&quot;postAppName&quot;[256C]&quot;MIMEType&quot;[256C]&quot;entryName&quot;[256C]}'/>
+<struct name='ICServiceEntry' type64='{ICServiceEntry=&quot;name&quot;[256C]&quot;port&quot;s&quot;flags&quot;s}'/>
+<struct name='ICServiceEntryPtr' type64='{ICServiceEntry=&quot;name&quot;[256C]&quot;port&quot;s&quot;flags&quot;s}'/>
+<struct name='ICServices' type64='{ICServices=&quot;count&quot;s&quot;services&quot;[1{ICServiceEntry}}'/>
+<struct name='ICServicesPtr' type64='{ICServices=&quot;count&quot;s&quot;services&quot;[1{ICServiceEntry}}'/>
+<struct name='LaunchPBPtr' type64='{LaunchParamBlockRec=&quot;reserved1&quot;I&quot;reserved2&quot;S&quot;launchBlockID&quot;S&quot;launchEPBLength&quot;I&quot;launchFileFlags&quot;S&quot;launchControlFlags&quot;S&quot;launchAppRef&quot;^{FSRef}&quot;launchProcessSN&quot;{ProcessSerialNumber}&quot;launchPreferredSize&quot;I&quot;launchMinimumSize&quot;I&quot;launchAvailableSize&quot;I&quot;launchAppParameters&quot;^{AppParameters}}'/>
+<struct name='LaunchParamBlockRec' type64='{LaunchParamBlockRec=&quot;reserved1&quot;I&quot;reserved2&quot;S&quot;launchBlockID&quot;S&quot;launchEPBLength&quot;I&quot;launchFileFlags&quot;S&quot;launchControlFlags&quot;S&quot;launchAppRef&quot;^{FSRef}&quot;launchProcessSN&quot;{ProcessSerialNumber}&quot;launchPreferredSize&quot;I&quot;launchMinimumSize&quot;I&quot;launchAvailableSize&quot;I&quot;launchAppParameters&quot;^{AppParameters}}'/>
+<struct name='ProcessInfoExtendedRec' type64='{ProcessInfoExtendedRec=&quot;processInfoLength&quot;I&quot;processName&quot;*&quot;processNumber&quot;{ProcessSerialNumber}&quot;processType&quot;I&quot;processSignature&quot;I&quot;processMode&quot;I&quot;processLocation&quot;*&quot;processSize&quot;I&quot;processFreeMem&quot;I&quot;processLauncher&quot;{ProcessSerialNumber}&quot;processLaunchDate&quot;I&quot;processActiveTime&quot;I&quot;processAppRef&quot;^{FSRef}&quot;processTempMemTotal&quot;I&quot;processPurgeableTempMemTotal&quot;I}'/>
+<struct name='ProcessInfoExtendedRecPtr' type64='{ProcessInfoExtendedRec=&quot;processInfoLength&quot;I&quot;processName&quot;*&quot;processNumber&quot;{ProcessSerialNumber}&quot;processType&quot;I&quot;processSignature&quot;I&quot;processMode&quot;I&quot;processLocation&quot;*&quot;processSize&quot;I&quot;processFreeMem&quot;I&quot;processLauncher&quot;{ProcessSerialNumber}&quot;processLaunchDate&quot;I&quot;processActiveTime&quot;I&quot;processAppRef&quot;^{FSRef}&quot;processTempMemTotal&quot;I&quot;processPurgeableTempMemTotal&quot;I}'/>
+<struct name='ProcessInfoRec' type64='{ProcessInfoRec=&quot;processInfoLength&quot;I&quot;processName&quot;*&quot;processNumber&quot;{ProcessSerialNumber}&quot;processType&quot;I&quot;processSignature&quot;I&quot;processMode&quot;I&quot;processLocation&quot;*&quot;processSize&quot;I&quot;processFreeMem&quot;I&quot;processLauncher&quot;{ProcessSerialNumber}&quot;processLaunchDate&quot;I&quot;processActiveTime&quot;I&quot;processAppRef&quot;^{FSRef}}'/>
+<struct name='ProcessInfoRecPtr' type64='{ProcessInfoRec=&quot;processInfoLength&quot;I&quot;processName&quot;*&quot;processNumber&quot;{ProcessSerialNumber}&quot;processType&quot;I&quot;processSignature&quot;I&quot;processMode&quot;I&quot;processLocation&quot;*&quot;processSize&quot;I&quot;processFreeMem&quot;I&quot;processLauncher&quot;{ProcessSerialNumber}&quot;processLaunchDate&quot;I&quot;processActiveTime&quot;I&quot;processAppRef&quot;^{FSRef}}'/>
+<struct name='SizeResourceRec' type64='{SizeResourceRec=&quot;flags&quot;S&quot;preferredHeapSize&quot;I&quot;minimumHeapSize&quot;I}'/>
+<struct name='SizeResourceRecPtr' type64='{SizeResourceRec=&quot;flags&quot;S&quot;preferredHeapSize&quot;I&quot;minimumHeapSize&quot;I}'/>
+<struct name='struct (unnamed at /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.Internal.sdk/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/HIServices.framework/Headers/Processes.h:57:3)' type64='{struct (unnamed at /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.Internal.sdk/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/HIServices.framework/Headers/Processes.h:57:3)=&quot;what&quot;S&quot;message&quot;I&quot;when&quot;I&quot;where&quot;{Point}&quot;modifiers&quot;S}'/>
+<cftype gettypeid_func='AXObserverGetTypeID' name='AXObserverRef' tollfree='__NSCFType' type64='^{__AXObserver=}'/>
+<cftype gettypeid_func='AXTextMarkerRangeGetTypeID' name='AXTextMarkerRangeRef' tollfree='__NSCFType' type64='^{__AXTextMarkerRange=}'/>
+<cftype gettypeid_func='AXTextMarkerGetTypeID' name='AXTextMarkerRef' tollfree='__NSCFType' type64='^{__AXTextMarker=}'/>
+<cftype gettypeid_func='AXUIElementGetTypeID' name='AXUIElementRef' tollfree='__NSCFType' type64='^{__AXUIElement=}'/>
+<cftype gettypeid_func='AXValueGetTypeID' name='AXValueRef' tollfree='__NSCFType' type64='^{__AXValue=}'/>
+<cftype gettypeid_func='HIShapeGetTypeID' name='HIMutableShapeRef' tollfree='__NSCFType' type64='^{__HIShape=}'/>
+<cftype gettypeid_func='HIShapeGetTypeID' name='HIShapeRef' tollfree='__NSCFType' type64='^{__HIShape=}'/>
+<cftype gettypeid_func='PasteboardGetTypeID' name='PasteboardRef' tollfree='__NSCFType' type64='^{OpaquePasteboardRef=}'/>
+<cftype gettypeid_func='TranslationGetTypeID' name='TranslationRef' tollfree='__NSCFType' type64='^{OpaqueTranslationRef=}'/>
+<opaque name='ICInstance' type64='^{OpaqueICInstance=}'/>
+<constant name='kAXAttachmentTextAttribute' type64='^{__CFString=}'/>
+<constant name='kAXAutocorrectedTextAttribute' type64='^{__CFString=}'/>
+<constant name='kAXBackgroundColorTextAttribute' type64='^{__CFString=}'/>
+<constant name='kAXFontFamilyKey' type64='^{__CFString=}'/>
+<constant name='kAXFontNameKey' type64='^{__CFString=}'/>
+<constant name='kAXFontSizeKey' type64='^{__CFString=}'/>
+<constant name='kAXFontTextAttribute' type64='^{__CFString=}'/>
+<constant name='kAXForegoundColorTextAttribute' type64='^{__CFString=}'/>
+<constant name='kAXForegroundColorTextAttribute' type64='^{__CFString=}'/>
+<constant name='kAXLinkTextAttribute' type64='^{__CFString=}'/>
+<constant name='kAXListItemIndexTextAttribute' type64='^{__CFString=}'/>
+<constant name='kAXListItemLevelTextAttribute' type64='^{__CFString=}'/>
+<constant name='kAXListItemPrefixTextAttribute' type64='^{__CFString=}'/>
+<constant name='kAXMarkedMisspelledTextAttribute' type64='^{__CFString=}'/>
+<constant name='kAXMisspelledTextAttribute' type64='^{__CFString=}'/>
+<constant name='kAXNaturalLanguageTextAttribute' type64='^{__CFString=}'/>
+<constant name='kAXReplacementStringTextAttribute' type64='^{__CFString=}'/>
+<constant name='kAXShadowTextAttribute' type64='^{__CFString=}'/>
+<constant name='kAXStrikethroughColorTextAttribute' type64='^{__CFString=}'/>
+<constant name='kAXStrikethroughTextAttribute' type64='^{__CFString=}'/>
+<constant name='kAXSuperscriptTextAttribute' type64='^{__CFString=}'/>
+<constant name='kAXTrustedCheckOptionPrompt' type64='^{__CFString=}'/>
+<constant name='kAXUnderlineColorTextAttribute' type64='^{__CFString=}'/>
+<constant name='kAXUnderlineTextAttribute' type64='^{__CFString=}'/>
+<constant name='kAXVisibleNameKey' type64='^{__CFString=}'/>
+<enum name='activDev' value64='5'/>
+<enum name='atAbsoluteCenter' value64='5'/>
+<enum name='atBottom' value64='3'/>
+<enum name='atBottomLeft' value64='11'/>
+<enum name='atBottomRight' value64='15'/>
+<enum name='atCenterBottom' value64='7'/>
+<enum name='atCenterLeft' value64='9'/>
+<enum name='atCenterRight' value64='13'/>
+<enum name='atCenterTop' value64='6'/>
+<enum name='atHorizontalCenter' value64='4'/>
+<enum name='atLeft' value64='8'/>
+<enum name='atNone' value64='0'/>
+<enum name='atRight' value64='12'/>
+<enum name='atTop' value64='2'/>
+<enum name='atTopLeft' value64='10'/>
+<enum name='atTopRight' value64='14'/>
+<enum name='atVerticalCenter' value64='1'/>
+<enum name='badPasteboardFlavorErr' value64='-25133'/>
+<enum name='badPasteboardIndexErr' value64='-25131'/>
+<enum name='badPasteboardItemErr' value64='-25132'/>
+<enum name='badPasteboardSyncErr' value64='-25130'/>
+<enum name='badTranslationRefErr' value64='-3031'/>
+<enum name='cdevGenErr' value64='-1'/>
+<enum name='cdevMemErr' value64='0'/>
+<enum name='cdevResErr' value64='1'/>
+<enum name='cdevUnset' value64='3'/>
+<enum name='clearDev' value64='13'/>
+<enum name='closeDev' value64='2'/>
+<enum name='copyDev' value64='11'/>
+<enum name='cursorDev' value64='14'/>
+<enum name='cutDev' value64='10'/>
+<enum name='deactivDev' value64='6'/>
+<enum name='duplicatePasteboardFlavorErr' value64='-25134'/>
+<enum name='extendedBlock' value64='19523'/>
+<enum name='extendedBlockLen' value64='40'/>
+<enum name='hitDev' value64='1'/>
+<enum name='icConfigInappropriateErr' value64='-675'/>
+<enum name='icConfigNotFoundErr' value64='-674'/>
+<enum name='icInternalErr' value64='-669'/>
+<enum name='icNoMoreWritersErr' value64='-671'/>
+<enum name='icNoPerm' value64='0'/>
+<enum name='icNoURLErr' value64='-673'/>
+<enum name='icNothingToOverrideErr' value64='-672'/>
+<enum name='icPermErr' value64='-667'/>
+<enum name='icPrefDataErr' value64='-668'/>
+<enum name='icPrefNotFoundErr' value64='-666'/>
+<enum name='icProfileNotFoundErr' value64='-676'/>
+<enum name='icReadOnlyPerm' value64='1'/>
+<enum name='icReadWritePerm' value64='2'/>
+<enum name='icTooManyProfilesErr' value64='-677'/>
+<enum name='icTruncatedErr' value64='-670'/>
+<enum name='initDev' value64='0'/>
+<enum name='kAEFetchURL' value64='1179996748'/>
+<enum name='kAEGetURL' value64='1196773964'/>
+<enum name='kAXCopyMultipleAttributeOptionStopOnError' value64='1'/>
+<enum name='kAXErrorAPIDisabled' value64='-25211'/>
+<enum name='kAXErrorActionUnsupported' value64='-25206'/>
+<enum name='kAXErrorAttributeUnsupported' value64='-25205'/>
+<enum name='kAXErrorCannotComplete' value64='-25204'/>
+<enum name='kAXErrorFailure' value64='-25200'/>
+<enum name='kAXErrorIllegalArgument' value64='-25201'/>
+<enum name='kAXErrorInvalidUIElement' value64='-25202'/>
+<enum name='kAXErrorInvalidUIElementObserver' value64='-25203'/>
+<enum name='kAXErrorNoValue' value64='-25212'/>
+<enum name='kAXErrorNotEnoughPrecision' value64='-25214'/>
+<enum name='kAXErrorNotImplemented' value64='-25208'/>
+<enum name='kAXErrorNotificationAlreadyRegistered' value64='-25209'/>
+<enum name='kAXErrorNotificationNotRegistered' value64='-25210'/>
+<enum name='kAXErrorNotificationUnsupported' value64='-25207'/>
+<enum name='kAXErrorParameterizedAttributeUnsupported' value64='-25213'/>
+<enum name='kAXErrorSuccess' value64='0'/>
+<enum name='kAXMenuItemModifierControl' value64='4'/>
+<enum name='kAXMenuItemModifierNoCommand' value64='8'/>
+<enum name='kAXMenuItemModifierNone' value64='0'/>
+<enum name='kAXMenuItemModifierOption' value64='2'/>
+<enum name='kAXMenuItemModifierShift' value64='1'/>
+<enum name='kAXPriorityHigh' value64='90'/>
+<enum name='kAXPriorityLow' value64='10'/>
+<enum name='kAXPriorityMedium' value64='50'/>
+<enum name='kAXUnderlineStyleDouble' value64='9'/>
+<enum name='kAXUnderlineStyleNone' value64='0'/>
+<enum name='kAXUnderlineStyleSingle' value64='1'/>
+<enum name='kAXUnderlineStyleThick' value64='2'/>
+<enum name='kAXValueAXErrorType' value64='5'/>
+<enum name='kAXValueCFRangeType' value64='4'/>
+<enum name='kAXValueCGPointType' value64='1'/>
+<enum name='kAXValueCGRectType' value64='3'/>
+<enum name='kAXValueCGSizeType' value64='2'/>
+<enum name='kAXValueIllegalType' value64='0'/>
+<enum name='kAXValueTypeAXError' value64='5'/>
+<enum name='kAXValueTypeCFRange' value64='4'/>
+<enum name='kAXValueTypeCGPoint' value64='1'/>
+<enum name='kAXValueTypeCGRect' value64='3'/>
+<enum name='kAXValueTypeCGSize' value64='2'/>
+<enum name='kAXValueTypeIllegal' value64='0'/>
+<enum name='kAlignAbsoluteCenter' value64='5'/>
+<enum name='kAlignBottom' value64='3'/>
+<enum name='kAlignBottomLeft' value64='11'/>
+<enum name='kAlignBottomRight' value64='15'/>
+<enum name='kAlignCenterBottom' value64='7'/>
+<enum name='kAlignCenterLeft' value64='9'/>
+<enum name='kAlignCenterRight' value64='13'/>
+<enum name='kAlignCenterTop' value64='6'/>
+<enum name='kAlignHorizontalCenter' value64='4'/>
+<enum name='kAlignLeft' value64='8'/>
+<enum name='kAlignNone' value64='0'/>
+<enum name='kAlignRight' value64='12'/>
+<enum name='kAlignTop' value64='2'/>
+<enum name='kAlignTopLeft' value64='10'/>
+<enum name='kAlignTopRight' value64='14'/>
+<enum name='kAlignVerticalCenter' value64='1'/>
+<enum name='kCurrentProcess' value64='2'/>
+<enum name='kHIShapeEnumerateInit' value64='1'/>
+<enum name='kHIShapeEnumerateRect' value64='2'/>
+<enum name='kHIShapeEnumerateTerminate' value64='3'/>
+<enum name='kHIShapeParseFromBottom' value64='1'/>
+<enum name='kHIShapeParseFromBottomRight' value64='3'/>
+<enum name='kHIShapeParseFromLeft' value64='0'/>
+<enum name='kHIShapeParseFromRight' value64='2'/>
+<enum name='kHIShapeParseFromTop' value64='0'/>
+<enum name='kHIShapeParseFromTopLeft' value64='0'/>
+<enum name='kICAttrLockedBit' value64='0'/>
+<enum name='kICAttrLockedMask' value64='1'/>
+<enum name='kICAttrNoChange' value64='-1'/>
+<enum name='kICAttrVolatileBit' value64='1'/>
+<enum name='kICAttrVolatileMask' value64='2'/>
+<enum name='kICComponentInterfaceVersion' value64='262144'/>
+<enum name='kICComponentInterfaceVersion0' value64='0'/>
+<enum name='kICComponentInterfaceVersion1' value64='65536'/>
+<enum name='kICComponentInterfaceVersion2' value64='131072'/>
+<enum name='kICComponentInterfaceVersion3' value64='196608'/>
+<enum name='kICComponentInterfaceVersion4' value64='262144'/>
+<enum name='kICComponentVersion' value64='0'/>
+<enum name='kICCreator' value64='1229144432'/>
+<enum name='kICEditPreferenceEvent' value64='1229144432'/>
+<enum name='kICEditPreferenceEventClass' value64='1229144432'/>
+<enum name='kICFileSpecHeaderSize' value64='106'/>
+<enum name='kICFileType' value64='1229144432'/>
+<enum name='kICMapBinaryBit' value64='0'/>
+<enum name='kICMapBinaryMask' value64='1'/>
+<enum name='kICMapDataForkBit' value64='2'/>
+<enum name='kICMapDataForkMask' value64='4'/>
+<enum name='kICMapFixedLength' value64='22'/>
+<enum name='kICMapNotIncomingBit' value64='4'/>
+<enum name='kICMapNotIncomingMask' value64='16'/>
+<enum name='kICMapNotOutgoingBit' value64='5'/>
+<enum name='kICMapNotOutgoingMask' value64='32'/>
+<enum name='kICMapPostBit' value64='3'/>
+<enum name='kICMapPostMask' value64='8'/>
+<enum name='kICMapResourceForkBit' value64='1'/>
+<enum name='kICMapResourceForkMask' value64='2'/>
+<enum name='kICNilProfileID' value64='0'/>
+<enum name='kICNoUserInteractionBit' value64='0'/>
+<enum name='kICNoUserInteractionMask' value64='1'/>
+<enum name='kICNumVersion' value64='1'/>
+<enum name='kICServicesTCPBit' value64='0'/>
+<enum name='kICServicesTCPMask' value64='1'/>
+<enum name='kICServicesUDPBit' value64='1'/>
+<enum name='kICServicesUDPMask' value64='2'/>
+<enum name='kInternetEventClass' value64='1196773964'/>
+<enum name='kNoProcess' value64='0'/>
+<enum name='kPasteboardClientIsOwner' value64='2'/>
+<enum name='kPasteboardFlavorNoFlags' value64='0'/>
+<enum name='kPasteboardFlavorNotSaved' value64='4'/>
+<enum name='kPasteboardFlavorPromised' value64='512'/>
+<enum name='kPasteboardFlavorRequestOnly' value64='8'/>
+<enum name='kPasteboardFlavorSenderOnly' value64='1'/>
+<enum name='kPasteboardFlavorSenderTranslated' value64='2'/>
+<enum name='kPasteboardFlavorSystemTranslated' value64='256'/>
+<enum name='kPasteboardModified' value64='1'/>
+<enum name='kPasteboardStandardLocationTrash' value64='1953657704'/>
+<enum name='kPasteboardStandardLocationUnknown' value64='1970170734'/>
+<enum name='kPlotIconRefNoImage' value64='2'/>
+<enum name='kPlotIconRefNoMask' value64='4'/>
+<enum name='kPlotIconRefNormalFlags' value64='0'/>
+<enum name='kProcessDictionaryIncludeAllInformationMask' value64='-1'/>
+<enum name='kProcessTransformToBackgroundApplication' value64='2'/>
+<enum name='kProcessTransformToForegroundApplication' value64='1'/>
+<enum name='kProcessTransformToUIElementApplication' value64='4'/>
+<enum name='kQuitAtNormalTimeMask' value64='2'/>
+<enum name='kQuitBeforeFBAsQuitMask' value64='4'/>
+<enum name='kQuitBeforeNormalTimeMask' value64='1'/>
+<enum name='kQuitBeforeShellQuitsMask' value64='8'/>
+<enum name='kQuitBeforeTerminatorAppQuitsMask' value64='16'/>
+<enum name='kQuitNeverMask' value64='32'/>
+<enum name='kQuitNotQuitDuringInstallMask' value64='256'/>
+<enum name='kQuitNotQuitDuringLogoutMask' value64='512'/>
+<enum name='kQuitOptionsMask' value64='127'/>
+<enum name='kSelectorAll1BitData' value64='16843009'/>
+<enum name='kSelectorAll32BitData' value64='134219784'/>
+<enum name='kSelectorAll4BitData' value64='33686018'/>
+<enum name='kSelectorAll8BitData' value64='67372036'/>
+<enum name='kSelectorAllAvailableData' value64='-1'/>
+<enum name='kSelectorAllHugeData' value64='-16777216'/>
+<enum name='kSelectorAllLargeData' value64='255'/>
+<enum name='kSelectorAllMiniData' value64='16711680'/>
+<enum name='kSelectorAllSmallData' value64='65280'/>
+<enum name='kSelectorHuge1Bit' value64='16777216'/>
+<enum name='kSelectorHuge32Bit' value64='134217728'/>
+<enum name='kSelectorHuge4Bit' value64='33554432'/>
+<enum name='kSelectorHuge8Bit' value64='67108864'/>
+<enum name='kSelectorHuge8BitMask' value64='268435456'/>
+<enum name='kSelectorLarge1Bit' value64='1'/>
+<enum name='kSelectorLarge32Bit' value64='8'/>
+<enum name='kSelectorLarge4Bit' value64='2'/>
+<enum name='kSelectorLarge8Bit' value64='4'/>
+<enum name='kSelectorLarge8BitMask' value64='16'/>
+<enum name='kSelectorMini1Bit' value64='65536'/>
+<enum name='kSelectorMini4Bit' value64='131072'/>
+<enum name='kSelectorMini8Bit' value64='262144'/>
+<enum name='kSelectorSmall1Bit' value64='256'/>
+<enum name='kSelectorSmall32Bit' value64='2048'/>
+<enum name='kSelectorSmall4Bit' value64='512'/>
+<enum name='kSelectorSmall8Bit' value64='1024'/>
+<enum name='kSelectorSmall8BitMask' value64='4096'/>
+<enum name='kSetFrontProcessCausedByUser' value64='2'/>
+<enum name='kSetFrontProcessFrontWindowOnly' value64='1'/>
+<enum name='kSystemProcess' value64='1'/>
+<enum name='kTransformDisabled' value64='1'/>
+<enum name='kTransformLabel1' value64='256'/>
+<enum name='kTransformLabel2' value64='512'/>
+<enum name='kTransformLabel3' value64='768'/>
+<enum name='kTransformLabel4' value64='1024'/>
+<enum name='kTransformLabel5' value64='1280'/>
+<enum name='kTransformLabel6' value64='1536'/>
+<enum name='kTransformLabel7' value64='1792'/>
+<enum name='kTransformNone' value64='0'/>
+<enum name='kTransformOffline' value64='2'/>
+<enum name='kTransformOpen' value64='3'/>
+<enum name='kTransformSelected' value64='16384'/>
+<enum name='kTransformSelectedDisabled' value64='16385'/>
+<enum name='kTransformSelectedOffline' value64='16386'/>
+<enum name='kTransformSelectedOpen' value64='16387'/>
+<enum name='kTranslationDataTranslation' value64='1'/>
+<enum name='kTranslationFileTranslation' value64='2'/>
+<enum name='kUAZoomFocusTypeInsertionPoint' value64='1'/>
+<enum name='kUAZoomFocusTypeOther' value64='0'/>
+<enum name='keyAEAttaching' value64='1098146664'/>
+<enum name='keyEvtDev' value64='7'/>
+<enum name='keyICEditPreferenceDestination' value64='1684370292'/>
+<enum name='launchAllow24Bit' value64='256'/>
+<enum name='launchContinue' value64='16384'/>
+<enum name='launchDontSwitch' value64='512'/>
+<enum name='launchInhibitDaemon' value64='128'/>
+<enum name='launchNoFileFlags' value64='2048'/>
+<enum name='launchUseMinimum' value64='1024'/>
+<enum name='macDev' value64='8'/>
+<enum name='mode32BitCompatible' value64='128'/>
+<enum name='modeCanBackground' value64='4096'/>
+<enum name='modeControlPanel' value64='524288'/>
+<enum name='modeDeskAccessory' value64='131072'/>
+<enum name='modeDisplayManagerAware' value64='4'/>
+<enum name='modeDoesActivateOnFGSwitch' value64='2048'/>
+<enum name='modeGetAppDiedMsg' value64='256'/>
+<enum name='modeGetFrontClicks' value64='512'/>
+<enum name='modeHighLevelEventAware' value64='64'/>
+<enum name='modeLaunchDontSwitch' value64='262144'/>
+<enum name='modeLocalAndRemoteHLEvents' value64='32'/>
+<enum name='modeMultiLaunch' value64='65536'/>
+<enum name='modeNeedSuspendResume' value64='16384'/>
+<enum name='modeOnlyBackground' value64='1024'/>
+<enum name='modeReserved' value64='16777216'/>
+<enum name='modeStationeryAware' value64='16'/>
+<enum name='modeUseTextEditServices' value64='8'/>
+<enum name='noPasteboardPromiseKeeperErr' value64='-25136'/>
+<enum name='notPasteboardOwnerErr' value64='-25135'/>
+<enum name='nulDev' value64='3'/>
+<enum name='pasteDev' value64='12'/>
+<enum name='svAll1BitData' value64='16843009'/>
+<enum name='svAll4BitData' value64='33686018'/>
+<enum name='svAll8BitData' value64='67372036'/>
+<enum name='svAllAvailableData' value64='-1'/>
+<enum name='svAllLargeData' value64='255'/>
+<enum name='svAllMiniData' value64='16711680'/>
+<enum name='svAllSmallData' value64='65280'/>
+<enum name='svLarge1Bit' value64='1'/>
+<enum name='svLarge4Bit' value64='2'/>
+<enum name='svLarge8Bit' value64='4'/>
+<enum name='svMini1Bit' value64='65536'/>
+<enum name='svMini4Bit' value64='131072'/>
+<enum name='svMini8Bit' value64='262144'/>
+<enum name='svSmall1Bit' value64='256'/>
+<enum name='svSmall4Bit' value64='512'/>
+<enum name='svSmall8Bit' value64='1024'/>
+<enum name='ttDisabled' value64='1'/>
+<enum name='ttLabel1' value64='256'/>
+<enum name='ttLabel2' value64='512'/>
+<enum name='ttLabel3' value64='768'/>
+<enum name='ttLabel4' value64='1024'/>
+<enum name='ttLabel5' value64='1280'/>
+<enum name='ttLabel6' value64='1536'/>
+<enum name='ttLabel7' value64='1792'/>
+<enum name='ttNone' value64='0'/>
+<enum name='ttOffline' value64='2'/>
+<enum name='ttOpen' value64='3'/>
+<enum name='ttSelected' value64='16384'/>
+<enum name='ttSelectedDisabled' value64='16385'/>
+<enum name='ttSelectedOffline' value64='16386'/>
+<enum name='ttSelectedOpen' value64='16387'/>
+<enum name='undoDev' value64='9'/>
+<enum name='updateDev' value64='4'/>
+<function name='AXAPIEnabled'>
+<retval type64='B'/>
+</function>
+<function name='AXIsProcessTrusted'>
+<retval type64='B'/>
+</function>
+<function name='AXIsProcessTrustedWithOptions'>
+<arg type64='^{__CFDictionary=}'/>
+<retval type64='B'/>
+</function>
+<function name='AXMakeProcessTrusted'>
+<arg type64='^{__CFString=}'/>
+<retval type64='i'/>
+</function>
+<function name='AXObserverAddNotification'>
+<arg type64='^{__AXObserver=}'/>
+<arg type64='^{__AXUIElement=}'/>
+<arg type64='^{__CFString=}'/>
+<arg type64='^v'/>
+<retval type64='i'/>
+</function>
+<function name='AXObserverCreate'>
+<arg type64='i'/>
+<arg function_pointer='true' type64='^?'>
+<arg type64='^{__AXObserver=}'/>
+<arg type64='^{__AXUIElement=}'/>
+<arg type64='^{__CFString=}'/>
+<arg type64='^v'/>
+<retval type64='v'/>
+</arg>
+<arg type64='^^{__AXObserver}'/>
+<retval type64='i'/>
+</function>
+<function name='AXObserverCreateWithInfoCallback'>
+<arg type64='i'/>
+<arg function_pointer='true' type64='^?'>
+<arg type64='^{__AXObserver=}'/>
+<arg type64='^{__AXUIElement=}'/>
+<arg type64='^{__CFString=}'/>
+<arg type64='^{__CFDictionary=}'/>
+<arg type64='^v'/>
+<retval type64='v'/>
+</arg>
+<arg type64='^^{__AXObserver}'/>
+<retval type64='i'/>
+</function>
+<function name='AXObserverGetRunLoopSource'>
+<arg type64='^{__AXObserver=}'/>
+<retval type64='^{__CFRunLoopSource=}'/>
+</function>
+<function name='AXObserverGetTypeID'>
+<retval type64='Q'/>
+</function>
+<function name='AXObserverRemoveNotification'>
+<arg type64='^{__AXObserver=}'/>
+<arg type64='^{__AXUIElement=}'/>
+<arg type64='^{__CFString=}'/>
+<retval type64='i'/>
+</function>
+<function name='AXTextMarkerCreate'>
+<arg type64='^{__CFAllocator=}'/>
+<arg type64='*'/>
+<arg type64='q'/>
+<retval already_retained='true' type64='^{__AXTextMarker=}'/>
+</function>
+<function name='AXTextMarkerGetBytePtr'>
+<arg type64='^{__AXTextMarker=}'/>
+<retval type64='*'/>
+</function>
+<function name='AXTextMarkerGetLength'>
+<arg type64='^{__AXTextMarker=}'/>
+<retval type64='q'/>
+</function>
+<function name='AXTextMarkerGetTypeID'>
+<retval type64='Q'/>
+</function>
+<function name='AXTextMarkerRangeCopyEndMarker'>
+<arg type64='^{__AXTextMarkerRange=}'/>
+<retval already_retained='true' type64='^{__AXTextMarker=}'/>
+</function>
+<function name='AXTextMarkerRangeCopyStartMarker'>
+<arg type64='^{__AXTextMarkerRange=}'/>
+<retval already_retained='true' type64='^{__AXTextMarker=}'/>
+</function>
+<function name='AXTextMarkerRangeCreate'>
+<arg type64='^{__CFAllocator=}'/>
+<arg type64='^{__AXTextMarker=}'/>
+<arg type64='^{__AXTextMarker=}'/>
+<retval already_retained='true' type64='^{__AXTextMarkerRange=}'/>
+</function>
+<function name='AXTextMarkerRangeCreateWithBytes'>
+<arg type64='^{__CFAllocator=}'/>
+<arg type64='*'/>
+<arg type64='q'/>
+<arg type64='*'/>
+<arg type64='q'/>
+<retval already_retained='true' type64='^{__AXTextMarkerRange=}'/>
+</function>
+<function name='AXTextMarkerRangeGetTypeID'>
+<retval type64='Q'/>
+</function>
+<function name='AXUIElementCopyActionDescription'>
+<arg type64='^{__AXUIElement=}'/>
+<arg type64='^{__CFString=}'/>
+<arg type64='^^{__CFString}'/>
+<retval type64='i'/>
+</function>
+<function name='AXUIElementCopyActionNames'>
+<arg type64='^{__AXUIElement=}'/>
+<arg type64='^^{__CFArray}'/>
+<retval type64='i'/>
+</function>
+<function name='AXUIElementCopyAttributeNames'>
+<arg type64='^{__AXUIElement=}'/>
+<arg type64='^^{__CFArray}'/>
+<retval type64='i'/>
+</function>
+<function name='AXUIElementCopyAttributeValue'>
+<arg type64='^{__AXUIElement=}'/>
+<arg type64='^{__CFString=}'/>
+<arg type64='^^v'/>
+<retval type64='i'/>
+</function>
+<function name='AXUIElementCopyAttributeValues'>
+<arg type64='^{__AXUIElement=}'/>
+<arg type64='^{__CFString=}'/>
+<arg type64='q'/>
+<arg type64='q'/>
+<arg type64='^^{__CFArray}'/>
+<retval type64='i'/>
+</function>
+<function name='AXUIElementCopyElementAtPosition'>
+<arg type64='^{__AXUIElement=}'/>
+<arg type64='f'/>
+<arg type64='f'/>
+<arg type64='^^{__AXUIElement}'/>
+<retval type64='i'/>
+</function>
+<function name='AXUIElementCopyMultipleAttributeValues'>
+<arg type64='^{__AXUIElement=}'/>
+<arg type64='^{__CFArray=}'/>
+<arg type64='I'/>
+<arg type64='^^{__CFArray}'/>
+<retval type64='i'/>
+</function>
+<function name='AXUIElementCopyParameterizedAttributeNames'>
+<arg type64='^{__AXUIElement=}'/>
+<arg type64='^^{__CFArray}'/>
+<retval type64='i'/>
+</function>
+<function name='AXUIElementCopyParameterizedAttributeValue'>
+<arg type64='^{__AXUIElement=}'/>
+<arg type64='^{__CFString=}'/>
+<arg type64='@'/>
+<arg type64='^^v'/>
+<retval type64='i'/>
+</function>
+<function name='AXUIElementCreateApplication'>
+<arg type64='i'/>
+<retval already_retained='true' type64='^{__AXUIElement=}'/>
+</function>
+<function name='AXUIElementCreateSystemWide'>
+<retval already_retained='true' type64='^{__AXUIElement=}'/>
+</function>
+<function name='AXUIElementGetAttributeValueCount'>
+<arg type64='^{__AXUIElement=}'/>
+<arg type64='^{__CFString=}'/>
+<arg type64='^q'/>
+<retval type64='i'/>
+</function>
+<function name='AXUIElementGetPid'>
+<arg type64='^{__AXUIElement=}'/>
+<arg type64='^i'/>
+<retval type64='i'/>
+</function>
+<function name='AXUIElementGetTypeID'>
+<retval type64='Q'/>
+</function>
+<function name='AXUIElementIsAttributeSettable'>
+<arg type64='^{__AXUIElement=}'/>
+<arg type64='^{__CFString=}'/>
+<arg type64='^B'/>
+<retval type64='i'/>
+</function>
+<function name='AXUIElementPerformAction'>
+<arg type64='^{__AXUIElement=}'/>
+<arg type64='^{__CFString=}'/>
+<retval type64='i'/>
+</function>
+<function name='AXUIElementPostKeyboardEvent'>
+<arg type64='^{__AXUIElement=}'/>
+<arg type64='S'/>
+<arg type64='S'/>
+<arg type64='B'/>
+<retval type64='i'/>
+</function>
+<function name='AXUIElementSetAttributeValue'>
+<arg type64='^{__AXUIElement=}'/>
+<arg type64='^{__CFString=}'/>
+<arg type64='@'/>
+<retval type64='i'/>
+</function>
+<function name='AXUIElementSetMessagingTimeout'>
+<arg type64='^{__AXUIElement=}'/>
+<arg type64='f'/>
+<retval type64='i'/>
+</function>
+<function name='AXValueCreate'>
+<arg type64='I'/>
+<arg type64='^v'/>
+<retval already_retained='true' type64='^{__AXValue=}'/>
+</function>
+<function name='AXValueGetType'>
+<arg type64='^{__AXValue=}'/>
+<retval type64='I'/>
+</function>
+<function name='AXValueGetTypeID'>
+<retval type64='Q'/>
+</function>
+<function name='AXValueGetValue'>
+<arg type64='^{__AXValue=}'/>
+<arg type64='I'/>
+<arg type64='^v'/>
+<retval type64='B'/>
+</function>
+<function name='CopyProcessName'>
+<arg type64='^{ProcessSerialNumber=II}'/>
+<arg type64='^^{__CFString}'/>
+<retval type64='i'/>
+</function>
+<function name='DisposeIconActionUPP'>
+<arg function_pointer='true' type64='^?'>
+<retval type64='s'/>
+</arg>
+<retval type64='v'/>
+</function>
+<function name='DisposeIconGetterUPP'>
+<arg function_pointer='true' type64='^?'>
+<retval type64='^*'/>
+</arg>
+<retval type64='v'/>
+</function>
+<function name='ExitToShell'>
+<retval type64='v'/>
+</function>
+<function name='GetCurrentProcess'>
+<arg type64='^{ProcessSerialNumber=II}'/>
+<retval type64='s'/>
+</function>
+<function name='GetFrontProcess'>
+<arg type64='^{ProcessSerialNumber=II}'/>
+<retval type64='s'/>
+</function>
+<function name='GetIconFamilyData'>
+<arg type64='^^{IconFamilyResource}'/>
+<arg type64='I'/>
+<arg type64='^*'/>
+<retval type64='s'/>
+</function>
+<function name='GetIconRefVariant'>
+<arg type64='^{OpaqueIconRef=}'/>
+<arg type64='I'/>
+<arg type64='^s'/>
+<retval type64='^{OpaqueIconRef=}'/>
+</function>
+<function name='GetNextProcess'>
+<arg type64='^{ProcessSerialNumber=II}'/>
+<retval type64='s'/>
+</function>
+<function name='GetProcessBundleLocation'>
+<arg type64='^{ProcessSerialNumber=II}'/>
+<arg type64='^{FSRef=[80C]}'/>
+<retval type64='i'/>
+</function>
+<function name='GetProcessForPID'>
+<arg type64='i'/>
+<arg type64='^{ProcessSerialNumber=II}'/>
+<retval type64='i'/>
+</function>
+<function name='GetProcessInformation'>
+<arg type64='^{ProcessSerialNumber=II}'/>
+<arg type64='^{ProcessInfoRec=I*{ProcessSerialNumber=II}III*II{ProcessSerialNumber=II}II^{FSRef}}'/>
+<retval type64='s'/>
+</function>
+<function name='GetProcessPID'>
+<arg type64='^{ProcessSerialNumber=II}'/>
+<arg type64='^i'/>
+<retval type64='i'/>
+</function>
+<function name='HIShapeContainsPoint'>
+<arg type64='^{__HIShape=}'/>
+<arg type64='^{CGPoint=dd}'/>
+<retval type64='B'/>
+</function>
+<function name='HIShapeCreateCopy'>
+<arg type64='^{__HIShape=}'/>
+<retval already_retained='true' type64='^{__HIShape=}'/>
+</function>
+<function name='HIShapeCreateDifference'>
+<arg type64='^{__HIShape=}'/>
+<arg type64='^{__HIShape=}'/>
+<retval already_retained='true' type64='^{__HIShape=}'/>
+</function>
+<function name='HIShapeCreateEmpty'>
+<retval already_retained='true' type64='^{__HIShape=}'/>
+</function>
+<function name='HIShapeCreateIntersection'>
+<arg type64='^{__HIShape=}'/>
+<arg type64='^{__HIShape=}'/>
+<retval already_retained='true' type64='^{__HIShape=}'/>
+</function>
+<function name='HIShapeCreateMutable'>
+<retval already_retained='true' type64='^{__HIShape=}'/>
+</function>
+<function name='HIShapeCreateMutableCopy'>
+<arg type64='^{__HIShape=}'/>
+<retval already_retained='true' type64='^{__HIShape=}'/>
+</function>
+<function name='HIShapeCreateMutableWithRect'>
+<arg type64='^{CGRect={CGPoint=dd}{CGSize=dd}}'/>
+<retval already_retained='true' type64='^{__HIShape=}'/>
+</function>
+<function name='HIShapeCreateUnion'>
+<arg type64='^{__HIShape=}'/>
+<arg type64='^{__HIShape=}'/>
+<retval already_retained='true' type64='^{__HIShape=}'/>
+</function>
+<function name='HIShapeCreateWithQDRgn'>
+<arg type64='^{OpaqueRgnHandle=}'/>
+<retval already_retained='true' type64='^{__HIShape=}'/>
+</function>
+<function name='HIShapeCreateWithRect'>
+<arg type64='^{CGRect={CGPoint=dd}{CGSize=dd}}'/>
+<retval already_retained='true' type64='^{__HIShape=}'/>
+</function>
+<function name='HIShapeCreateXor'>
+<arg type64='^{__HIShape=}'/>
+<arg type64='^{__HIShape=}'/>
+<retval already_retained='true' type64='^{__HIShape=}'/>
+</function>
+<function name='HIShapeDifference'>
+<arg type64='^{__HIShape=}'/>
+<arg type64='^{__HIShape=}'/>
+<arg type64='^{__HIShape=}'/>
+<retval type64='i'/>
+</function>
+<function name='HIShapeEnumerate'>
+<arg type64='^{__HIShape=}'/>
+<arg type64='I'/>
+<arg function_pointer='true' type64='^?'>
+<arg type64='i'/>
+<arg type64='^{__HIShape=}'/>
+<arg type64='^{CGRect={CGPoint=dd}{CGSize=dd}}'/>
+<arg type64='^v'/>
+<retval type64='i'/>
+</arg>
+<arg type64='^v'/>
+<retval type64='i'/>
+</function>
+<function name='HIShapeGetAsQDRgn'>
+<arg type64='^{__HIShape=}'/>
+<arg type64='^{OpaqueRgnHandle=}'/>
+<retval type64='i'/>
+</function>
+<function name='HIShapeGetBounds'>
+<arg type64='^{__HIShape=}'/>
+<arg type64='^{CGRect={CGPoint=dd}{CGSize=dd}}'/>
+<retval type64='^{CGRect={CGPoint=dd}{CGSize=dd}}'/>
+</function>
+<function name='HIShapeGetTypeID'>
+<retval type64='Q'/>
+</function>
+<function name='HIShapeInset'>
+<arg type64='^{__HIShape=}'/>
+<arg type64='d'/>
+<arg type64='d'/>
+<retval type64='i'/>
+</function>
+<function name='HIShapeIntersect'>
+<arg type64='^{__HIShape=}'/>
+<arg type64='^{__HIShape=}'/>
+<arg type64='^{__HIShape=}'/>
+<retval type64='i'/>
+</function>
+<function name='HIShapeIntersectsRect'>
+<arg type64='^{__HIShape=}'/>
+<arg type64='^{CGRect={CGPoint=dd}{CGSize=dd}}'/>
+<retval type64='B'/>
+</function>
+<function name='HIShapeIsEmpty'>
+<arg type64='^{__HIShape=}'/>
+<retval type64='B'/>
+</function>
+<function name='HIShapeIsRectangular'>
+<arg type64='^{__HIShape=}'/>
+<retval type64='B'/>
+</function>
+<function name='HIShapeOffset'>
+<arg type64='^{__HIShape=}'/>
+<arg type64='d'/>
+<arg type64='d'/>
+<retval type64='i'/>
+</function>
+<function name='HIShapeReplacePathInCGContext'>
+<arg type64='^{__HIShape=}'/>
+<arg type64='^{CGContext=}'/>
+<retval type64='i'/>
+</function>
+<function name='HIShapeSetEmpty'>
+<arg type64='^{__HIShape=}'/>
+<retval type64='i'/>
+</function>
+<function name='HIShapeSetWithShape'>
+<arg type64='^{__HIShape=}'/>
+<arg type64='^{__HIShape=}'/>
+<retval type64='i'/>
+</function>
+<function name='HIShapeUnion'>
+<arg type64='^{__HIShape=}'/>
+<arg type64='^{__HIShape=}'/>
+<arg type64='^{__HIShape=}'/>
+<retval type64='i'/>
+</function>
+<function name='HIShapeUnionWithRect'>
+<arg type64='^{__HIShape=}'/>
+<arg type64='^{CGRect={CGPoint=dd}{CGSize=dd}}'/>
+<retval type64='i'/>
+</function>
+<function name='HIShapeXor'>
+<arg type64='^{__HIShape=}'/>
+<arg type64='^{__HIShape=}'/>
+<arg type64='^{__HIShape=}'/>
+<retval type64='i'/>
+</function>
+<function name='ICAddMapEntry'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='^*'/>
+<arg type64='^{ICMapEntry=sssIIIi[256C][256C][256C][256C][256C]}'/>
+<retval type64='i'/>
+</function>
+<function name='ICAddProfile'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='i'/>
+<arg type64='^i'/>
+<retval type64='i'/>
+</function>
+<function name='ICBegin'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='C'/>
+<retval type64='i'/>
+</function>
+<function name='ICCountMapEntries'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='^*'/>
+<arg type64='^q'/>
+<retval type64='i'/>
+</function>
+<function name='ICCountPref'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='^q'/>
+<retval type64='i'/>
+</function>
+<function name='ICCountProfiles'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='^q'/>
+<retval type64='i'/>
+</function>
+<function name='ICCreateGURLEvent'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='I'/>
+<arg type64='^*'/>
+<arg type64='^{AEDesc=I^^{OpaqueAEDataStorageType}}'/>
+<retval type64='i'/>
+</function>
+<function name='ICDeleteMapEntry'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='^*'/>
+<arg type64='q'/>
+<retval type64='i'/>
+</function>
+<function name='ICDeletePref'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='*'/>
+<retval type64='i'/>
+</function>
+<function name='ICDeleteProfile'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='i'/>
+<retval type64='i'/>
+</function>
+<function name='ICEditPreferences'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='*'/>
+<retval type64='i'/>
+</function>
+<function name='ICEnd'>
+<arg type64='^{OpaqueICInstance=}'/>
+<retval type64='i'/>
+</function>
+<function name='ICFindPrefHandle'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='*'/>
+<arg type64='^I'/>
+<arg type64='^*'/>
+<retval type64='i'/>
+</function>
+<function name='ICGetConfigName'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='B'/>
+<arg type64='*'/>
+<retval type64='i'/>
+</function>
+<function name='ICGetCurrentProfile'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='^i'/>
+<retval type64='i'/>
+</function>
+<function name='ICGetDefaultPref'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='*'/>
+<arg type64='^*'/>
+<retval type64='i'/>
+</function>
+<function name='ICGetIndMapEntry'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='^*'/>
+<arg type64='q'/>
+<arg type64='^q'/>
+<arg type64='^{ICMapEntry=sssIIIi[256C][256C][256C][256C][256C]}'/>
+<retval type64='i'/>
+</function>
+<function name='ICGetIndPref'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='q'/>
+<arg type64='*'/>
+<retval type64='i'/>
+</function>
+<function name='ICGetIndProfile'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='q'/>
+<arg type64='^i'/>
+<retval type64='i'/>
+</function>
+<function name='ICGetMapEntry'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='^*'/>
+<arg type64='q'/>
+<arg type64='^{ICMapEntry=sssIIIi[256C][256C][256C][256C][256C]}'/>
+<retval type64='i'/>
+</function>
+<function name='ICGetPerm'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='*'/>
+<retval type64='i'/>
+</function>
+<function name='ICGetPref'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='*'/>
+<arg type64='^I'/>
+<arg type64='^v'/>
+<arg type64='^q'/>
+<retval type64='i'/>
+</function>
+<function name='ICGetPrefHandle'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='*'/>
+<arg type64='^I'/>
+<arg type64='^^*'/>
+<retval type64='i'/>
+</function>
+<function name='ICGetProfileName'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='i'/>
+<arg type64='*'/>
+<retval type64='i'/>
+</function>
+<function name='ICGetSeed'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='^q'/>
+<retval type64='i'/>
+</function>
+<function name='ICGetVersion'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='q'/>
+<arg type64='^I'/>
+<retval type64='i'/>
+</function>
+<function name='ICLaunchURL'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='*'/>
+<arg type64='^v'/>
+<arg type64='q'/>
+<arg type64='^q'/>
+<arg type64='^q'/>
+<retval type64='i'/>
+</function>
+<function name='ICMapEntriesFilename'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='^*'/>
+<arg type64='*'/>
+<arg type64='^{ICMapEntry=sssIIIi[256C][256C][256C][256C][256C]}'/>
+<retval type64='i'/>
+</function>
+<function name='ICMapEntriesTypeCreator'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='^*'/>
+<arg type64='I'/>
+<arg type64='I'/>
+<arg type64='*'/>
+<arg type64='^{ICMapEntry=sssIIIi[256C][256C][256C][256C][256C]}'/>
+<retval type64='i'/>
+</function>
+<function name='ICMapFilename'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='*'/>
+<arg type64='^{ICMapEntry=sssIIIi[256C][256C][256C][256C][256C]}'/>
+<retval type64='i'/>
+</function>
+<function name='ICMapTypeCreator'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='I'/>
+<arg type64='I'/>
+<arg type64='*'/>
+<arg type64='^{ICMapEntry=sssIIIi[256C][256C][256C][256C][256C]}'/>
+<retval type64='i'/>
+</function>
+<function name='ICParseURL'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='*'/>
+<arg type64='^v'/>
+<arg type64='q'/>
+<arg type64='^q'/>
+<arg type64='^q'/>
+<arg type64='^*'/>
+<retval type64='i'/>
+</function>
+<function name='ICSendGURLEvent'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='^{AEDesc=I^^{OpaqueAEDataStorageType}}'/>
+<retval type64='i'/>
+</function>
+<function name='ICSetCurrentProfile'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='i'/>
+<retval type64='i'/>
+</function>
+<function name='ICSetMapEntry'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='^*'/>
+<arg type64='q'/>
+<arg type64='^{ICMapEntry=sssIIIi[256C][256C][256C][256C][256C]}'/>
+<retval type64='i'/>
+</function>
+<function name='ICSetPref'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='*'/>
+<arg type64='I'/>
+<arg type64='^v'/>
+<arg type64='q'/>
+<retval type64='i'/>
+</function>
+<function name='ICSetPrefHandle'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='*'/>
+<arg type64='I'/>
+<arg type64='^*'/>
+<retval type64='i'/>
+</function>
+<function name='ICSetProfileName'>
+<arg type64='^{OpaqueICInstance=}'/>
+<arg type64='i'/>
+<arg type64='*'/>
+<retval type64='i'/>
+</function>
+<function name='ICStart'>
+<arg type64='^^{OpaqueICInstance}'/>
+<arg type64='I'/>
+<retval type64='i'/>
+</function>
+<function name='ICStop'>
+<arg type64='^{OpaqueICInstance=}'/>
+<retval type64='i'/>
+</function>
+<function name='IconRefContainsCGPoint'>
+<arg type64='^{CGPoint=dd}'/>
+<arg type64='^{CGRect={CGPoint=dd}{CGSize=dd}}'/>
+<arg type64='s'/>
+<arg type64='I'/>
+<arg type64='^{OpaqueIconRef=}'/>
+<retval type64='B'/>
+</function>
+<function name='IconRefIntersectsCGRect'>
+<arg type64='^{CGRect={CGPoint=dd}{CGSize=dd}}'/>
+<arg type64='^{CGRect={CGPoint=dd}{CGSize=dd}}'/>
+<arg type64='s'/>
+<arg type64='I'/>
+<arg type64='^{OpaqueIconRef=}'/>
+<retval type64='B'/>
+</function>
+<function name='IconRefToHIShape'>
+<arg type64='^{CGRect={CGPoint=dd}{CGSize=dd}}'/>
+<arg type64='s'/>
+<arg type64='I'/>
+<arg type64='^{OpaqueIconRef=}'/>
+<retval type64='^{__HIShape=}'/>
+</function>
+<function name='IconRefToIconFamily'>
+<arg type64='^{OpaqueIconRef=}'/>
+<arg type64='I'/>
+<arg type64='^^^{IconFamilyResource}'/>
+<retval type64='s'/>
+</function>
+<function name='InvokeIconActionUPP'>
+<arg type64='I'/>
+<arg type64='^^*'/>
+<arg type64='^v'/>
+<arg function_pointer='true' type64='^?'>
+<retval type64='s'/>
+</arg>
+<retval type64='s'/>
+</function>
+<function name='InvokeIconGetterUPP'>
+<arg type64='I'/>
+<arg type64='^v'/>
+<arg function_pointer='true' type64='^?'>
+<retval type64='^*'/>
+</arg>
+<retval type64='^*'/>
+</function>
+<function name='IsIconRefMaskEmpty'>
+<arg type64='^{OpaqueIconRef=}'/>
+<retval type64='B'/>
+</function>
+<function name='IsProcessVisible'>
+<arg type64='^{ProcessSerialNumber=II}'/>
+<retval type64='B'/>
+</function>
+<function name='KillProcess'>
+<arg type64='^{ProcessSerialNumber=II}'/>
+<retval type64='s'/>
+</function>
+<function name='LaunchApplication'>
+<arg type64='^{LaunchParamBlockRec=ISSISS^{FSRef}{ProcessSerialNumber=II}III^{AppParameters}}'/>
+<retval type64='s'/>
+</function>
+<function name='NewIconActionUPP'>
+<arg function_pointer='true' type64='^?'>
+<arg type64='I'/>
+<arg type64='^^*'/>
+<arg type64='^v'/>
+<retval type64='s'/>
+</arg>
+<retval function_pointer='true' type64='^?'>
+<retval type64='s'/>
+</retval>
+</function>
+<function name='NewIconGetterUPP'>
+<arg function_pointer='true' type64='^?'>
+<arg type64='I'/>
+<arg type64='^v'/>
+<retval type64='^*'/>
+</arg>
+<retval function_pointer='true' type64='^?'>
+<retval type64='^*'/>
+</retval>
+</function>
+<function name='PasteboardClear'>
+<arg type64='^{OpaquePasteboardRef=}'/>
+<retval type64='i'/>
+</function>
+<function name='PasteboardCopyItemFlavorData'>
+<arg type64='^{OpaquePasteboardRef=}'/>
+<arg type64='^v'/>
+<arg type64='^{__CFString=}'/>
+<arg type64='^^{__CFData}'/>
+<retval type64='i'/>
+</function>
+<function name='PasteboardCopyItemFlavors'>
+<arg type64='^{OpaquePasteboardRef=}'/>
+<arg type64='^v'/>
+<arg type64='^^{__CFArray}'/>
+<retval type64='i'/>
+</function>
+<function name='PasteboardCopyName'>
+<arg type64='^{OpaquePasteboardRef=}'/>
+<arg type64='^^{__CFString}'/>
+<retval type64='i'/>
+</function>
+<function name='PasteboardCopyPasteLocation'>
+<arg type64='^{OpaquePasteboardRef=}'/>
+<arg type64='^^{__CFURL}'/>
+<retval type64='i'/>
+</function>
+<function name='PasteboardCreate'>
+<arg type64='^{__CFString=}'/>
+<arg type64='^^{OpaquePasteboardRef}'/>
+<retval type64='i'/>
+</function>
+<function name='PasteboardGetItemCount'>
+<arg type64='^{OpaquePasteboardRef=}'/>
+<arg type64='^Q'/>
+<retval type64='i'/>
+</function>
+<function name='PasteboardGetItemFlavorFlags'>
+<arg type64='^{OpaquePasteboardRef=}'/>
+<arg type64='^v'/>
+<arg type64='^{__CFString=}'/>
+<arg type64='^I'/>
+<retval type64='i'/>
+</function>
+<function name='PasteboardGetItemIdentifier'>
+<arg type64='^{OpaquePasteboardRef=}'/>
+<arg type64='q'/>
+<arg type64='^^v'/>
+<retval type64='i'/>
+</function>
+<function name='PasteboardGetTypeID'>
+<retval type64='Q'/>
+</function>
+<function name='PasteboardPutItemFlavor'>
+<arg type64='^{OpaquePasteboardRef=}'/>
+<arg type64='^v'/>
+<arg type64='^{__CFString=}'/>
+<arg type64='^{__CFData=}'/>
+<arg type64='I'/>
+<retval type64='i'/>
+</function>
+<function name='PasteboardResolvePromises'>
+<arg type64='^{OpaquePasteboardRef=}'/>
+<retval type64='i'/>
+</function>
+<function name='PasteboardSetPasteLocation'>
+<arg type64='^{OpaquePasteboardRef=}'/>
+<arg type64='^{__CFURL=}'/>
+<retval type64='i'/>
+</function>
+<function name='PasteboardSetPromiseKeeper'>
+<arg type64='^{OpaquePasteboardRef=}'/>
+<arg function_pointer='true' type64='^?'>
+<arg type64='^{OpaquePasteboardRef=}'/>
+<arg type64='^v'/>
+<arg type64='^{__CFString=}'/>
+<arg type64='^v'/>
+<retval type64='i'/>
+</arg>
+<arg type64='^v'/>
+<retval type64='i'/>
+</function>
+<function name='PasteboardSynchronize'>
+<arg type64='^{OpaquePasteboardRef=}'/>
+<retval type64='I'/>
+</function>
+<function name='PlotIconRefInContext'>
+<arg type64='^{CGContext=}'/>
+<arg type64='^{CGRect={CGPoint=dd}{CGSize=dd}}'/>
+<arg type64='s'/>
+<arg type64='s'/>
+<arg type64='^{RGBColor=SSS}'/>
+<arg type64='I'/>
+<arg type64='^{OpaqueIconRef=}'/>
+<retval type64='i'/>
+</function>
+<function name='ProcessInformationCopyDictionary'>
+<arg type64='^{ProcessSerialNumber=II}'/>
+<arg type64='I'/>
+<retval already_retained='true' type64='^{__CFDictionary=}'/>
+</function>
+<function name='SameProcess'>
+<arg type64='^{ProcessSerialNumber=II}'/>
+<arg type64='^{ProcessSerialNumber=II}'/>
+<arg type64='^B'/>
+<retval type64='s'/>
+</function>
+<function name='SetFrontProcess'>
+<arg type64='^{ProcessSerialNumber=II}'/>
+<retval type64='s'/>
+</function>
+<function name='SetFrontProcessWithOptions'>
+<arg type64='^{ProcessSerialNumber=II}'/>
+<arg type64='I'/>
+<retval type64='i'/>
+</function>
+<function name='SetIconFamilyData'>
+<arg type64='^^{IconFamilyResource}'/>
+<arg type64='I'/>
+<arg type64='^*'/>
+<retval type64='s'/>
+</function>
+<function name='ShowHideProcess'>
+<arg type64='^{ProcessSerialNumber=II}'/>
+<arg type64='B'/>
+<retval type64='s'/>
+</function>
+<function name='TransformProcessType'>
+<arg type64='^{ProcessSerialNumber=II}'/>
+<arg type64='I'/>
+<retval type64='i'/>
+</function>
+<function name='TranslationCopyDestinationType'>
+<arg type64='^{OpaqueTranslationRef=}'/>
+<arg type64='^^{__CFString}'/>
+<retval type64='i'/>
+</function>
+<function name='TranslationCopySourceType'>
+<arg type64='^{OpaqueTranslationRef=}'/>
+<arg type64='^^{__CFString}'/>
+<retval type64='i'/>
+</function>
+<function name='TranslationCreate'>
+<arg type64='^{__CFString=}'/>
+<arg type64='^{__CFString=}'/>
+<arg type64='I'/>
+<arg type64='^^{OpaqueTranslationRef}'/>
+<retval type64='i'/>
+</function>
+<function name='TranslationCreateWithSourceArray'>
+<arg type64='^{__CFArray=}'/>
+<arg type64='I'/>
+<arg type64='^^{__CFArray}'/>
+<arg type64='^^{__CFDictionary}'/>
+<retval type64='i'/>
+</function>
+<function name='TranslationGetTranslationFlags'>
+<arg type64='^{OpaqueTranslationRef=}'/>
+<arg type64='^I'/>
+<retval type64='i'/>
+</function>
+<function name='TranslationGetTypeID'>
+<retval type64='Q'/>
+</function>
+<function name='TranslationPerformForData'>
+<arg type64='^{OpaqueTranslationRef=}'/>
+<arg type64='^{__CFData=}'/>
+<arg type64='^^{__CFData}'/>
+<retval type64='i'/>
+</function>
+<function name='TranslationPerformForFile'>
+<arg type64='^{OpaqueTranslationRef=}'/>
+<arg type64='^{FSRef=[80C]}'/>
+<arg type64='^{FSRef=[80C]}'/>
+<arg type64='^{__CFString=}'/>
+<arg type64='^{FSRef=[80C]}'/>
+<retval type64='i'/>
+</function>
+<function name='TranslationPerformForURL'>
+<arg type64='^{OpaqueTranslationRef=}'/>
+<arg type64='^{__CFURL=}'/>
+<arg type64='^{__CFURL=}'/>
+<arg type64='^^{__CFURL}'/>
+<retval type64='i'/>
+</function>
+<function name='UAZoomChangeFocus'>
+<arg type64='^{CGRect={CGPoint=dd}{CGSize=dd}}'/>
+<arg type64='^{CGRect={CGPoint=dd}{CGSize=dd}}'/>
+<arg type64='I'/>
+<retval type64='i'/>
+</function>
+<function name='UAZoomEnabled'>
+<retval type64='B'/>
+</function>
+<function name='WakeUpProcess'>
+<arg type64='^{ProcessSerialNumber=II}'/>
+<retval type64='s'/>
+</function>
+</signatures>
