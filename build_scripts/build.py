@@ -11,6 +11,11 @@ import subprocess
 from pathlib import Path
 import platform
 
+# Fix Unicode output on Windows (for GitHub Actions)
+if sys.platform == "win32":
+    sys.stdout.reconfigure(encoding='utf-8')
+    sys.stderr.reconfigure(encoding='utf-8')
+
 
 class AppBuilder:
     """應用程式打包器"""
