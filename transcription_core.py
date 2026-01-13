@@ -62,6 +62,12 @@ class TranscriptionCore:
             self.whisper_executable = self.resources_dir / "main"
             self.ffmpeg_executable = self.resources_dir / "ffmpeg"
         
+        # Debug: 顯示路徑資訊
+        print(f"[DEBUG] 資源目錄: {self.resources_dir}")
+        print(f"[DEBUG] 模型路徑: {self.model_path} (存在: {self.model_path.exists()})")
+        print(f"[DEBUG] Whisper執行檔: {self.whisper_executable} (存在: {self.whisper_executable.exists()})")
+        print(f"[DEBUG] FFmpeg: {self.ffmpeg_executable} (存在: {self.ffmpeg_executable.exists()})")
+        
         # 取消標記
         self._cancelled = False
         self._process: Optional[subprocess.Popen] = None
@@ -131,7 +137,8 @@ class TranscriptionCore:
         
         try:
             # 準備音訊檔案（如果是影片則提取音訊）
-            audio_file = self._prepare_audio(input_path, progress_callback)
+            # 不傳入 progress_callback 以免進度條亂跳 (例如從 40% 跳回 0%)
+            audio_file = self._prepare_audio(input_path, None)
             
             if self._cancelled:
                 return TranscriptionResult(
@@ -141,9 +148,13 @@ class TranscriptionCore:
                     error_message="已取消"
                 )
             
+            # 獲取媒體總時長（秒）
+            total_duration = self._get_media_duration(input_path)
+            print(f"[DEBUG] 媒體總時長: {total_duration} 秒")
+            
             # 執行 Whisper 轉錄
             if progress_callback:
-                progress_callback(0.3)
+                progress_callback(0.0)  # 轉錄開始 (0%)
             
             transcript_text, output_file = self._run_whisper(
                 audio_file,
@@ -152,7 +163,8 @@ class TranscriptionCore:
                 output_srt,
                 output_txt,
                 output_vtt,
-                progress_callback
+                progress_callback,
+                total_duration  # 傳入總時長
             )
             
             if self._cancelled:
@@ -185,7 +197,7 @@ class TranscriptionCore:
                 transcript_text="",
                 error_message=str(e)
             )
-    
+
     def _prepare_audio(
         self,
         input_path: Path,
@@ -242,7 +254,25 @@ class TranscriptionCore:
             
         except subprocess.TimeoutExpired:
             raise RuntimeError("FFmpeg 轉換超時")
-    
+
+    def _get_media_duration(self, file_path: Path) -> float:
+        """獲取媒體檔案的總時長（秒）"""
+        try:
+            # 使用 ffmpeg -i 讀取資訊
+            cmd = [str(self.ffmpeg_executable), '-i', str(file_path)]
+            result = subprocess.run(cmd, stderr=subprocess.PIPE, text=True, encoding='utf-8', errors='ignore')
+            
+            # 從輸出中尋找 Duration: 00:00:00.00
+            import re
+            match = re.search(r'Duration: (\d+):(\d+):(\d+\.\d+)', result.stderr)
+            if match:
+                h, m, s = int(match.group(1)), int(match.group(2)), float(match.group(3))
+                return h * 3600 + m * 60 + s
+        except Exception as e:
+            print(f"[ERROR] 無法獲取時長: {e}")
+        
+        return 3600.0  # 如果失敗，預設回退到 1 小時
+
     def _run_whisper(
         self,
         audio_file: Path,
@@ -251,66 +281,84 @@ class TranscriptionCore:
         output_srt: bool,
         output_txt: bool,
         output_vtt: bool,
-        progress_callback: Optional[Callable[[float], None]] = None
+        progress_callback: Optional[Callable[[float], None]] = None,
+        total_duration: float = 3600.0
     ) -> tuple:
         """執行 Whisper 轉錄"""
-        # 建立輸出檔案路徑
+        # 建立輸出檔案路徑 (whisper.cpp 會自動加上副檔名)
         output_base = original_file.with_suffix('')
         
-        # 建構命令
+        # 建構命令 - whisper.cpp 使用短標誌格式
         cmd = [
             str(self.whisper_executable),
-            '-m', str(self.model_path),
-            '-f', str(audio_file),
-            '-l', language if language != "auto" else "auto",
-            '-t', '4',  # 執行緒數
-            '--print-progress'
+            '-m', str(self.model_path),      # 模型路徑
+            '-l', language if language != "auto" else "auto",  # 語言
+            '-t', '4',                        # 執行緒數
+            '-of', str(output_base),          # 輸出檔案基礎名稱
         ]
         
-        # 輸出格式
+        # 輸出格式標誌
         if output_srt:
-            cmd.extend(['-osrt', '-of', str(output_base)])
+            cmd.append('-osrt')
         if output_txt:
-            cmd.extend(['-otxt'])
+            cmd.append('-otxt')
         if output_vtt:
-            cmd.extend(['-ovtt'])
+            cmd.append('-ovtt')
+        
+        # 音訊檔案放在最後
+        cmd.extend(['-f', str(audio_file)])
+        
+        print(f"[DEBUG] 執行 Whisper 命令: {' '.join(cmd)}")
         
         # 執行
         try:
             self._process = subprocess.Popen(
                 cmd,
                 stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                text=True
+                stderr=subprocess.STDOUT,  # 合併 stderr 到 stdout
+                text=True,
+                bufsize=1  # 行緩衝
             )
             
-            stdout_lines = []
+            transcript_lines = []
             
-            # 讀取輸出
-            while True:
+            # 讀取輸出並解析進度
+            for line in iter(self._process.stdout.readline, ''):
                 if self._cancelled:
                     self._process.terminate()
                     break
                 
-                line = self._process.stdout.readline()
-                if not line and self._process.poll() is not None:
-                    break
+                line = line.strip()
+                if not line:
+                    continue
                 
-                if line:
-                    stdout_lines.append(line)
-                    # 嘗試解析進度
-                    if 'progress' in line.lower() and progress_callback:
-                        try:
-                            # 簡單的進度估計
-                            progress_callback(0.5)
-                        except:
-                            pass
+                # print(f"[WHISPER] {line}")  # 減少 Debug 輸出以免洗版
+                transcript_lines.append(line)
+                
+                # 解析時間戳來估計進度 [00:00:00.000 --> 00:00:05.000]
+                if '-->' in line and progress_callback and total_duration > 0:
+                    try:
+                        # 提取結束時間
+                        import re
+                        match = re.search(r'\[(\d+):(\d+):(\d+)', line)
+                        if match:
+                            h, m, s = int(match.group(1)), int(match.group(2)), int(match.group(3))
+                            current_seconds = h * 3600 + m * 60 + s
+                            
+                            # 精確計算進度
+                            progress = min(current_seconds / total_duration, 0.99)
+                            progress_callback(progress)
+                    except:
+                        pass
+                
+                # 如果看到 whisper_print_timings，表示快完成了
+                if 'whisper_print_timings' in line and progress_callback:
+                    progress_callback(1.0)
             
             self._process.wait()
             
             if self._process.returncode != 0:
-                stderr = self._process.stderr.read()
-                raise RuntimeError(f"Whisper 轉錄失敗：{stderr}")
+                raise RuntimeError(f"Whisper 返回錯誤碼：{self._process.returncode}")
             
             # 讀取輸出檔案
             transcript_text = ""
