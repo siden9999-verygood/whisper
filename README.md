@@ -13,19 +13,33 @@
 - **多格式輸出** - SRT 字幕、TXT 純文字、VTT 等格式
 - **簡繁轉換** - 自動將簡體中文轉換為繁體中文
 - **跨平台** - 支援 Windows 和 macOS
+- **GPU 加速** - Windows CUDA 版本支援 NVIDIA 顯卡加速
 - **完全免費** - 開源軟體，永久免費
 
-## 安裝方式
+## 下載安裝
 
-### 方式一：下載安裝包（推薦）
+前往 [Releases](https://github.com/siden9999-verygood/whisper/releases) 頁面下載：
 
-1. 前往 [Releases](https://github.com/siden9999-verygood/whisper/releases) 頁面
-2. 下載對應平台的安裝包：
-   - Windows：`VoiceTranscriber-Setup.exe`
-   - macOS：`VoiceTranscriber.dmg`
-3. 雙擊安裝，首次執行時會自動下載 AI 模型（約 3GB）
+| 平台 | 檔案 | 說明 |
+|------|------|------|
+| **macOS** | `VoiceTranscriber-*.dmg` | 適用所有 Mac |
+| **Windows** | `VoiceTranscriber-Windows.zip` | CPU 版本，適用所有電腦 |
+| **Windows + NVIDIA** | `VoiceTranscriber-Windows-CUDA.zip` | GPU 加速版，速度快 10-50 倍 |
 
-### 方式二：從原始碼執行
+### 安裝步驟
+
+1. 下載對應平台的安裝包
+2. 解壓縮（Windows）或拖曳到應用程式（macOS）
+3. 首次執行時會自動下載 AI 模型（約 3GB）
+
+### 選擇 Windows 版本
+
+- **沒有 NVIDIA 顯卡** → 下載 `VoiceTranscriber-Windows.zip`
+- **有 NVIDIA 顯卡** → 下載 `VoiceTranscriber-Windows-CUDA.zip`（推薦）
+
+> 💡 **如何確認顯卡？** 按 `Ctrl+Shift+Esc` 開啟工作管理員 → 效能 → GPU，查看顯卡名稱。名稱包含 "NVIDIA" 就可以用 CUDA 版本。
+
+## 從原始碼執行
 
 ```bash
 # 1. 克隆專案
@@ -63,32 +77,52 @@ python app_main.py
 | 平台 | 最低需求 | 建議配置 |
 |------|----------|----------|
 | **Windows** | Windows 10, 4GB RAM | Windows 11, 8GB RAM |
-| **macOS** | macOS 10.14, 4GB RAM | macOS 12+, 8GB RAM |
+| **Windows CUDA** | Windows 10, NVIDIA GTX 10系列以上 | RTX 30/40 系列 |
+| **macOS** | macOS 10.14, 4GB RAM | macOS 12+, Apple Silicon |
 
-- Python 3.8 或以上版本（從原始碼執行時需要）
 - 約 4GB 磁碟空間（含 AI 模型）
+- CUDA 版本需約 350MB 額外空間
 
 ## 硬體加速說明
 
-本工具使用 [whisper.cpp](https://github.com/ggerganov/whisper.cpp) 作為轉錄引擎，各平台硬體使用方式如下：
-
 | 平台 | 硬體加速 | 說明 |
 |------|----------|------|
-| **macOS (M1/M2/M3/M4)** | Apple Metal GPU | 自動啟用，速度最快 |
+| **macOS (Apple Silicon)** | Metal GPU | 自動啟用，速度最快 |
 | **macOS (Intel)** | CPU | 可正常使用，速度較慢 |
-| **Windows** | CPU | 預設使用 CPU 運算 |
-| **Windows + NVIDIA** | 需手動設定 | 見下方說明 |
+| **Windows CPU 版** | CPU | 通用版本，適用所有電腦 |
+| **Windows CUDA 版** | NVIDIA GPU | 自動啟用，速度快 10-50 倍 |
 
-### Windows 啟用 NVIDIA GPU 加速
+### 效能比較
 
-目前提供的 Windows 版本使用 CPU 運算。如需使用 NVIDIA GPU 加速，請依照以下步驟：
+以 20 分鐘音檔為例：
 
-1. 安裝 [NVIDIA CUDA Toolkit](https://developer.nvidia.com/cuda-downloads)
-2. 從 [whisper.cpp Releases](https://github.com/ggerganov/whisper.cpp/releases) 下載 CUDA 版本的執行檔
-3. 將下載的 `main.exe` 替換 `whisper_resources/main.exe`
-4. 重新執行程式
+| 版本 | 處理時間 |
+|------|----------|
+| Windows CPU | 約 20-40 分鐘 |
+| Windows CUDA (RTX 3060) | 約 1-2 分鐘 |
+| macOS M1/M2/M3 | 約 2-5 分鐘 |
 
-> 注意：CPU 版本對大多數使用情境已足夠。5 分鐘的音檔約需 1-3 分鐘處理。
+## 移除程式
+
+### macOS
+
+程式內建「完整移除」功能：
+
+1. 開啟程式
+2. 點擊右下角「完整移除程式」按鈕
+3. 確認後會自動刪除模型並移到垃圾桶
+
+或手動移除：
+
+```bash
+rm -rf /Applications/VoiceTranscriber.app
+rm -rf ~/Library/Application\ Support/VoiceTranscriber
+```
+
+### Windows
+
+1. 刪除解壓縮的資料夾即可
+2. 模型在同資料夾的 `whisper_resources` 中，會一起刪除
 
 ## 致謝 / Credits
 
