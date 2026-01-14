@@ -39,25 +39,28 @@
 
 > 💡 **如何確認顯卡？** 按 `Ctrl+Shift+Esc` 開啟工作管理員 → 效能 → GPU，查看顯卡名稱。名稱包含 "NVIDIA" 就可以用 CUDA 版本。
 
-### macOS 首次開啟
+### macOS 安裝步驟
 
-如果出現「應用程式已損毀，無法打開」的警告，請使用以下方法：
+由於 App 未經 Apple 簽章，首次開啟需要額外步驟：
 
-**方法一（推薦）：右鍵打開**
+**步驟 1：安裝 App**
 
-1. 將 App 拖到「應用程式」資料夾
-2. 在 Finder 中找到 App
-3. **按住 Control + 點擊**（或右鍵點擊）
-4. 選擇「打開」
-5. 在彈出的警告中再次點「打開」
+1. 雙擊下載的 `VoiceTranscriber-1.0.0.dmg` 檔案
+2. 出現 DMG 視窗後，把 `VoiceTranscriber.app` **拖曳**到 `Applications` 圖示上
+3. 等待複製完成，關閉 DMG 視窗
 
-之後就能正常雙擊開啟。
+**步驟 2：解除安全限制**
 
-**方法二：終端機指令**
+開啟「終端機」（Spotlight 搜尋 Terminal），貼上以下指令並按 Enter：
 
 ```bash
 xattr -cr /Applications/VoiceTranscriber.app
 ```
+
+**步驟 3：開啟 App**
+
+1. 前往 Finder →「應用程式」資料夾
+2. 雙擊 `VoiceTranscriber` 開啟
 
 > ⚠️ 這是所有未經 Apple 簽章的 App 的正常現象，不影響使用安全。
 
