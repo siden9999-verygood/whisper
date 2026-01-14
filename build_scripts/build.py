@@ -108,7 +108,11 @@ class AppBuilder:
         
         # 添加 whisper 執行檔和 ffmpeg
         if target_platform == "windows":
-            resource_files = ["main.exe", "ffmpeg.exe"]
+            resource_files = [
+                "main.exe", "ffmpeg.exe",
+                # whisper.cpp v1.8.2 需要的 DLL
+                "ggml-base.dll", "ggml-cpu.dll", "ggml.dll", "whisper.dll"
+            ]
         else:
             resource_files = ["main", "ffmpeg"]
         
