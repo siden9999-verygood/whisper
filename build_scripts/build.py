@@ -108,23 +108,32 @@ class AppBuilder:
         
         # 添加 whisper 執行檔和 ffmpeg
         if target_platform == "windows":
-            resource_files = [
-                "main.exe", "ffmpeg.exe",
-                # whisper.cpp 基本 DLL
-                "ggml-base.dll", "ggml-cpu.dll", "ggml.dll", "whisper.dll",
-                # CUDA DLL (如果存在則包含)
-                "ggml-cuda.dll", "cublas64_12.dll", "cublasLt64_12.dll",
-                "cudart64_12.dll", "nvblas64_12.dll", 
-                "nvrtc-builtins64_124.dll", "nvrtc64_120_0.dll"
-            ]
+            # 基本執行檔
+            base_files = ["main.exe", "ffmpeg.exe"]
+            
+            # 動態掃描所有 DLLs（包含 CUDA DLLs）
+            dll_files = list(self.resources_dir.glob("*.dll"))
+            
+            print(f"  發現 {len(dll_files)} 個 DLL 檔案")
+            
+            # 添加基本執行檔
+            for res_file in base_files:
+                res_path = self.resources_dir / res_file
+                if res_path.exists():
+                    datas.append(f"--add-data={res_path}{os.pathsep}whisper_resources")
+                    print(f"  包含資源：{res_file}")
+            
+            # 添加所有 DLLs
+            for dll_path in dll_files:
+                datas.append(f"--add-data={dll_path}{os.pathsep}whisper_resources")
+                print(f"  包含 DLL：{dll_path.name}")
         else:
             resource_files = ["main", "ffmpeg"]
-        
-        for res_file in resource_files:
-            res_path = self.resources_dir / res_file
-            if res_path.exists():
-                datas.append(f"--add-data={res_path}{os.pathsep}whisper_resources")
-                print(f"  包含資源：{res_file}")
+            for res_file in resource_files:
+                res_path = self.resources_dir / res_file
+                if res_path.exists():
+                    datas.append(f"--add-data={res_path}{os.pathsep}whisper_resources")
+                    print(f"  包含資源：{res_file}")
         
         # Frameworks 目錄（macOS）
         frameworks_dir = self.resources_dir / "Frameworks"
