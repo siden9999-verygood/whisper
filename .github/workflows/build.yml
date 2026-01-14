@@ -52,6 +52,22 @@ jobs:
           python -m pip install --upgrade pip
           pip install pyinstaller customtkinter srt opencc-python-reimplemented
 
+      - name: Download whisper.cpp official binaries
+        run: |
+          # 下載官方預編譯版本（CPU only，包含必要的 DLLs）
+          Invoke-WebRequest -Uri "https://github.com/ggml-org/whisper.cpp/releases/download/v1.8.2/whisper-bin-x64.zip" -OutFile whisper.zip
+          Expand-Archive -Path whisper.zip -DestinationPath whisper_bin
+          # 移除舊的執行檔和 DLLs
+          Remove-Item whisper_resources/*.dll -ErrorAction SilentlyContinue
+          Remove-Item whisper_resources/main.exe -ErrorAction SilentlyContinue
+          # 複製新的執行檔（官方的 CLI 工具）
+          Copy-Item whisper_bin/whisper-cli.exe whisper_resources/main.exe
+          # 複製所有 DLLs（包含 ggml-base.dll, ggml-cpu.dll, ggml.dll, whisper.dll）
+          Copy-Item whisper_bin/*.dll whisper_resources/
+          # 顯示已複製的檔案
+          Write-Host "已複製的檔案:"
+          Get-ChildItem whisper_resources/*.exe, whisper_resources/*.dll | ForEach-Object { Write-Host "  $_" }
+
       - name: Build Windows app
         run: python build_scripts/build.py
 
