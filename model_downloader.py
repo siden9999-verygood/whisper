@@ -22,12 +22,17 @@ class ModelDownloader:
         """初始化下載器"""
         # 確定資源目錄
         if getattr(sys, 'frozen', False):
-            # 打包後，模型存放在 exe 同目錄（持久化）
-            self.base_path = Path(sys.executable).parent
+            # 打包後的行為
+            if sys.platform == "darwin":
+                # macOS: 使用標準 Application Support 目錄
+                self.resources_dir = Path.home() / "Library" / "Application Support" / "VoiceTranscriber"
+            else:
+                # Windows: 使用 exe 同目錄
+                self.resources_dir = Path(sys.executable).parent / "whisper_resources"
         else:
-            self.base_path = Path(__file__).parent
+            # 開發模式：使用專案目錄
+            self.resources_dir = Path(__file__).parent / "whisper_resources"
         
-        self.resources_dir = self.base_path / "whisper_resources"
         self.model_path = self.resources_dir / self.MODEL_NAME
         
         # 確保資源目錄存在

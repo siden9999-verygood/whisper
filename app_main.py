@@ -172,10 +172,26 @@ class VoiceTranscriberApp(ctk.CTk):
         self.cancel_btn.pack(side="left", padx=5)
         
         # 底部狀態 - 放置在最下方
+        bottom_frame = ctk.CTkFrame(self, fg_color="transparent")
+        bottom_frame.pack(side="bottom", fill="x", pady=5)
+        
         self.model_label = ctk.CTkLabel(
-            self, text="", font=ctk.CTkFont(size=10), text_color="#555555"
+            bottom_frame, text="", font=ctk.CTkFont(size=10), text_color="#555555"
         )
-        self.model_label.pack(side="bottom", pady=5)
+        self.model_label.pack(side="left", padx=10)
+        
+        # 完整移除按鈕（只在 macOS 打包版本顯示）
+        if getattr(sys, 'frozen', False) and sys.platform == "darwin":
+            self.uninstall_btn = ctk.CTkButton(
+                bottom_frame,
+                text="完整移除程式",
+                font=ctk.CTkFont(size=10),
+                width=90, height=24,
+                fg_color="#8B0000",
+                hover_color="#A52A2A",
+                command=self._complete_uninstall
+            )
+            self.uninstall_btn.pack(side="right", padx=10)
     
     def _select_file(self):
         from tkinter import filedialog
@@ -270,6 +286,49 @@ class VoiceTranscriberApp(ctk.CTk):
             self.is_transcribing = False
             self.status.configure(text="已取消")
             self._reset()
+    
+    def _complete_uninstall(self):
+        """完整移除程式（僅 macOS）"""
+        from tkinter import messagebox
+        import subprocess
+        import shutil
+        
+        # 確認對話框
+        result = messagebox.askyesno(
+            "完整移除程式",
+            "此操作將：\n\n"
+            "1. 刪除已下載的模型 (~3GB)\n"
+            "2. 將應用程式移到垃圾桶\n\n"
+            "確定要完整移除程式嗎？",
+            icon="warning"
+        )
+        
+        if not result:
+            return
+        
+        try:
+            # 1. 刪除模型資料夾
+            model_dir = Path.home() / "Library" / "Application Support" / "VoiceTranscriber"
+            if model_dir.exists():
+                shutil.rmtree(model_dir)
+            
+            # 2. 取得 App 路徑並移到垃圾桶
+            if getattr(sys, 'frozen', False):
+                app_path = Path(sys.executable).parent.parent.parent  # .app bundle
+                if app_path.suffix == ".app":
+                    # 使用 AppleScript 移到垃圾桶
+                    script = f'''
+                    tell application "Finder"
+                        move POSIX file "{app_path}" to trash
+                    end tell
+                    '''
+                    subprocess.run(["osascript", "-e", script], check=True)
+            
+            # 3. 關閉程式
+            self.quit()
+            
+        except Exception as e:
+            messagebox.showerror("錯誤", f"移除失敗：{e}")
 
 
 if __name__ == "__main__":

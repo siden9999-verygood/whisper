@@ -53,16 +53,22 @@ class TranscriptionCore:
                 self.bundled_path = Path(sys._MEIPASS)
             else:
                 self.bundled_path = Path(sys.executable).parent
-            # 用戶數據（下載的模型）在 exe 同目錄
-            self.user_path = Path(sys.executable).parent
+            
+            # 用戶數據（下載的模型）
+            if sys.platform == "darwin":
+                # macOS: 使用標準 Application Support 目錄
+                self.user_resources_dir = Path.home() / "Library" / "Application Support" / "VoiceTranscriber"
+            else:
+                # Windows: 使用 exe 同目錄
+                self.user_resources_dir = Path(sys.executable).parent / "whisper_resources"
         else:
+            # 開發模式
             self.bundled_path = Path(__file__).parent
-            self.user_path = Path(__file__).parent
+            self.user_resources_dir = Path(__file__).parent / "whisper_resources"
         
-        # 打包的資源目錄（main.exe, ffmpeg, DLLs）
+        # 打包的資源目錄（main, ffmpeg, DLLs）
         self.resources_dir = self.bundled_path / "whisper_resources"
-        # 用戶資源目錄（下載的模型）
-        self.user_resources_dir = self.user_path / "whisper_resources"
+        # 模型路徑
         self.model_path = self.user_resources_dir / "ggml-large-v2.bin"
         
         # 確定 whisper.cpp 執行檔路徑
