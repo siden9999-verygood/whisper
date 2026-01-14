@@ -118,12 +118,44 @@ jobs:
 
       - name: Download CUDA whisper.cpp binaries
         run: |
+          # 下載 CUDA 版本
           Invoke-WebRequest -Uri "https://github.com/ggml-org/whisper.cpp/releases/download/v1.8.2/whisper-cublas-12.4.0-bin-x64.zip" -OutFile cuda.zip
           Expand-Archive -Path cuda.zip -DestinationPath cuda_bin
+          
+          # 顯示解壓後的目錄結構以便除錯
+          Write-Host "=== CUDA ZIP 解壓後的目錄結構 ==="
+          Get-ChildItem -Path cuda_bin -Recurse | ForEach-Object { Write-Host $_.FullName }
+          
+          # 移除舊的執行檔和 DLLs
           Remove-Item whisper_resources/*.dll -ErrorAction SilentlyContinue
           Remove-Item whisper_resources/main.exe -ErrorAction SilentlyContinue
-          Copy-Item cuda_bin/Release/whisper-cli.exe whisper_resources/main.exe
-          Copy-Item cuda_bin/Release/*.dll whisper_resources/
+          
+          # 找到 whisper-cli.exe 並複製（可能在子目錄中）
+          $whisperCli = Get-ChildItem -Path cuda_bin -Recurse -Filter "whisper-cli.exe" | Select-Object -First 1
+          if ($whisperCli) {
+            Copy-Item $whisperCli.FullName whisper_resources/main.exe
+            Write-Host "已複製 whisper-cli.exe 從: $($whisperCli.FullName)"
+          } else {
+            # 嘗試找 main.exe
+            $mainExe = Get-ChildItem -Path cuda_bin -Recurse -Filter "main.exe" | Select-Object -First 1
+            if ($mainExe) {
+              Copy-Item $mainExe.FullName whisper_resources/main.exe
+              Write-Host "已複製 main.exe 從: $($mainExe.FullName)"
+            } else {
+              Write-Host "錯誤：找不到 whisper-cli.exe 或 main.exe"
+              exit 1
+            }
+          }
+          
+          # 複製所有 DLLs（從解壓目錄遞迴搜尋）
+          Get-ChildItem -Path cuda_bin -Recurse -Filter "*.dll" | ForEach-Object {
+            Copy-Item $_.FullName whisper_resources/
+            Write-Host "已複製 DLL: $($_.Name)"
+          }
+          
+          # 顯示最終結果
+          Write-Host "=== whisper_resources 目錄內容 ==="
+          Get-ChildItem whisper_resources/*.exe, whisper_resources/*.dll | ForEach-Object { Write-Host "  $($_.Name)" }
 
       - name: Build Windows CUDA app
         run: python build_scripts/build.py
