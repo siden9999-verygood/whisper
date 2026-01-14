@@ -39,6 +39,22 @@
 
 > 💡 **如何確認顯卡？** 按 `Ctrl+Shift+Esc` 開啟工作管理員 → 效能 → GPU，查看顯卡名稱。名稱包含 "NVIDIA" 就可以用 CUDA 版本。
 
+### macOS 首次開啟
+
+如果出現「應用程式已損毀，無法打開」的警告，這是因為 App 未經 Apple 簽章。請執行以下步驟：
+
+1. 將 App 拖到「應用程式」資料夾
+2. 開啟「終端機」（Spotlight 搜尋 Terminal）
+3. 執行指令：
+
+   ```bash
+   xattr -cr /Applications/VoiceTranscriber.app
+   ```
+
+4. 再次開啟 App 即可
+
+> ⚠️ 這是所有未簽章 Mac App 的正常現象，不影響使用安全。
+
 ## 從原始碼執行
 
 ```bash
