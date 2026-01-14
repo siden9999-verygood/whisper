@@ -57,16 +57,34 @@ jobs:
           # 下載官方預編譯版本（CPU only，包含必要的 DLLs）
           Invoke-WebRequest -Uri "https://github.com/ggml-org/whisper.cpp/releases/download/v1.8.2/whisper-bin-x64.zip" -OutFile whisper.zip
           Expand-Archive -Path whisper.zip -DestinationPath whisper_bin
+          
+          # 顯示解壓後的目錄結構以便除錯
+          Write-Host "=== ZIP 解壓後的目錄結構 ==="
+          Get-ChildItem -Path whisper_bin -Recurse | ForEach-Object { Write-Host $_.FullName }
+          
           # 移除舊的執行檔和 DLLs
           Remove-Item whisper_resources/*.dll -ErrorAction SilentlyContinue
           Remove-Item whisper_resources/main.exe -ErrorAction SilentlyContinue
-          # 複製新的執行檔（官方的 CLI 工具）
-          Copy-Item whisper_bin/whisper-cli.exe whisper_resources/main.exe
-          # 複製所有 DLLs（包含 ggml-base.dll, ggml-cpu.dll, ggml.dll, whisper.dll）
-          Copy-Item whisper_bin/*.dll whisper_resources/
-          # 顯示已複製的檔案
-          Write-Host "已複製的檔案:"
-          Get-ChildItem whisper_resources/*.exe, whisper_resources/*.dll | ForEach-Object { Write-Host "  $_" }
+          
+          # 找到 whisper-cli.exe 並複製（可能在子目錄中）
+          $whisperCli = Get-ChildItem -Path whisper_bin -Recurse -Filter "whisper-cli.exe" | Select-Object -First 1
+          if ($whisperCli) {
+            Copy-Item $whisperCli.FullName whisper_resources/main.exe
+            Write-Host "已複製 whisper-cli.exe 從: $($whisperCli.FullName)"
+          } else {
+            Write-Host "錯誤：找不到 whisper-cli.exe"
+            exit 1
+          }
+          
+          # 複製所有 DLLs（從解壓目錄遞迴搜尋）
+          Get-ChildItem -Path whisper_bin -Recurse -Filter "*.dll" | ForEach-Object {
+            Copy-Item $_.FullName whisper_resources/
+            Write-Host "已複製 DLL: $($_.Name)"
+          }
+          
+          # 顯示最終結果
+          Write-Host "=== whisper_resources 目錄內容 ==="
+          Get-ChildItem whisper_resources/*.exe, whisper_resources/*.dll | ForEach-Object { Write-Host "  $($_.Name)" }
 
       - name: Build Windows app
         run: python build_scripts/build.py
