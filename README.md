@@ -41,19 +41,25 @@
 
 ### macOS 首次開啟
 
-如果出現「應用程式已損毀，無法打開」的警告，這是因為 App 未經 Apple 簽章。請執行以下步驟：
+如果出現「應用程式已損毀，無法打開」的警告，請使用以下方法：
+
+**方法一（推薦）：右鍵打開**
 
 1. 將 App 拖到「應用程式」資料夾
-2. 開啟「終端機」（Spotlight 搜尋 Terminal）
-3. 執行指令：
+2. 在 Finder 中找到 App
+3. **按住 Control + 點擊**（或右鍵點擊）
+4. 選擇「打開」
+5. 在彈出的警告中再次點「打開」
 
-   ```bash
-   xattr -cr /Applications/VoiceTranscriber.app
-   ```
+之後就能正常雙擊開啟。
 
-4. 再次開啟 App 即可
+**方法二：終端機指令**
 
-> ⚠️ 這是所有未簽章 Mac App 的正常現象，不影響使用安全。
+```bash
+xattr -cr /Applications/VoiceTranscriber.app
+```
+
+> ⚠️ 這是所有未經 Apple 簽章的 App 的正常現象，不影響使用安全。
 
 ## 從原始碼執行
 
