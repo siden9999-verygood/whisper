@@ -110,8 +110,12 @@ class AppBuilder:
         if target_platform == "windows":
             resource_files = [
                 "main.exe", "ffmpeg.exe",
-                # whisper.cpp v1.8.2 需要的 DLL
-                "ggml-base.dll", "ggml-cpu.dll", "ggml.dll", "whisper.dll"
+                # whisper.cpp 基本 DLL
+                "ggml-base.dll", "ggml-cpu.dll", "ggml.dll", "whisper.dll",
+                # CUDA DLL (如果存在則包含)
+                "ggml-cuda.dll", "cublas64_12.dll", "cublasLt64_12.dll",
+                "cudart64_12.dll", "nvblas64_12.dll", 
+                "nvrtc-builtins64_124.dll", "nvrtc64_120_0.dll"
             ]
         else:
             resource_files = ["main", "ffmpeg"]
