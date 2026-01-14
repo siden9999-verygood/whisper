@@ -153,6 +153,7 @@ class TranscriptionCore:
                 error_message=f"找不到 Whisper 執行檔：{self.whisper_executable}"
             )
         
+        audio_file = None  # 初始化，供 finally 清理使用
         try:
             # 準備音訊檔案（如果是影片則提取音訊）
             # 不傳入 progress_callback 以免進度條亂跳 (例如從 40% 跳回 0%)
@@ -215,6 +216,15 @@ class TranscriptionCore:
                 transcript_text="",
                 error_message=str(e)
             )
+        finally:
+            # 清理暫存的 WAV 檔案
+            if audio_file and audio_file != input_path:
+                try:
+                    if audio_file.exists():
+                        audio_file.unlink()
+                        print(f"[DEBUG] 已清理暫存檔: {audio_file}")
+                except Exception:
+                    pass  # 忽略清理失敗
 
     def _prepare_audio(
         self,
