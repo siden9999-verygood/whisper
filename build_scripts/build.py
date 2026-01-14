@@ -201,11 +201,26 @@ class AppBuilder:
             print(f"❌ 找不到 .app：{app_path}")
             return False
         
+        # 建立臨時資料夾，將 .app 放入其中
+        import shutil
+        temp_dmg_dir = self.dist_dir / "dmg_temp"
+        if temp_dmg_dir.exists():
+            shutil.rmtree(temp_dmg_dir)
+        temp_dmg_dir.mkdir()
+        
+        # 複製 .app 到臨時資料夾
+        temp_app_path = temp_dmg_dir / f"{self.APP_NAME_EN}.app"
+        shutil.copytree(app_path, temp_app_path)
+        
+        # 建立到 Applications 的符號連結（方便使用者拖曳安裝）
+        applications_link = temp_dmg_dir / "Applications"
+        applications_link.symlink_to("/Applications")
+        
         # 使用 hdiutil 建立 DMG
         cmd = [
             "hdiutil", "create",
             "-volname", self.APP_NAME,
-            "-srcfolder", str(app_path),
+            "-srcfolder", str(temp_dmg_dir),
             "-ov",
             "-format", "UDZO",
             str(dmg_path)
