@@ -47,12 +47,23 @@ class TranscriptionCore:
         """初始化轉錄核心"""
         # 確定基礎路徑
         if getattr(sys, 'frozen', False):
-            self.base_path = Path(sys.executable).parent
+            # PyInstaller 打包後
+            # 打包的二進位檔案在 _MEIPASS
+            if hasattr(sys, '_MEIPASS'):
+                self.bundled_path = Path(sys._MEIPASS)
+            else:
+                self.bundled_path = Path(sys.executable).parent
+            # 用戶數據（下載的模型）在 exe 同目錄
+            self.user_path = Path(sys.executable).parent
         else:
-            self.base_path = Path(__file__).parent
+            self.bundled_path = Path(__file__).parent
+            self.user_path = Path(__file__).parent
         
-        self.resources_dir = self.base_path / "whisper_resources"
-        self.model_path = self.resources_dir / "ggml-large-v2.bin"
+        # 打包的資源目錄（main.exe, ffmpeg, DLLs）
+        self.resources_dir = self.bundled_path / "whisper_resources"
+        # 用戶資源目錄（下載的模型）
+        self.user_resources_dir = self.user_path / "whisper_resources"
+        self.model_path = self.user_resources_dir / "ggml-large-v2.bin"
         
         # 確定 whisper.cpp 執行檔路徑
         if sys.platform == "win32":
@@ -63,7 +74,8 @@ class TranscriptionCore:
             self.ffmpeg_executable = self.resources_dir / "ffmpeg"
         
         # Debug: 顯示路徑資訊
-        print(f"[DEBUG] 資源目錄: {self.resources_dir}")
+        print(f"[DEBUG] 打包資源目錄: {self.resources_dir}")
+        print(f"[DEBUG] 用戶資源目錄: {self.user_resources_dir}")
         print(f"[DEBUG] 模型路徑: {self.model_path} (存在: {self.model_path.exists()})")
         print(f"[DEBUG] Whisper執行檔: {self.whisper_executable} (存在: {self.whisper_executable.exists()})")
         print(f"[DEBUG] FFmpeg: {self.ffmpeg_executable} (存在: {self.ffmpeg_executable.exists()})")

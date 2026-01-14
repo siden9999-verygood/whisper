@@ -22,6 +22,7 @@ class ModelDownloader:
         """初始化下載器"""
         # 確定資源目錄
         if getattr(sys, 'frozen', False):
+            # 打包後，模型存放在 exe 同目錄（持久化）
             self.base_path = Path(sys.executable).parent
         else:
             self.base_path = Path(__file__).parent
