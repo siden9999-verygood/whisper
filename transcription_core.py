@@ -253,6 +253,8 @@ class TranscriptionCore:
                 cmd,
                 capture_output=True,
                 text=True,
+                encoding='utf-8',
+                errors='replace',
                 timeout=600  # 10 分鐘超時
             )
             
@@ -329,6 +331,8 @@ class TranscriptionCore:
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,  # 合併 stderr 到 stdout
                 text=True,
+                encoding='utf-8',  # 明確指定 UTF-8 編碼
+                errors='replace',  # 無法解碼時用替代字元
                 bufsize=1  # 行緩衝
             )
             
