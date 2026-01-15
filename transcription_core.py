@@ -266,6 +266,11 @@ class TranscriptionCore:
             str(output_wav)
         ]
         
+        # Windows 隱藏終端機視窗
+        kwargs = {}
+        if sys.platform == "win32":
+            kwargs['creationflags'] = subprocess.CREATE_NO_WINDOW
+        
         try:
             result = subprocess.run(
                 cmd,
@@ -273,7 +278,8 @@ class TranscriptionCore:
                 text=True,
                 encoding='utf-8',
                 errors='replace',
-                timeout=600  # 10 分鐘超時
+                timeout=600,  # 10 分鐘超時
+                **kwargs
             )
             
             if result.returncode != 0:
@@ -289,10 +295,15 @@ class TranscriptionCore:
 
     def _get_media_duration(self, file_path: Path) -> float:
         """獲取媒體檔案的總時長（秒）"""
+        # Windows 隱藏終端機視窗
+        kwargs = {}
+        if sys.platform == "win32":
+            kwargs['creationflags'] = subprocess.CREATE_NO_WINDOW
+        
         try:
             # 使用 ffmpeg -i 讀取資訊
             cmd = [str(self.ffmpeg_executable), '-i', str(file_path)]
-            result = subprocess.run(cmd, stderr=subprocess.PIPE, text=True, encoding='utf-8', errors='ignore')
+            result = subprocess.run(cmd, stderr=subprocess.PIPE, text=True, encoding='utf-8', errors='ignore', **kwargs)
             
             # 從輸出中尋找 Duration: 00:00:00.00
             import re
@@ -349,6 +360,11 @@ class TranscriptionCore:
         
         print(f"[DEBUG] 執行 Whisper 命令: {' '.join(cmd)}")
         
+        # Windows 隱藏終端機視窗
+        kwargs = {}
+        if sys.platform == "win32":
+            kwargs['creationflags'] = subprocess.CREATE_NO_WINDOW
+        
         # 執行
         try:
             self._process = subprocess.Popen(
@@ -358,7 +374,8 @@ class TranscriptionCore:
                 text=True,
                 encoding='utf-8',  # 明確指定 UTF-8 編碼
                 errors='replace',  # 無法解碼時用替代字元
-                bufsize=1  # 行緩衝
+                bufsize=1,  # 行緩衝
+                **kwargs
             )
             
             transcript_lines = []
