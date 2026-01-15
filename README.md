@@ -1,4 +1,6 @@
-# 免費語音轉錄工具
+# 免費語音轉錄工具 / Free Voice Transcriber
+
+[English](#english) | 繁體中文
 
 > 使用 OpenAI Whisper large-v2 模型進行高精度語音轉文字，完全免費、開源
 
@@ -165,3 +167,94 @@ rm -rf ~/Library/Application\ Support/VoiceTranscriber
 ## 授權條款
 
 本專案採用 MIT 授權條款。詳見 [LICENSE](LICENSE) 檔案。
+
+---
+
+<a name="english"></a>
+
+# English
+
+> High-accuracy speech-to-text using OpenAI Whisper large-v2 model. Free and open source.
+
+## Features
+
+- **High Accuracy** - Powered by Whisper large-v2 model
+- **Multi-language** - Chinese, English, Japanese, Auto-detect
+- **Multiple Formats** - SRT subtitles, TXT plain text
+- **Custom Vocabulary** - Add names, places, terms to improve accuracy
+- **Chinese Conversion** - Auto convert Simplified to Traditional Chinese
+- **Cross-platform** - Windows and macOS
+- **GPU Acceleration** - CUDA support for NVIDIA GPUs (Windows)
+- **100% Free** - Open source, forever free
+
+## Download
+
+Go to [Releases](https://github.com/siden9999-verygood/whisper/releases):
+
+| Platform | File | Description |
+|----------|------|-------------|
+| **macOS** | `VoiceTranscriber-*.dmg` | Universal for all Macs |
+| **Windows** | `VoiceTranscriber-Windows.zip` | CPU version |
+| **Windows + NVIDIA** | `VoiceTranscriber-Windows-CUDA.zip` | GPU accelerated, 10-50x faster |
+
+### Installation
+
+1. Download the package for your platform
+2. Extract (Windows) or drag to Applications (macOS)
+3. First run will auto-download AI model (~3GB)
+
+### macOS Note
+
+Since the app is not Apple-signed, run this command in Terminal before first launch:
+
+```bash
+xattr -cr /Applications/VoiceTranscriber.app
+```
+
+## Usage
+
+1. Launch the app
+2. Select audio/video file (MP3, WAV, M4A, MP4, MOV, etc.)
+3. Choose language and output format
+4. Click "Start Transcription"
+5. Output file saved in the same directory as source
+
+### Supported Formats
+
+**Audio**: MP3, WAV, M4A, FLAC, OGG, AAC  
+**Video**: MP4, MOV, AVI, MKV, WMV, FLV, WebM
+
+## System Requirements
+
+| Platform | Minimum | Recommended |
+|----------|---------|-------------|
+| **Windows** | Windows 10, 4GB RAM | Windows 11, 8GB RAM |
+| **Windows CUDA** | Windows 10, NVIDIA GTX 10xx+ | RTX 30/40 series |
+| **macOS** | macOS 10.14, 4GB RAM | macOS 12+, Apple Silicon |
+
+- ~4GB disk space (including AI model)
+
+## Performance
+
+For a 20-minute audio file:
+
+| Version | Processing Time |
+|---------|-----------------|
+| Windows CPU | ~20-40 minutes |
+| Windows CUDA (RTX 3060) | ~1-2 minutes |
+| macOS M1/M2/M3 | ~2-5 minutes |
+
+## Run from Source
+
+```bash
+git clone https://github.com/siden9999-verygood/whisper.git
+cd whisper
+python -m venv venv
+source venv/bin/activate  # macOS/Linux
+pip install -r requirements.txt
+python app_main.py
+```
+
+## License
+
+MIT License. See [LICENSE](LICENSE) file.
