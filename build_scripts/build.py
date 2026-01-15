@@ -158,7 +158,6 @@ class AppBuilder:
         elif target_platform == "windows":
             cmd.extend([
                 "--windowed",
-                "--console",  # 暫時保留控制台以便調試
             ])
         
         # 添加資源

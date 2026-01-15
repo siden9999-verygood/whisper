@@ -102,6 +102,7 @@ class TranscriptionCore:
         self,
         input_file: str,
         language: str = "zh",
+        prompt: str = "",  # 自訂詞彙
         output_srt: bool = True,
         output_txt: bool = False,
         output_vtt: bool = False,
@@ -183,7 +184,8 @@ class TranscriptionCore:
                 output_txt,
                 output_vtt,
                 progress_callback,
-                total_duration  # 傳入總時長
+                total_duration,  # 傳入總時長
+                prompt  # 自訂詞彙
             )
             
             if self._cancelled:
@@ -312,7 +314,8 @@ class TranscriptionCore:
         output_txt: bool,
         output_vtt: bool,
         progress_callback: Optional[Callable[[float], None]] = None,
-        total_duration: float = 3600.0
+        total_duration: float = 3600.0,
+        prompt: str = ""  # 自訂詞彙
     ) -> tuple:
         """執行 Whisper 轉錄"""
         # 建立輸出檔案路徑 (whisper.cpp 會自動加上副檔名)
@@ -326,6 +329,12 @@ class TranscriptionCore:
             '-t', '4',                        # 執行緒數
             '-of', str(output_base),          # 輸出檔案基礎名稱
         ]
+        
+        # 自訂詞彙
+        if prompt and prompt.strip():
+            # 逗號分隔轉換為空格分隔
+            cleaned_prompt = ' '.join([w.strip() for w in prompt.split(',') if w.strip()])
+            cmd.extend(['--prompt', cleaned_prompt])
         
         # 輸出格式標誌
         if output_srt:

@@ -6,6 +6,7 @@
 
 import os
 import sys
+import json
 import threading
 from pathlib import Path
 from typing import Optional
@@ -30,7 +31,18 @@ from transcription_core import TranscriptionCore
 
 # 常數
 APP_NAME = "語音轉錄工具"
-APP_VERSION = "1.0.0"
+APP_VERSION = "1.1.0"
+
+
+def get_settings_path() -> Path:
+    """取得設定檔路徑"""
+    if getattr(sys, 'frozen', False):
+        if sys.platform == "darwin":
+            return Path.home() / "Library" / "Application Support" / "VoiceTranscriber" / "settings.json"
+        else:
+            return Path(sys.executable).parent / "settings.json"
+    else:
+        return Path(__file__).parent / "settings.json"
 
 
 class VoiceTranscriberApp(ctk.CTk):
@@ -39,10 +51,10 @@ class VoiceTranscriberApp(ctk.CTk):
     def __init__(self):
         super().__init__()
         
-        # 視窗設定 - 稍微加高以顯示底部文字
+        # 視窗設定 - 加高以容納自訂詞彙區塊
         self.title(f"{APP_NAME}")
-        self.geometry("500x430")
-        self.minsize(500, 430)
+        self.geometry("500x520")
+        self.minsize(500, 520)
         
         # 深色主題
         ctk.set_appearance_mode("dark")
@@ -59,6 +71,7 @@ class VoiceTranscriberApp(ctk.CTk):
         self.output_txt = ctk.BooleanVar(value=False)
         self.convert_traditional = ctk.BooleanVar(value=True)
         self.language_var = ctk.StringVar(value="zh")
+        self.prompt_var = ctk.StringVar(value="")  # 自訂詞彙
         
         self._build_ui()
         self.after(300, self._check_model)
@@ -139,6 +152,60 @@ class VoiceTranscriberApp(ctk.CTk):
             content, text="簡體→繁體（僅中文音訊）", variable=self.convert_traditional,
             font=ctk.CTkFont(size=11)
         ).pack(anchor="w", padx=15, pady=8)
+        
+        # ═══ 自訂詞彙區塊 ═══
+        prompt_frame = ctk.CTkFrame(content, fg_color="#0f3460", corner_radius=8)
+        prompt_frame.pack(fill="x", padx=15, pady=(0, 8))
+        
+        # 標題列
+        prompt_header = ctk.CTkFrame(prompt_frame, fg_color="transparent")
+        prompt_header.pack(fill="x", padx=10, pady=(8, 3))
+        
+        ctk.CTkLabel(
+            prompt_header, 
+            text="自訂詞彙（提高辨識準確度）",
+            font=ctk.CTkFont(size=11, weight="bold")
+        ).pack(side="left")
+        
+        # 儲存/載入按鈕
+        btn_container = ctk.CTkFrame(prompt_header, fg_color="transparent")
+        btn_container.pack(side="right")
+        
+        self.save_prompt_btn = ctk.CTkButton(
+            btn_container, text="儲存", width=45, height=22,
+            font=ctk.CTkFont(size=10),
+            fg_color="#1a4a7a", hover_color="#2a5a8a",
+            command=self._save_prompt
+        )
+        self.save_prompt_btn.pack(side="left", padx=2)
+        
+        self.load_prompt_btn = ctk.CTkButton(
+            btn_container, text="載入", width=45, height=22,
+            font=ctk.CTkFont(size=10),
+            fg_color="#1a4a7a", hover_color="#2a5a8a",
+            command=self._load_prompt
+        )
+        self.load_prompt_btn.pack(side="left", padx=2)
+        
+        # 輸入框
+        self.prompt_entry = ctk.CTkEntry(
+            prompt_frame,
+            textvariable=self.prompt_var,
+            placeholder_text="輸入人名、地名、專有名詞，用逗號分隔",
+            font=ctk.CTkFont(size=11),
+            height=32,
+            fg_color="#16213e",
+            border_color="#1a4a7a"
+        )
+        self.prompt_entry.pack(fill="x", padx=10, pady=(0, 3))
+        
+        # 使用提示（範例）
+        ctk.CTkLabel(
+            prompt_frame,
+            text="範例：黃仁勳, 張忠謀, 台積電, NVIDIA",
+            font=ctk.CTkFont(size=10),
+            text_color="#888888"
+        ).pack(anchor="w", padx=10, pady=(0, 8))
         
         # 進度
         self.progress = ctk.CTkProgressBar(content, height=8, corner_radius=4)
@@ -243,6 +310,7 @@ class VoiceTranscriberApp(ctk.CTk):
             result = self.transcription_core.transcribe(
                 input_file=self.selected_file,
                 language=self.language_var.get(),
+                prompt=self.prompt_var.get(),  # 自訂詞彙
                 output_srt=self.output_srt.get(),
                 output_txt=self.output_txt.get(),
                 output_vtt=False,
@@ -286,6 +354,53 @@ class VoiceTranscriberApp(ctk.CTk):
             self.is_transcribing = False
             self.status.configure(text="已取消")
             self._reset()
+    
+    def _save_prompt(self):
+        """儲存自訂詞彙到設定檔"""
+        prompt = self.prompt_var.get().strip()
+        if not prompt:
+            self.status.configure(text="請先輸入詞彙")
+            return
+        
+        settings_path = get_settings_path()
+        settings_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        # 讀取現有設定
+        settings = {}
+        if settings_path.exists():
+            try:
+                with open(settings_path, 'r', encoding='utf-8') as f:
+                    settings = json.load(f)
+            except:
+                pass
+        
+        # 更新並儲存
+        settings['custom_prompt'] = prompt
+        with open(settings_path, 'w', encoding='utf-8') as f:
+            json.dump(settings, f, ensure_ascii=False, indent=2)
+        
+        self.status.configure(text="常用詞彙已儲存")
+
+    def _load_prompt(self):
+        """從設定檔載入自訂詞彙"""
+        settings_path = get_settings_path()
+        
+        if not settings_path.exists():
+            self.status.configure(text="尚無儲存的常用詞彙")
+            return
+        
+        try:
+            with open(settings_path, 'r', encoding='utf-8') as f:
+                settings = json.load(f)
+            
+            prompt = settings.get('custom_prompt', '')
+            if prompt:
+                self.prompt_var.set(prompt)
+                self.status.configure(text="已載入常用詞彙")
+            else:
+                self.status.configure(text="尚無儲存的常用詞彙")
+        except Exception:
+            self.status.configure(text="載入失敗")
     
     def _complete_uninstall(self):
         """完整移除程式（僅 macOS）"""
